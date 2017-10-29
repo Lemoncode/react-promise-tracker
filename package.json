@@ -4,7 +4,11 @@
   "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
   "main": "./src/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "rimraf dist && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
@@ -24,6 +28,8 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.1.1",
+    "rimraf": "^2.6.2",
     "webpack": "^3.8.1"
   }
 }

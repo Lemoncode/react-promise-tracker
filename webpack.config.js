@@ -1,7 +1,17 @@
+var webpack = require('webpack');
+var path = require('path');
+
+const NODE_ENV = process.env.NODE_ENV;
+
+const filename = `react-promise-tracker${NODE_ENV === 'production' ? '.min' : ''}.js`;
+
 module.exports = {
   entry: ['./src/index.js'],
   output: {
-    filename: './lib/react-promise-tracker.js',
+    path: path.join(__dirname, 'dist'),
+    filename,
+    library: 'ReactPromiseTracker',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
