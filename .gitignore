@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+dist/
+typings/
+*.orig
+.idea/
+*/src/**/*.js.map
+**/.vscode/
+.editorconfig
+yarn.lock
+*.log
