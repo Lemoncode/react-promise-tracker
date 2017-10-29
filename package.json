@@ -1,0 +1,29 @@
+{
+  "name": "react-promise-tracker",
+  "version": "0.0.1",
+  "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemoncode/react-promise-tracker.git"
+  },
+  "author": "Lemoncode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lemoncode/react-promise-tracker/issues"
+  },
+  "homepage": "https://github.com/Lemoncode/react-promise-tracker#readme",
+  "dependencies": {
+    "react": "^16.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.8.1"
+  }
+}
