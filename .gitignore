@@ -10,3 +10,4 @@ typings/
 yarn.lock
 *.log
 lib/
+es/
