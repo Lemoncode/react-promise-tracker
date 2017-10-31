@@ -3,7 +3,6 @@ import path from 'path';
 
 const NODE_ENV = process.env.NODE_ENV;
 
-
 const filename = `react-promise-tracker${NODE_ENV === 'production' ? '.min' : ''}.js`;
 
 export default {

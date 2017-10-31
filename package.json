@@ -8,8 +8,7 @@
     "lib",
     "es",
     "src",
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "scripts": {
     "clean": "rimraf lib dist es",
