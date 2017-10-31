@@ -9,3 +9,5 @@ typings/
 .editorconfig
 yarn.lock
 *.log
+lib/
+es/
