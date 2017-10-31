@@ -3,7 +3,6 @@ import { emitter, promiseCounterUpdateEventId } from './trackHttp';
 
 export const promiseTrackerHoc = (ComponentToWrap) => {
   return class promiseTrackerComponent extends Component {
-    // let’s define what’s needed from the `context`
     constructor(props) {
       super(props);
 
@@ -11,16 +10,16 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
     }
 
     componentWillMount() {
-      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress) => {        
+      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress) => {
         this.setState({trackedPromiseInProgress: anyPromiseInProgress});
-      });            
+      });
     }
 
     componentWillUnmount() {
       emitter.off(promiseCounterUpdateEventId);
     }
 
-    render() {      
+    render() {
       return (
         <ComponentToWrap {...this.props} trackedPromiseInProgress={this.state.trackedPromiseInProgress} />
       )

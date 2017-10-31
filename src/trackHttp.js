@@ -6,7 +6,6 @@ export const promiseCounterUpdateEventId = 'promise-counter-update';
 let counter = 0;
 
 // TODO: Add unit test support
-//export const trackPromise = (promise: Promise<any>): Promise<any> => {
 export const trackPromise = (promise) => {
   counter++;
   const promiseInProgress = anyPromiseInProgress();
