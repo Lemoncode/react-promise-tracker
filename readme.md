@@ -23,8 +23,11 @@ npm install react-promise-tracker --save
 Whenever you want a promise to be tracked, just wrap it:
 
 ```diff
++ import { trackPromise} from 'react-promise-tracker';
+//...
+
 + trackPromise(
-    fetchUsers();
+    fetchUsers(); // You function that returns a promise
 + );
 ```
 
