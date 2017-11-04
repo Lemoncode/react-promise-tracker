@@ -31,3 +31,30 @@ Whenever you want a promise to be tracked, just wrap it:
 Then you only need to create a component that will defined a property called _trackedPromiseInProgress_
 
 And wrap it around the _promiseTrackerHoc_
+
+Sample:
+
+```diff
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
++ import { promiseTrackerHoc} from 'react-promise-tracker';
+
+const InnerLoadingSpinerComponent = (props) => {
+  return (
+    <div>      
+    {
+      (props.trackedPromiseInProgress === true) ?
+        <h3>Hey I'm a spinner loader wannabe !!!</h3>
+      :
+        null       
+    }
+  </div>  
+  )
+};
+
+InnerLoadingSpinerComponent.propTypes = {
+  trackedPromiseInProgress : PropTypes.bool.isRequired,
+};
+
++ export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
+```
