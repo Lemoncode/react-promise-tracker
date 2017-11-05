@@ -8,7 +8,7 @@ const isEventValid = (event) => {
 };
 
 const getOrCreateEventSubscribersFor = (allEventSubscribers, event) => 
-  getEventSubscribersFor(event) ? getEventSubscribersFor(event) : createEventSubscribersFor(event);
+getEventSubscribersFor(allEventSubscribers, event) ? getEventSubscribersFor(allEventSubscribers, event) : createEventSubscribersFor(allEventSubscribers, event);
 
 const getEventSubscribersFor = (allEventSubscribers, event) => allEventSubscribers[event];
 
@@ -32,7 +32,7 @@ const unsubscribeCallback = (allEventSubscribers, event, callbackToRemove) => {
 
 const signalSubscribers = (eventSubscribers, ...args) => {
   const callbacksToUnsubscribeAfterCalled = [];
-  eventSubscribers.each((callback) => {
+  eventSubscribers.forEach((callback) => {
     callback.apply(callback.context, [...args]);
     if (callback.off_event) {
       callbacksToUnsubscribeAfterCalled.push(callback);
@@ -47,10 +47,10 @@ export class Emitter {
   emit(event, ...args) {
     const allEventSubscribers = this;
     if (isEventValid(event)) {
-      const eventSubscribers = getEventSubscribersFor(event);
+      const eventSubscribers = getEventSubscribersFor(allEventSubscribers, event);
       if (eventSubscribers) {
-        const callbacksToUnsubscribe = signalSubscribers(eventSubscribers, [...args]);
-        callbacksToUnsubscribe.each((callback) => {
+        const callbacksToUnsubscribe = signalSubscribers(eventSubscribers, ...args);
+        callbacksToUnsubscribe.forEach((callback) => {
           unsubscribeCallback(allEventSubscribers, event, callback);
         });
       }
@@ -80,7 +80,7 @@ export class Emitter {
   off(event, callback) {
     const allEventSubscribers = this;
     if (isEventValid(event)) {
-      const eventSubscribers = getEventSubscribersFor(event);
+      const eventSubscribers = getEventSubscribersFor(allEventSubscribers, event);
       if (eventSubscribers) {
         unsubscribeCallback(allEventSubscribers, event, callback);
       }
@@ -89,6 +89,7 @@ export class Emitter {
   }
 
   _e(e) {
-    return getOrCreateEventSubscribersFor(e);
+    const allEventSubscribers = this;
+    return getOrCreateEventSubscribersFor(allEventSubscribers, e);
   }
 }
