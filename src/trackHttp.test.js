@@ -1,24 +1,26 @@
 import {trackPromise, emitter} from './trackHttp';
 import {Emitter} from './tinyemmiter';
 
-jest.mock('emitter', jest.fn)
 
 describe('trackPromise', () => {
   test('Initial case, promise emitter.emit is called', () => {
     // Arrange
-    emitter.mockImplementation(
-       () => ({
-        emit: (a ,b) => {}
-       })
-    );
 
-    const myPromise = new Promise((resolve, reject) => {});
+    emitter.emit = jest.fn((a,b) => {
+      return;
+    });
+
+
+    //const myPromise = new Promise((resolve, reject) => {});
+    const myPromise =  Promise.resolve().then(() => {
+      expect(true).toBe(true)
+    });
 
     // Act
-    trackPromise(promise)
+    trackPromise(myPromise);
 
     // Assert
-    expect(emitter.emit).toHaveBeenCalled(1);
+    expect(emitter.emit).toHaveBeenCalledTimes(1);
   });
 });
 
