@@ -39,17 +39,39 @@ describe('trackPromise', () => {
     trackPromise(myPromise);
 
     // Assert
-    myPromise.then(() => {
+    return myPromise.then(() => {
       expect(emitter.emit).toHaveBeenCalledTimes(2);
     });
-
-    return myPromise;
   });
+
+  test.only('Promise tracked, we got fail, check that emit is called 2 times', () => {
+    // Arrange
+    expect.assertions(1);
+
+    emitter.emit = jest.fn((a,b) => {
+      return;
+    });
+
+
+    const myPromise =  Promise.reject();
+
+    // Act
+    trackPromise(myPromise);
+
+    // Assert
+    return myPromise.catch(()=>
+        expect(emitter.emit).toHaveBeenCalledTimes(2));
+    /*return myPromise.then(() => {}, () =>{
+      expect(emitter.emit).toHaveBeenCalledTimes(2);
+    });*/
+  });
+
 
   // Pending promise failed
 
   test('Two Promises tracked, we got resolve on both, check that emit is called 4 times', () => {
     // Arrange
+    expect.assertions(1);
 
     emitter.emit = jest.fn((a,b) => {
       return;
@@ -65,11 +87,9 @@ describe('trackPromise', () => {
     trackPromise(myPromiseB);
 
     // Assert
-    Promise.all(promises).then(() => {
+    return Promise.all(promises).then(() => {
       expect(emitter.emit).toHaveBeenCalledTimes(4);
     });
-
-    return Promise.all(promises);
   });
 
 });
