@@ -12,8 +12,10 @@ export const trackPromise = (promise) => {
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
 
   promise
-    .then(() => decrementPromiseCounter())
-    .catch(() => decrementPromiseCounter());
+    .then(() =>
+        decrementPromiseCounter())
+    .catch(() =>
+        decrementPromiseCounter());
 
   return promise;
 };
