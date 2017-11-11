@@ -1,5 +1,14 @@
-import {trackPromise} from './trackHttp';
+import {trackPromise, emitter} from './trackHttp';
+import {Emitter} from './tinyemmiter';
 
-test('track promise dummy true', () => {
-  expect(true).toBe(true);
+//jest.mock('emitter', jest.fn)
+
+describe('trackPromise', () => {
+  test('Initial case, promise emitter.emit is called', () => {
+    // Arrange
+    // Act 
+    // Assert
+    expect(emitter.emit).toHaveBeenCalled(1);
+  });
 });
+
