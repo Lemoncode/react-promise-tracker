@@ -11,3 +11,4 @@ yarn.lock
 *.log
 lib/
 es/
+package-lock.json
