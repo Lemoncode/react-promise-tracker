@@ -2,8 +2,10 @@
   "name": "react-promise-tracker",
   "version": "0.0.2",
   "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
-  "main": "./lib/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",    
   "files": [
     "lib",
     "es",
@@ -14,8 +16,8 @@
     "clean": "rimraf lib dist es",
     "prepublish": "npm run clean && npm run build",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p"
   },
