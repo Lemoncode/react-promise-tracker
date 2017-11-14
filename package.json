@@ -2,16 +2,41 @@
   "name": "react-promise-tracker",
   "version": "0.0.2",
   "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",    
+  "keywords": [
+    "react",
+    "promise",
+    "tracker",
+    "track",
+    "hoc",
+    "higher order component",
+    "spinner",
+    "component"
+  ],
+  "homepage": "https://github.com/Lemoncode/react-promise-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/Lemoncode/react-promise-tracker/issues"
+  },
+  "license": "MIT",
+  "author": "Lemoncode",
+  "contributors": [
+    "Braulio Diez <braulio.diez@lemoncode.net> (https://github.com/brauliodiez)",
+    "Javier Calzado <fjcalzadosp@gmail.com> (https://github.com/fjcalzado)",
+    "Alejandro Rosa <> (https://github.com/arp82)"
+  ],
   "files": [
     "lib",
     "es",
     "src",
     "dist"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemoncode/react-promise-tracker.git"
+  },  
   "scripts": {
     "clean": "rimraf lib dist es",
     "prepublish": "npm run clean && npm run build",
@@ -21,16 +46,6 @@
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lemoncode/react-promise-tracker.git"
-  },
-  "author": "Lemoncode",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Lemoncode/react-promise-tracker/issues"
-  },
-  "homepage": "https://github.com/Lemoncode/react-promise-tracker#readme",
   "dependencies": {
     "react": "^16.0.0"
   },

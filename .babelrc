@@ -1,6 +1,21 @@
 {
-  "presets": [
-    "env",
-    "react"
-  ]
+  "env": {
+    "commonjs": {
+      "presets": [
+        ["env", {
+          "useBuiltIns": false
+        }],
+        "react"
+      ]
+    },
+    "es": {
+      "presets": [
+        ["env", {
+          "useBuiltIns": false,
+          "modules": false
+        }],
+        "react"
+      ]
+    }
+  }
 }
