@@ -1,5 +1,6 @@
 {
   "env": {
+    // Compatibility Profile. ES5 output and CommonJS module format.
     "commonjs": {
       "presets": [
         ["env", {
@@ -8,11 +9,15 @@
         "react"
       ]
     },
+    // Future Profile. ES6 output and module syntax.
     "es": {
       "presets": [
         ["env", {
           "useBuiltIns": false,
-          "modules": false
+          "modules": false,
+          "targets": {
+            "node": "6.5"
+          }
         }],
         "react"
       ]
