@@ -1,4 +1,4 @@
-import { Emitter } from './tinyemmiter';
+import { Emitter } from './tinyEmmiter';
 
 export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
