@@ -14,8 +14,9 @@ export const trackPromise = (promise) => {
   promise
     .then(() =>
         decrementPromiseCounter())
-    .catch(() =>
-        decrementPromiseCounter());
+    .catch(() => {
+      decrementPromiseCounter();
+    });
 
   return promise;
 };

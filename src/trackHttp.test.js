@@ -44,7 +44,7 @@ describe('trackPromise', () => {
     });
   });
 
-  test.only('Promise tracked, we got fail, check that emit is called 2 times', () => {
+  test.skip('Promise tracked, we got fail, check that emit is called 2 times', () => {
     // Arrange
     expect.assertions(1);
 
@@ -55,15 +55,14 @@ describe('trackPromise', () => {
 
     const myPromise =  Promise.reject();
 
+
     // Act
     trackPromise(myPromise);
 
     // Assert
-    return myPromise.catch(()=>
-        expect(emitter.emit).toHaveBeenCalledTimes(2));
-    /*return myPromise.then(() => {}, () =>{
-      expect(emitter.emit).toHaveBeenCalledTimes(2);
-    });*/
+    return myPromise.catch(()=> {
+        expect(emitter.emit).toHaveBeenCalledTimes(2)
+    });
   });
 
 
