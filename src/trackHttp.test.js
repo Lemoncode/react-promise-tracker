@@ -10,7 +10,6 @@ describe('trackPromise', () => {
       return;
     });
 
-
     //const myPromise = new Promise((resolve, reject) => {});
     const myPromise =  Promise.resolve().then(() => {
       return "ok";
@@ -27,11 +26,9 @@ describe('trackPromise', () => {
 
   test('Promise tracked, we got resolve, check that emit is called 2 times', () => {
     // Arrange
-
     emitter.emit = jest.fn((a,b) => {
       return;
     });
-
 
     const myPromise =  Promise.resolve();
 
@@ -52,9 +49,7 @@ describe('trackPromise', () => {
       return;
     });
 
-
     const myPromise =  Promise.reject();
-
 
     // Act
     trackPromise(myPromise);
@@ -67,7 +62,6 @@ describe('trackPromise', () => {
 
 
   // Pending promise failed
-
   test('Two Promises tracked, we got resolve on both, check that emit is called 4 times', () => {
     // Arrange
     expect.assertions(1);
@@ -75,7 +69,6 @@ describe('trackPromise', () => {
     emitter.emit = jest.fn((a,b) => {
       return;
     });
-
 
     const myPromiseA =  Promise.resolve();
     const myPromiseB =  Promise.resolve();
@@ -90,6 +83,5 @@ describe('trackPromise', () => {
       expect(emitter.emit).toHaveBeenCalledTimes(4);
     });
   });
-
 });
 
