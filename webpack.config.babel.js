@@ -18,7 +18,8 @@ export default {
       commonjs: 'react',
       commonjs2: 'react',
       amd: 'react',
-    }
+    },
+    // TODO !!: check what to do with React-dom dependency (needed for test)
   },
   module: {
     rules: [

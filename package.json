@@ -42,12 +42,29 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.1.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "enzyme-to-json": "^3.2.2",
     "jest": "^21.2.1",
+    "react-dom": "^16.1.1",
+    "react-test-renderer": "^16.1.1",
     "regenerator-runtime": "^0.11.0",
     "rimraf": "^2.6.2",
     "webpack": "^3.8.1"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/", "/es/", "/lib/"]
+    "setupFiles": [
+      "./test/shim.js",
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/es/",
+      "/lib/"
+    ]
   }
 }
