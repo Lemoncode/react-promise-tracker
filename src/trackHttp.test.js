@@ -5,12 +5,10 @@ import {Emitter} from './tinyemmiter';
 describe('trackPromise', () => {
   test('On Initial case, promise fired, promise emitter.emit is called', () => {
     // Arrange
-
     emitter.emit = jest.fn((a,b) => {
       return;
     });
 
-    //const myPromise = new Promise((resolve, reject) => {});
     const myPromise =  Promise.resolve().then(() => {
       return "ok";
     });
