@@ -1,7 +1,5 @@
 # react-promise-tracker
 
-**Work in progress**
-
 Simple promise tracker React Hoc.
 
 # Why do I need this?
