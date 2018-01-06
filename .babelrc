@@ -21,6 +21,9 @@
         }],
         "react"
       ]
+    },
+    "test": {
+      "presets": ["env", "react"]
     }
   }
 }

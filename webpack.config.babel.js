@@ -23,7 +23,7 @@ export default {
       commonjs: 'react',
       commonjs2: 'react',
       amd: 'react',
-    }
+    },
   },
   module: {
     rules: [
