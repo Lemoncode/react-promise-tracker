@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { emitter, promiseCounterUpdateEventId } from './trackHttp';
+import { emitter, promiseCounterUpdateEventId } from './trackPromise';
 
 export const promiseTrackerHoc = (ComponentToWrap) => {
   return class promiseTrackerComponent extends Component {

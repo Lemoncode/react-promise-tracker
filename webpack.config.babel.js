@@ -3,14 +3,19 @@ import path from 'path';
 
 const NODE_ENV = process.env.NODE_ENV;
 
-const filename = `react-promise-tracker${NODE_ENV === 'production' ? '.min' : ''}.js`;
+const version = JSON.stringify(process.env.npm_package_version).replace(/"/g, '');
+const filename = `react-promise-tracker-${version}${NODE_ENV === 'production' ? '.min' : ''}.js`;
 
 export default {
   entry: ['./src/index.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename,
-    library: 'ReactPromiseTracker',
+    library: {
+      root: 'ReactPromiseTracker',
+      amd: 'react-promise-tracker',
+      commonjs: 'react-promise-tracker',
+    },
     libraryTarget: 'umd',
   },
   externals: {

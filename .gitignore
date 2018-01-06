@@ -6,7 +6,6 @@ typings/
 .idea/
 */src/**/*.js.map
 **/.vscode/
-.editorconfig
 yarn.lock
 *.log
 lib/
