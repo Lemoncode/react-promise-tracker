@@ -36,7 +36,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lemoncode/react-promise-tracker.git"
-  },  
+  },
   "scripts": {
     "clean": "rimraf lib dist es",
     "prepublish": "npm run clean && npm run build",
@@ -45,8 +45,8 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --ignore spec.js,test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
   "dependencies": {
     "react": "^16.0.0"

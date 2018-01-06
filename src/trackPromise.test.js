@@ -1,5 +1,5 @@
-import {trackPromise, emitter} from './trackHttp';
-import {Emitter} from './tinyemmiter';
+import {trackPromise, emitter} from './trackPromise';
+import {Emitter} from './tinyEmmiter';
 
 
 describe('trackPromise', () => {
