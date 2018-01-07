@@ -39,15 +39,16 @@
   },
   "scripts": {
     "clean": "rimraf lib dist es",
-    "prepublish": "npm run clean && npm run prettier && npm run build",
+    "prettier": "prettier --write \"{src,test}/**/*.{js, ts}\"",
+    "lint": "eslint \"{src,test}/**/*.js\"",
+    "prepublish": "npm run clean && npm run prettier && npm run lint && npm run test && npm run build",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --ignore spec.js,test.js",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --ignore spec.js,test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p",
     "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "prettier": "prettier --write \"src/**/*.{js, ts}\""
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
   "dependencies": {
     "react": "^16.0.0"
@@ -63,6 +64,10 @@
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
+    "eslint": "^4.15.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-react": "^7.5.1",
     "jest": "^21.2.1",
     "prettier": "1.9.2",
     "react-dom": "^16.1.1",
