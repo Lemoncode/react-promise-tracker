@@ -1,30 +1,26 @@
-import { Emitter } from './tinyEmmiter';
+import { Emitter } from "./tinyEmmiter";
 
 export const emitter = new Emitter();
-export const promiseCounterUpdateEventId = 'promise-counter-update';
+export const promiseCounterUpdateEventId = "promise-counter-update";
 
 let counter = 0;
 
 // TODO: Add unit test support
-export const trackPromise = (promise) => {
+export const trackPromise = promise => {
   counter++;
   const promiseInProgress = anyPromiseInProgress();
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
 
-  promise
-    .then(() =>
-        decrementPromiseCounter())
-    .catch(() => {
-      decrementPromiseCounter();
-    });
+  promise.then(() => decrementPromiseCounter()).catch(() => {
+    decrementPromiseCounter();
+  });
 
   return promise;
 };
 
-const anyPromiseInProgress = () => (counter > 0);
+const anyPromiseInProgress = () => counter > 0;
 
 const decrementPromiseCounter = () => {
-
   counter--;
   const promiseInProgress = anyPromiseInProgress();
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);

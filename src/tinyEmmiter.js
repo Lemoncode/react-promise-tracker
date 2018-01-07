@@ -1,4 +1,3 @@
-
 // Based on:
 // https://github.com/scottcorgan/tiny-emitter
 // class based
@@ -31,7 +30,7 @@ export class Emitter {
       delete this[event];
       return this;
     }
-    this[event] = e.filter((f) => f != fn);
+    this[event] = e.filter(f => f != fn);
     return this;
   }
   _e(e) {

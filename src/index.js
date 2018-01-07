@@ -1,2 +1,2 @@
-export { trackPromise } from './trackPromise';
-export { promiseTrackerHoc } from './trackerHoc';
+export { trackPromise } from "./trackPromise";
+export { promiseTrackerHoc } from "./trackerHoc";
