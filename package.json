@@ -39,14 +39,15 @@
   },
   "scripts": {
     "clean": "rimraf lib dist es",
-    "prepublish": "npm run clean && npm run build",
+    "prepublish": "npm run clean && npm run prettier && npm run build",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --ignore spec.js,test.js",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --ignore spec.js,test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p",
     "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "prettier": "prettier --write \"src/**/*.{js, ts}\""
   },
   "dependencies": {
     "react": "^16.0.0"
@@ -63,6 +64,7 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "^3.2.2",
     "jest": "^21.2.1",
+    "prettier": "1.9.2",
     "react-dom": "^16.1.1",
     "react-test-renderer": "^16.1.1",
     "regenerator-runtime": "^0.11.0",
