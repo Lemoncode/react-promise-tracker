@@ -1,6 +1,6 @@
 {
   "name": "react-promise-tracker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
   "keywords": [
     "react",
@@ -27,10 +27,11 @@
     "lib",
     "es",
     "src",
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "types": "index.d.ts",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
   "repository": {
