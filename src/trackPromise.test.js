@@ -39,7 +39,7 @@ describe('trackPromise', () => {
     });
   });
 
-  test.skip('Promise tracked, we got fail, check that emit is called 2 times', () => {
+  test('Promise tracked, we got fail, check that emit is called 2 times', () => {
     // Arrange
     expect.assertions(1);
 
@@ -47,7 +47,11 @@ describe('trackPromise', () => {
       return;
     });
 
-    const myPromise =  Promise.reject();
+    const myPromise = new Promise((resolve, reject) => {
+      reject();
+    })
+
+    //const myPromise =  Promise.reject();
 
     // Act
     trackPromise(myPromise);
