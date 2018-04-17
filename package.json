@@ -30,6 +30,7 @@
     "dist",
     "index.d.ts"
   ],
+  "browser": "lib/index.js",
   "main": "lib/index.js",
   "types": "index.d.ts",
   "module": "es/index.js",
