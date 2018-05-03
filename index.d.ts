@@ -18,4 +18,4 @@ export function trackPromise(promise: Promise <any> ): Promise <any>;
  * @param component Input component to be wrapped.
  * @returns It returns a new component that extends the input one.
  */
-export function promiseTrackerHoc(component: React.Component <any, any> ): React.Component <any, any>;
+export function promiseTrackerHoc(component: React.ReactNode ): React.ReactNode;
