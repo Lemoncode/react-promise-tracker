@@ -62,7 +62,6 @@ describe('trackPromise', () => {
     });
   });
 
-
   // Pending promise failed
   test('Two Promises tracked, we got resolve on both, check that emit is called 4 times', () => {
     // Arrange
@@ -85,5 +84,24 @@ describe('trackPromise', () => {
       expect(emitter.emit).toHaveBeenCalledTimes(4);
     });
   });
+
+  test('Promise tracked with area', () => {
+    // // Arrange
+    expect.assertions(1);
+
+    emitter.emit = jest.fn((a, b, c) => {
+      return;
+    })
+    const myPromiseA = Promise.resolve();
+
+    // Act
+    trackPromise(myPromiseA, 'global');
+
+    // Assert
+    return myPromiseA.then(() => {
+      expect(emitter.emit).toHaveBeenCalledTimes(2);
+    });
+  });
+
 });
 

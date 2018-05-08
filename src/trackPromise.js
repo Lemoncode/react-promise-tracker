@@ -6,10 +6,10 @@ export const promiseCounterUpdateEventId = 'promise-counter-update';
 let counter = 0;
 
 // TODO: Add unit test support
-export const trackPromise = (promise) => {
+export const trackPromise = (promise, areaPromise = 'global') => {
   counter++;
   const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress,getArea(areaPromise));
 
   promise
   .then(() => decrementPromiseCounter(),
@@ -19,10 +19,11 @@ export const trackPromise = (promise) => {
   return promise;
 };
 
+const getArea = (areaPromise) => areaPromise === '' ? areaPromise='global' : areaPromise;
+
 const anyPromiseInProgress = () => (counter > 0);
 
 const decrementPromiseCounter = () => {
-
   counter--;
   const promiseInProgress = anyPromiseInProgress();
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
