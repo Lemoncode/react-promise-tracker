@@ -95,7 +95,7 @@ describe('trackPromise', () => {
     const myPromiseA = Promise.resolve();
 
     // Act
-    trackPromise(myPromiseA, 'global');
+    trackPromise(myPromiseA, 'test');
 
     // Assert
     return myPromiseA.then(() => {

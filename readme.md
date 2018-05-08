@@ -73,7 +73,7 @@ Whenever you want a promise to be tracked with area, just wrap it with the desir
 + ,'sampleArea');
 ```
 
-Wrap the component with the areas:
+Wrap the component with the area:
 
 ```diff
 import React, { Component } from 'react';
@@ -98,7 +98,7 @@ InnerLoadingSpinerComponent.propTypes = {
   trackedPromiseInProgress : PropTypes.bool.isRequired,
 };
 
-+ export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent,['sampleArea']);
++ export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent,'sampleArea');
 ```
 
 

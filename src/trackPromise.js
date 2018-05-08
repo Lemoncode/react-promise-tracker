@@ -3,30 +3,38 @@ import { Emitter } from './tinyEmmiter';
 export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
 
-let counter = 0;
+let counter = {global: 0}
 
 // TODO: Add unit test support
 export const trackPromise = (promise, areaPromise = 'global') => {
-  counter++;
-  const promiseInProgress = anyPromiseInProgress();
+  const area = getArea(areaPromise);
+
+  // Todo encapsulate in a method called incrementCounter(areaName)
+  incrementCounter(area);
+
+  const promiseInProgress = anyPromiseInProgress(area);
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress,getArea(areaPromise));
 
   promise
-  .then(() => decrementPromiseCounter(),
-        () =>decrementPromiseCounter()
+  .then(() => decrementPromiseCounter(area),
+        () =>decrementPromiseCounter(area)
         );
 
   return promise;
 };
 
-const getArea = (areaPromise) => areaPromise === '' ? areaPromise='global' : areaPromise;
+const getArea = (areaPromise) => Boolean(areaPromise) ? areaPromise : areaPromise='global';
 
-const anyPromiseInProgress = () => (counter > 0);
+const incrementCounter = (area)=> ( counter[area] ? counter[area]++ : counter[area] = 1)
 
-const decrementPromiseCounter = () => {
-  counter--;
-  const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+const decrementCounterArea = (area) => (counter[area]--);
+
+const anyPromiseInProgress = (area) => (counter[area] > 0);
+
+const decrementPromiseCounter = (area) => {
+  decrementCounterArea(area);
+  const promiseInProgress = anyPromiseInProgress(area);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 };
 
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error

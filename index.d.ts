@@ -20,7 +20,8 @@ export function trackPromise(promise: Promise <any> ): Promise <any>;
  */
 
 export interface TrackerProps {
-  trackedPromiseInProgress
+  trackedPromiseInProgress : boolean;
+  area? : string;
 }
 
 export function promiseTrackerHoc<P>(component: React.ComponentType<P & TrackerProps>): React.ComponentType<P>;

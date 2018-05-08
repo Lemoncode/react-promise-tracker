@@ -30,14 +30,14 @@ describe('trackerHoc', () => {
   test('Area property are passed down to the child component', () => {
     const DummyComponent = (props) => <span>test</span>;
 
-    const TrackedComponent = promiseTrackerHoc(DummyComponent, ['test']);
+    const TrackedComponent = promiseTrackerHoc(DummyComponent, 'test');
     const wrapper = mount(<TrackedComponent />);
 
     const dummyChild = wrapper.find('DummyComponent');
 
     expect(dummyChild).not.toBe(null);
-    expect(dummyChild.prop('areasHoc')).toContain('test');
-    expect(dummyChild.prop('areasHoc')).not.toContain('global');
+    expect(dummyChild.prop('areaSubscribed')).toContain('test');
+    expect(dummyChild.prop('areaSubscribed')).not.toContain('global');
   });
 
 });
