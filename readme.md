@@ -85,10 +85,8 @@ const InnerLoadingSpinerComponent = (props) => {
     <div>
     {
       (props.trackedPromiseInProgress === true) ?
-        <div>
             <h3>Hey I'm a spinner loader wannabe !!!</h3>
             {props.children}
-        </div>
       :
         {props.children}
     }
