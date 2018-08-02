@@ -4,11 +4,11 @@ Simple promise tracker React Hoc (sample application: https://github.com/Lemonco
 
 # Why do I need this?
 
-Some time we need to track blocing promises (e.g. fetch http calls), and display a loading spinner, and some others not.
+Sometimes we need to track blocking promises (e.g. fetch http calls), to choose between displaying a loading spinner or not.
 
 This library implements:
-  - A simple function that will make a promise to be tracked.
-  - An Hoc component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greated than zero, hidden when not).
+  - A simple function that will allow a promise to be tracked.
+  - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
   
 # Installation
 
@@ -18,7 +18,7 @@ npm install react-promise-tracker --save
 
 # Usage
 
-Whenever you want a promise to be tracked, just wrap it:
+Whenever you want a promise to be tracked, just wrap it like in the code below:
 
 ```diff
 + import { trackPromise} from 'react-promise-tracker';
