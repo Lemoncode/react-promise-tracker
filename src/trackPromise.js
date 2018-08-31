@@ -7,11 +7,12 @@ let counter = {
   default: 0,
 };
 
-export const trackPromise = (promise, area = 'default') => {
+export const trackPromise = (promise, area) => {
+  area = area || 'default';
   incrementCounter(area);
 
-  const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+  const promiseInProgress = anyPromiseInProgress(area);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 
   promise
     .then(() => decrementPromiseCounter(area),
@@ -34,15 +35,11 @@ const anyPromiseInProgress = (area) => (counter[area] > 0);
 const decrementPromiseCounter = (area) => {
   decrementCounter(area);
   const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 };
 
 const decrementCounter = (area) => {
-  if (Boolean(counter[area])) {
-    counter[area]--;
-  } else {
-    counter[area] = 0;
-  }
+  counter[area]--;
 };
 
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error

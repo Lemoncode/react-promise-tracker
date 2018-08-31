@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { promiseTrackerHoc } from './trackerHoc'
 
 describe('trackerHoc', () => {
-
-  test('Property trackedPromiseInProgress is passed down and value false', () => {
+  it('Property trackedPromiseInProgress is passed down and value false', () => {
     const DummyComponent = (props) => <span>test</span>;
 
     const TrackedComponent = promiseTrackerHoc(DummyComponent);
@@ -15,7 +14,7 @@ describe('trackerHoc', () => {
     expect(dummyChild.prop('trackedPromiseInProgress')).toBe(false);
   });
 
-  test('Additional properties are passed down to the child component', () => {
+  it('Additional properties are passed down to the child component', () => {
     const DummyComponent = (props) => <span>test</span>;
 
     const TrackedComponent = promiseTrackerHoc(DummyComponent);
