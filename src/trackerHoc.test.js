@@ -7,7 +7,7 @@ describe('trackerHoc', () => {
     const DummyComponent = (props) => <span>test</span>;
 
     const TrackedComponent = promiseTrackerHoc(DummyComponent);
-    const wrapper = mount(<TrackedComponent/>);
+    const wrapper = mount(<TrackedComponent />);
 
     const dummyChild = wrapper.find('DummyComponent');
 
@@ -19,7 +19,7 @@ describe('trackerHoc', () => {
     const DummyComponent = (props) => <span>test</span>;
 
     const TrackedComponent = promiseTrackerHoc(DummyComponent);
-    const wrapper = mount(<TrackedComponent customprop='test'/>);
+    const wrapper = mount(<TrackedComponent customprop='test' />);
 
     const dummyChild = wrapper.find('DummyComponent');
 

@@ -1,15 +1,15 @@
-import {trackPromise, emitter} from './trackPromise';
-import {Emitter} from './tinyEmmiter';
+import { trackPromise, emitter } from './trackPromise';
+import { Emitter } from './tinyEmmiter';
 
 
 describe('trackPromise', () => {
   test('On Initial case, promise fired, promise emitter.emit is called', () => {
     // Arrange
-    emitter.emit = jest.fn((a,b) => {
+    emitter.emit = jest.fn((a, b) => {
       return;
     });
 
-    const myPromise =  Promise.resolve().then(() => {
+    const myPromise = Promise.resolve().then(() => {
       return "ok";
     });
 
@@ -24,11 +24,11 @@ describe('trackPromise', () => {
 
   test('Promise tracked, we got resolve, check that emit is called 2 times', () => {
     // Arrange
-    emitter.emit = jest.fn((a,b) => {
+    emitter.emit = jest.fn((a, b) => {
       return;
     });
 
-    const myPromise =  Promise.resolve();
+    const myPromise = Promise.resolve();
 
     // Act
     trackPromise(myPromise);
@@ -43,7 +43,7 @@ describe('trackPromise', () => {
     // Arrange
     expect.assertions(1);
 
-    emitter.emit = jest.fn((a,b) => {
+    emitter.emit = jest.fn((a, b) => {
       return;
     });
 
@@ -57,8 +57,8 @@ describe('trackPromise', () => {
     trackPromise(myPromise);
 
     // Assert
-    return myPromise.catch(()=> {
-        expect(emitter.emit).toHaveBeenCalledTimes(2)
+    return myPromise.catch(() => {
+      expect(emitter.emit).toHaveBeenCalledTimes(2)
     });
   });
 
@@ -68,12 +68,12 @@ describe('trackPromise', () => {
     // Arrange
     expect.assertions(1);
 
-    emitter.emit = jest.fn((a,b) => {
+    emitter.emit = jest.fn((a, b) => {
       return;
     });
 
-    const myPromiseA =  Promise.resolve();
-    const myPromiseB =  Promise.resolve();
+    const myPromiseA = Promise.resolve();
+    const myPromiseB = Promise.resolve();
     const promises = [myPromiseA, myPromiseB];
 
     // Act

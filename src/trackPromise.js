@@ -3,29 +3,46 @@ import { Emitter } from './tinyEmmiter';
 export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
 
-let counter = 0;
+let counter = {
+  default: 0,
+};
 
-// TODO: Add unit test support
-export const trackPromise = (promise) => {
-  counter++;
+export const trackPromise = (promise, area = 'default') => {
+  incrementCounter(area);
+
   const promiseInProgress = anyPromiseInProgress();
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
 
   promise
-  .then(() => decrementPromiseCounter(),
-        () =>decrementPromiseCounter()
-        );
+    .then(() => decrementPromiseCounter(area),
+      () => decrementPromiseCounter(area)
+    );
 
   return promise;
 };
 
-const anyPromiseInProgress = () => (counter > 0);
+const incrementCounter = (area) => {
+  if (Boolean(counter[area])) {
+    counter[area]++;
+  } else {
+    counter[area] = 1;
+  }
+};
 
-const decrementPromiseCounter = () => {
+const anyPromiseInProgress = (area) => (counter[area] > 0);
 
-  counter--;
+const decrementPromiseCounter = (area) => {
+  decrementCounter(area);
   const promiseInProgress = anyPromiseInProgress();
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+};
+
+const decrementCounter = (area) => {
+  if (Boolean(counter[area])) {
+    counter[area]--;
+  } else {
+    counter[area] = 0;
+  }
 };
 
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error

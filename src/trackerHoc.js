@@ -6,12 +6,12 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
     constructor(props) {
       super(props);
 
-      this.state = {trackedPromiseInProgress: false};
+      this.state = { trackedPromiseInProgress: false };
     }
 
     componentWillMount() {
       emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress) => {
-        this.setState({trackedPromiseInProgress: anyPromiseInProgress});
+        this.setState({ trackedPromiseInProgress: anyPromiseInProgress });
       });
     }
 

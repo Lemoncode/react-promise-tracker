@@ -9,7 +9,7 @@ Sometimes we need to track blocking promises (e.g. fetch http calls), to choose 
 This library implements:
   - A simple function that will allow a promise to be tracked.
   - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
-  
+
 # Installation
 
 ```cmd
@@ -42,14 +42,14 @@ import PropTypes from 'prop-types';
 
 const InnerLoadingSpinerComponent = (props) => {
   return (
-    <div>      
+    <div>
     {
       (props.trackedPromiseInProgress === true) ?
         <h3>Hey I'm a spinner loader wannabe !!!</h3>
       :
-        null       
+        null
     }
-  </div>  
+  </div>
   )
 };
 
@@ -63,6 +63,6 @@ InnerLoadingSpinerComponent.propTypes = {
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
-We specialize in Front End technologies and .NET. [Click here](http://lemoncode.net/services/en/#en-home) to get more info about us. 
+We specialize in Front End technologies and .NET. [Click here](http://lemoncode.net/services/en/#en-home) to get more info about us.
 
 For the LATAM/Spanish audience we are running an Online Front End Master degree, more info: http://lemoncode.net/master-frontend
