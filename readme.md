@@ -67,7 +67,7 @@ import React from 'react';
 export const AppComponent = (props) => (
   <div>
     <h1>Hello App!</h1>
-    <LoadingSpinnerComponent />
++   <LoadingSpinnerComponent />
   </div>
 );
 ```
@@ -76,13 +76,13 @@ export const AppComponent = (props) => (
 
 ```diff
 import React from 'react';
-+ import { LoadingSpinnerComponent} from './loadingSpinner';
+import { LoadingSpinnerComponent} from './loadingSpinner';
 
 export const AppComponent = (props) => (
   <div>
     <h1>Hello App!</h1>
     <LoadingSpinnerComponent /> // default area
-    <LoadingSpinnerComponent area="secondArea" /> // second area
++   <LoadingSpinnerComponent area="otherArea" /> // other area
   </div>
 );
 ```
