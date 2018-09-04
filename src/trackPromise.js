@@ -1,4 +1,5 @@
 import { Emitter } from './tinyEmmiter';
+import { defaultArea } from './constants';
 
 export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
@@ -8,7 +9,7 @@ let counter = {
 };
 
 export const trackPromise = (promise, area) => {
-  area = area || 'default';
+  area = area || defaultArea;
   incrementCounter(area);
 
   const promiseInProgress = anyPromiseInProgress(area);

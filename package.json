@@ -79,6 +79,7 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "restoreMocks": true,
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/",

@@ -1,28 +1,55 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { promiseTrackerHoc } from './trackerHoc'
+import { emitter, promiseCounterUpdateEventId } from './trackPromise';
 
 describe('trackerHoc', () => {
-  it('Property trackedPromiseInProgress is passed down and value false', () => {
-    const DummyComponent = (props) => <span>test</span>;
+  it('should render component with trackedPromiseInProgress equals false and area equals "default" when render promiseTrackerHoc', () => {
+    // Arrange
+    const TestSpinnerComponent = (props) => <span>test</span>;
 
-    const TrackedComponent = promiseTrackerHoc(DummyComponent);
-    const wrapper = mount(<TrackedComponent />);
+    // Act
+    const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
-    const dummyChild = wrapper.find('DummyComponent');
+    // Assert
+    const component = mount(
+      <TrackedComponent
+      />,
+    );
 
-    expect(dummyChild).not.toBe(null);
-    expect(dummyChild.prop('trackedPromiseInProgress')).toBe(false);
+    expect(component).toMatchSnapshot();
   });
 
-  it('Additional properties are passed down to the child component', () => {
-    const DummyComponent = (props) => <span>test</span>;
+  it('should render component with trackedPromiseInProgress equals false, area equals "default" and customProp equals "test" when feeding customProp equals "test"', () => {
+    // Arrange
+    const TestSpinnerComponent = (props) => <span>test</span>;
 
-    const TrackedComponent = promiseTrackerHoc(DummyComponent);
-    const wrapper = mount(<TrackedComponent customprop='test' />);
+    // Act
+    const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
-    const dummyChild = wrapper.find('DummyComponent');
+    // Assert
+    const component = mount(
+      <TrackedComponent
+        customProp="test"
+      />,
+    );
 
-    expect(dummyChild).not.toBe(null);
-    expect(dummyChild.prop('customprop')).toBe('test');
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea"', () => {
+    // Arrange
+    const TestSpinnerComponent = (props) => <span>test</span>;
+
+    // Act
+    const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+
+    // Assert
+    const component = mount(
+      <TrackedComponent
+        area="testArea"
+      />,
+    );
+
+    expect(component).toMatchSnapshot();
   });
 });

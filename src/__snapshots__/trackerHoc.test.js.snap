@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "default" when render promiseTrackerHoc 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    area="default"
+    trackedPromiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" 1`] = `
+<promiseTrackerComponent
+  area="testArea"
+>
+  <TestSpinnerComponent
+    area="testArea"
+    trackedPromiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc should render component with trackedPromiseInProgress equals false, area equals "default" and customProp equals "test" when feeding customProp equals "test" 1`] = `
+<promiseTrackerComponent
+  customProp="test"
+>
+  <TestSpinnerComponent
+    area="default"
+    customProp="test"
+    trackedPromiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
