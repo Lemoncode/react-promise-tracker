@@ -19,12 +19,13 @@ export function trackPromise(promise: Promise<any>): Promise<any>;
  * @returns It returns a new component that extends the input one.
  */
 
-export interface TrackerProps {
+export interface ComponentToWrapProps {
+  area: string;
   trackedPromiseInProgress: boolean;
 }
 
 export interface TrackerHocProps {
-  area: string;
+  area?: string;
 }
 
-export function promiseTrackerHoc<P>(component: React.ComponentType<P & TrackerProps>): React.ComponentType<P & TrackerHocProps>;
+export function promiseTrackerHoc<P>(component: React.ComponentType<P & ComponentToWrapProps>): React.ComponentType<P & TrackerHocProps>;
