@@ -33,7 +33,7 @@ Then you only need to create a component that will defined a property called _tr
 
 And wrap it around the _promiseTrackerHoc_
 
-Sample:
+## Basic sample:
 
 ```diff
 import React, { Component } from 'react';
@@ -58,6 +58,33 @@ InnerLoadingSpinerComponent.propTypes = {
 };
 
 + export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
+```
+
+```diff
+import React from 'react';
++ import { LoadingSpinnerComponent} from './loadingSpinner';
+
+export const AppComponent = (props) => (
+  <div>
+    <h1>Hello App!</h1>
+    <LoadingSpinnerComponent />
+  </div>
+);
+```
+
+## Sample with areas:
+
+```diff
+import React from 'react';
++ import { LoadingSpinnerComponent} from './loadingSpinner';
+
+export const AppComponent = (props) => (
+  <div>
+    <h1>Hello App!</h1>
+    <LoadingSpinnerComponent /> // default area
+    <LoadingSpinnerComponent area="secondArea" /> // second area
+  </div>
+);
 ```
 
 # About Lemoncode
