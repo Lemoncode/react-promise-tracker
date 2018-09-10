@@ -5,7 +5,7 @@ export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
 
 let counter = {
-  default: 0,
+  [defaultArea]: 0,
 };
 
 export const trackPromise = (promise, area) => {

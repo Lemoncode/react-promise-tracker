@@ -1,1 +1,1 @@
-export const defaultArea = 'default';
+export const defaultArea = 'default-area';

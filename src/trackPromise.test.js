@@ -1,4 +1,5 @@
 import { trackPromise, emitter } from './trackPromise';
+import { defaultArea } from './constants';
 
 describe('trackPromise', () => {
   describe('using default area', () => {
@@ -14,7 +15,7 @@ describe('trackPromise', () => {
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
 
-      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, 'default');
+      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, defaultArea);
     });
 
     it('Promise tracked, we got resolve, check that emit is called 2 times', (done) => {
@@ -30,9 +31,9 @@ describe('trackPromise', () => {
       myPromise.then(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(2);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, defaultArea);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', false, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', false, defaultArea);
         done();
       });
     });
@@ -50,9 +51,9 @@ describe('trackPromise', () => {
       myPromise.catch(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(2);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, defaultArea);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', false, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', false, defaultArea);
         done();
       });
     });
@@ -75,13 +76,13 @@ describe('trackPromise', () => {
       Promise.all(promises).then(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(4);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, 'promise-counter-update', true, defaultArea);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', true, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, 'promise-counter-update', true, defaultArea);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(3, 'promise-counter-update', false, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(3, 'promise-counter-update', false, defaultArea);
 
-        expect(emitter.emit).toHaveBeenNthCalledWith(4, 'promise-counter-update', false, 'default');
+        expect(emitter.emit).toHaveBeenNthCalledWith(4, 'promise-counter-update', false, defaultArea);
         done();
       });
     });
@@ -100,7 +101,7 @@ describe('trackPromise', () => {
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
-      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, 'default');
+      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, defaultArea);
     });
 
     it('should call emitter.emit one time when feeding promise and area equals null', () => {
@@ -115,7 +116,7 @@ describe('trackPromise', () => {
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
-      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, 'default');
+      expect(emitter.emit).toHaveBeenCalledWith('promise-counter-update', true, defaultArea);
     });
 
     it('should call emitter.emit one time when feeding promise and area equals testArea', () => {

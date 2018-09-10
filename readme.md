@@ -88,7 +88,7 @@ import React from 'react';
 export const ProductListComponent = (props) => (
   <div>
     ...
-+   <LoadingSpinnerComponent /> // default area
++   <LoadingSpinnerComponent /> // default-area
   </div>
 );
 ```

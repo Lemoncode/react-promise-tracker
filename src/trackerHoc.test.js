@@ -3,7 +3,7 @@ import { promiseTrackerHoc } from './trackerHoc'
 import { emitter, promiseCounterUpdateEventId } from './trackPromise';
 
 describe('trackerHoc', () => {
-  it('should render component with trackedPromiseInProgress equals false and area equals "default" when render promiseTrackerHoc', () => {
+  it('should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc', () => {
     // Arrange
     const TestSpinnerComponent = (props) => <span>test</span>;
 
@@ -19,7 +19,7 @@ describe('trackerHoc', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('should render component with trackedPromiseInProgress equals false, area equals "default" and customProp equals "test" when feeding customProp equals "test"', () => {
+  it('should render component with trackedPromiseInProgress equals false, area equals "default-area" and customProp equals "test" when feeding customProp equals "test"', () => {
     // Arrange
     const TestSpinnerComponent = (props) => <span>test</span>;
 
