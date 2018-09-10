@@ -74,17 +74,46 @@ export const AppComponent = (props) => (
 
 ## Sample with areas:
 
+There are some times we need define several spinners in our app. For example, imagine a product list app with a shopping cart section.
+We would like to show spinner while is loading the product list and other one in shopping cart pop-up section.
+
+![Shopping cart sample](./readme_resources/00-shopping-cart-sample.png)
+
+We could add the `default-area` to show product list spinner:
+
 ```diff
 import React from 'react';
-import { LoadingSpinnerComponent} from './loadingSpinner';
++ import { LoadingSpinnerComponent} from './loadingSpinner';
 
-export const AppComponent = (props) => (
+export const ProductListComponent = (props) => (
   <div>
-    <h1>Hello App!</h1>
-    <LoadingSpinnerComponent /> // default area
-+   <LoadingSpinnerComponent area="otherArea" /> // other area
+    ...
++   <LoadingSpinnerComponent /> // default area
   </div>
 );
+```
+
+And we add the `shopping-cart-area` to show shopping cart spinner:
+
+```diff
+import React from 'react';
++ import { LoadingSpinnerComponent} from './loadingSpinner';
+
+export const ShoppingCartModal = (props) => (
+  <div>
++   <LoadingSpinnerComponent area="shopping-cart-area" />
+  </div>
+);
+```
+
+With this approach, we don't need to define different spinners components, it's only one but it will render when we want to track the desired area:
+
+```diff
++ import { trackPromise} from 'react-promise-tracker';
+...
++ trackPromise(
+    fetchSelectedProducts();
++ ,'shopping-cart-area');
 ```
 
 # About Lemoncode
