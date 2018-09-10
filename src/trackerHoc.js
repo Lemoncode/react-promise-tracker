@@ -1,17 +1,23 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { emitter, promiseCounterUpdateEventId } from './trackPromise';
+import { defaultArea } from './constants';
 
 export const promiseTrackerHoc = (ComponentToWrap) => {
   return class promiseTrackerComponent extends Component {
     constructor(props) {
       super(props);
 
-      this.state = {trackedPromiseInProgress: false};
+      this.state = {
+        trackedPromiseInProgress: false,
+        area: props.area || defaultArea,
+      };
     }
 
-    componentWillMount() {
-      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress) => {
-        this.setState({trackedPromiseInProgress: anyPromiseInProgress});
+    componentDidMount() {
+      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
+        if (this.state.area === area) {
+          this.setState({ trackedPromiseInProgress: anyPromiseInProgress });
+        }
       });
     }
 
@@ -21,7 +27,11 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
 
     render() {
       return (
-        <ComponentToWrap {...this.props} trackedPromiseInProgress={this.state.trackedPromiseInProgress} />
+        <ComponentToWrap
+          {...this.props}
+          area={this.state.area}
+          trackedPromiseInProgress={this.state.trackedPromiseInProgress}
+        />
       )
     }
   }

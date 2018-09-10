@@ -1,31 +1,46 @@
 import { Emitter } from './tinyEmmiter';
+import { defaultArea } from './constants';
 
 export const emitter = new Emitter();
 export const promiseCounterUpdateEventId = 'promise-counter-update';
 
-let counter = 0;
+let counter = {
+  [defaultArea]: 0,
+};
 
-// TODO: Add unit test support
-export const trackPromise = (promise) => {
-  counter++;
-  const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+export const trackPromise = (promise, area) => {
+  area = area || defaultArea;
+  incrementCounter(area);
+
+  const promiseInProgress = anyPromiseInProgress(area);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 
   promise
-  .then(() => decrementPromiseCounter(),
-        () =>decrementPromiseCounter()
-        );
+    .then(() => decrementPromiseCounter(area),
+      () => decrementPromiseCounter(area)
+    );
 
   return promise;
 };
 
-const anyPromiseInProgress = () => (counter > 0);
+const incrementCounter = (area) => {
+  if (Boolean(counter[area])) {
+    counter[area]++;
+  } else {
+    counter[area] = 1;
+  }
+};
 
-const decrementPromiseCounter = () => {
+const anyPromiseInProgress = (area) => (counter[area] > 0);
 
-  counter--;
+const decrementPromiseCounter = (area) => {
+  decrementCounter(area);
   const promiseInProgress = anyPromiseInProgress();
-  emitter.emit(promiseCounterUpdateEventId, promiseInProgress);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
+};
+
+const decrementCounter = (area) => {
+  counter[area]--;
 };
 
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error

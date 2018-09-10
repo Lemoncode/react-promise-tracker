@@ -9,7 +9,7 @@ import * as React from "react";
  * @param promise Input promise to be tracked.
  * @returns It returns the same promise as input.
  */
-export function trackPromise(promise: Promise <any> ): Promise <any>;
+export function trackPromise(promise: Promise<any>): Promise<any>;
 
 
 /**
@@ -19,8 +19,13 @@ export function trackPromise(promise: Promise <any> ): Promise <any>;
  * @returns It returns a new component that extends the input one.
  */
 
-export interface TrackerProps {
-  trackedPromiseInProgress
+export interface ComponentToWrapProps {
+  area: string;
+  trackedPromiseInProgress: boolean;
 }
 
-export function promiseTrackerHoc<P>(component: React.ComponentType<P & TrackerProps>): React.ComponentType<P>;
+export interface TrackerHocProps {
+  area?: string;
+}
+
+export function promiseTrackerHoc<P>(component: React.ComponentType<P & ComponentToWrapProps>): React.ComponentType<P & TrackerHocProps>;
