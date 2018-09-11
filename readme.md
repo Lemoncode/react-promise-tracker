@@ -1,6 +1,6 @@
 # react-promise-tracker
 
-Simple promise tracker React Hoc (sample application: https://github.com/Lemoncode/react-promise-tracker-sample).
+Simple promise tracker React Hoc.[ Live Demo]:(https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
 
 # Why do I need this?
 
