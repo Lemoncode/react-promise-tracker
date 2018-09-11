@@ -10,12 +10,6 @@ This library implements:
   - A simple function that will allow a promise to be tracked.
   - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
 
-# Demos
-
-- [Default area sample](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
-
-- [Two areas sample](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
-
 # Installation
 
 ```cmd
@@ -66,6 +60,10 @@ InnerLoadingSpinerComponent.propTypes = {
 + export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
 ```
 
+> To add a cool spinner component you can make use of e.g. ![react-spinner](https://www.npmjs.com/package/react-spinners)
+
+- Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
+
 ```diff
 import React from 'react';
 + import { LoadingSpinnerComponent} from './loadingSpinner';
@@ -80,8 +78,8 @@ export const AppComponent = (props) => (
 
 ## Sample with areas:
 
-There are some times we need define several spinners in our app. For example, imagine a product list app with a shopping cart section.
-We would like to show spinner while is loading the product list and other one in shopping cart pop-up section.
+Using react-promise-tracker as is will just display a single spinner in your page, there are cases where you want to display a given spinner only blocking certain area of the screen (e.g.: a product list app with a shopping cart section.
+We would like to block the ui (show spinner) while is loading the product, but not the rest of the user interface, and the same thing with the shopping cart pop-up section.
 
 ![Shopping cart sample](./readme_resources/00-shopping-cart-sample.png)
 
@@ -121,6 +119,13 @@ With this approach, we don't need to define different spinners components, it's 
     fetchSelectedProducts();
 + ,'shopping-cart-area');
 ```
+
+# Demos
+
+- [Default area sample](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+
+- [Two areas sample](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
+
 
 # About Lemoncode
 
