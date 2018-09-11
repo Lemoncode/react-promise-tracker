@@ -60,7 +60,11 @@ InnerLoadingSpinerComponent.propTypes = {
 + export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
 ```
 
-> To add a cool spinner component you can make use of e.g. [react-spinner](https://www.npmjs.com/package/react-spinners)
+- To add a cool spinner component you can make use of _react-spinners_:
+
+  - [Demo page] http://www.davidhu.io/react-spinners/
+  - [Github page](https://github.com/davidhu2000/react-spinners)
+
 
 - Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
 
