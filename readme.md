@@ -122,6 +122,8 @@ With this approach, we don't need to define different spinners components, it's 
 
 # Demos
 
+If you want to see it in action:
+
 - [Default area sample](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
 
 - [Two areas sample](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
