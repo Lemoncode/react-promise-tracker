@@ -10,6 +10,12 @@ This library implements:
   - A simple function that will allow a promise to be tracked.
   - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
 
+# Demos
+
+- [Default area sample](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+
+- [Two areas sample](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
+
 # Installation
 
 ```cmd
