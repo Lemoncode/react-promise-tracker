@@ -1,6 +1,6 @@
 # react-promise-tracker
 
-Simple promise tracker React Hoc.[ Live Demo]:(https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+Simple promise tracker React Hoc.[Live Demo]:(https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
 
 # Why do I need this?
 
@@ -60,7 +60,7 @@ InnerLoadingSpinerComponent.propTypes = {
 + export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
 ```
 
-> To add a cool spinner component you can make use of e.g. ![react-spinner](https://www.npmjs.com/package/react-spinners)
+> To add a cool spinner component you can make use of e.g. [react-spinner](https://www.npmjs.com/package/react-spinners)
 
 - Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
 
