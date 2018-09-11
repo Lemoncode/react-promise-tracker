@@ -62,7 +62,7 @@ InnerLoadingSpinerComponent.propTypes = {
 
 - To add a cool spinner component you can make use of _react-spinners_:
 
-  - [Demo page] http://www.davidhu.io/react-spinners/
+  - [Demo page](http://www.davidhu.io/react-spinners/)
   - [Github page](https://github.com/davidhu2000/react-spinners)
 
 
