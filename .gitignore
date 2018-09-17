@@ -1,12 +1,6 @@
-node_modules
-.DS_Store
-dist/
-typings/
-*.orig
-.idea/
-*/src/**/*.js.map
+.vscode/
+node_modules/
 yarn.lock
-*.log
+.editorconfig
 lib/
-es/
-package-lock.json
+samples/

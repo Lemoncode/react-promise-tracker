@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>react-promise-tracker</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/jquery.sidr.bare.css">
+    <link rel="stylesheet" href="css/jquery.sidr.light.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="container-fluid">
+      <div class="row">
+        <header id="introduction">
+          <div class="hidden-md hidden-lg">
+            <nav class="navbar navbar-default navbar-mobile">
+              <div class="navbar-header col-xs-12">
+                <a id="navigation" href="#navigation" aria-controls="bs-navbar" aria-expanded="true" class="navbar-toggle">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </a>
+                <strong class="navbar-brand">react-promise-tracker</strong>
+              </div>
+            </nav>
+          </div>
+          <div class="col-xs-12 jumbotron text-center">
+            <h1>react-promise-tracker</h1>
+            <p>A simple promise tracker React HOC</p>
+            <p>
+              <a href="//github.com/lemoncode/lcformvalidation">
+                <img class="img-link" src="./ReadmeResources/github.png"
+                  alt="GitHub">
+                <strong>v1.1.0</strong>
+              </a>
+            </p>
+          </div>
+        </header>
+        <main class="col-md-9 col-sm-12">
+          <p>
+            Sometimes we need to track blocking promises (e.g. fetch http calls), to choose between displaying a loading spinner or not.
+            react-promise-tracker is a tiny JavaScript library that provides you with a React HOC component to keep track of ongoing promises.
+          </p>
+          <p>
+            This library implements:
+          </p>
+          <ul class="features">
+            <li>A simple function that will allow a promise to be tracked.</li>
+            <li>An HOC component that will allow us wrap a loading spinner. It will be displayed when the number of tracked request are greater than zero, and hidden when not.</li>
+          </ul>
+          <p>
+            react-promise-tracker is licensed under
+            <a href="//raw.githubusercontent.com/Lemoncode/lcFormValidation/master/LICENSE" target="_blank">MIT software license</a> being
+            an open-source component of <a href="//lemoncode.net" target="_blank">Lemoncode</a>.
+          </p>
+          
+          <section id="installation" class="offset">
+            <h2 class="heading">
+              <span>Installation</span>
+              <a href="#installation">
+                <img class="img-link" src="img/link.svg" alt="(link this)">
+              </a>
+            </h2>
+            <article>
+              <h3>Using npm</h3>
+              <pre class="snippet"><code class="language-bash">npm install react-promise-tracker --save</code></pre>
+            </article>
+            <article>
+              <h3>Direct download</h3>
+              <div class="row">
+                <div class="col-sm-12 download">
+                  <div class="col-sm-4">
+                    <a href="//unpkg.com/react-promise-tracker@1.1.0/dist/react-promise-tracker-1.1.0.min.js" target="_blank" role="button" class="btn btn-primary btn-block">v1.1.0 production version</a>
+                  </div>
+                  <div class="col-sm-4">
+                    <span class="download-description">4.9KB minified, packed</span>
+                  </div>
+                </div>
+                <div class="col-sm-12 download">
+                  <div class="col-sm-4">
+                    <a href="//unpkg.com/react-promise-tracker@1.1.0/dist/react-promise-tracker-1.1.0.js" target="_blank" role="button" class="btn btn-default btn-block">v1.1.0 development version</a>
+                  </div>
+                  <div class="col-sm-4">
+                    <span class="download-description">Full source</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+          
+          <section id="usage" class="offset">
+            <h2 class="heading">
+              <span>Usage</span>
+              <a href="#usage">
+                <img class="img-link" src="img/link.svg" alt="(link this)">
+              </a>
+            </h2>
+            <section id="track-a-promise" class="offset">
+              <h3 class="heading">
+                <span>Track a promise</span>
+                <a href="#track-a-promise">
+                  <img class="img-link" src="img/link.svg" alt="(link this)">
+                </a>
+              </h3>
+              <article>
+                <p>
+                  Whenever you want a promise to be tracked, just wrap it like in the code below:
+                </p>
+                <pre class="snippet" data-line="1,4-6"><code class="language-javascript">import { trackPromise} from 'react-promise-tracker';
+//...
+
+trackPromise(
+  fetchUsers(); // Your function that returns a promise
+);</code></pre>
+                <p>
+                  Then you only need to create a component that will define a property called <i>trackedPromiseInProgress</i>
+                  and wrap it around the <i>promiseTrackerHoc</i>.
+                </p>
+              </article>
+            </section>
+            <section id="basic-example" class="offset">
+              <h3 class="heading">
+                <span>Basic example</span>
+                <a href="#basic-example">
+                  <img class="img-link" src="img/link.svg" alt="(link this)">
+                </a>
+              </h3>
+              <article>
+                <p>
+                  Whenever you want a promise to be tracked, just wrap it like in the code below:
+                </p>
+                <pre class="snippet" data-line="3,17"><code class="language-jsx">import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { promiseTrackerHoc } from 'react-promise-tracker';
+
+const InnerLoadingSpinerComponent = (props) =&gt {
+  return (
+    &ltdiv&gt
+      {props.trackedPromiseInProgress ? &lth3&gtHey I'm a spinner loader wannabe !!!&lt/h3&gt : null}
+    &lt/div&gt
+  )
+};
+  
+InnerLoadingSpinerComponent.propTypes = {
+  trackedPromiseInProgress : PropTypes.bool.isRequired,
+};
+
+export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);</code></pre>
+                  <p>
+                    To add a cool spinner component, you can make use of <i>react-spinners</i>:
+                  </p>
+                  <ul>
+                    <li>
+                      <a href="http://www.davidhu.io/react-spinners/">Demo page</a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/davidhu2000/react-spinners">Github page</a>
+                    </li>
+                  </ul>
+                  <p>
+                    Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
+                  </p>
+                  <pre class="snippet" data-line="2,7"><code class="language-jsx">import React from 'react';
+import { LoadingSpinnerComponent} from './loadingSpinner';
+
+export const AppComponent = (props) =&gt (
+  &ltdiv&gt
+    &lth1&gtHello App!&lt/h1&gt
++   &ltLoadingSpinnerComponent /&gt
+  &lt/div&gt
+);</code></pre>
+              </article>
+            </section>
+            <section id="example-with-areas" class="offset">
+              <h3 class="heading">
+                <span>Example with areas</span>
+                <a href="#example-with-areas">
+                  <img class="img-link" src="img/link.svg" alt="(link this)">
+                </a>
+              </h3>
+              <article>
+                <p>
+                  Using react-promise-tracker as is will just display a single spinner in your page, 
+                  there are cases where you want to display a given spinner only blocking certain area of the screen,
+                  e.g.: a product list app with a shopping cart section. We would like to block the ui (show spinner) 
+                  while is loading the product, but not the rest of the user interface, and the same thing with the 
+                  shopping cart pop-up section.
+                </p>
+                <figure>
+                  <img src="img/shopping-cart-sample.png" alt="Login form" class="img-responsive">
+                </figure>
+                <p>
+                  We could add the <i>default-area</i> to show product list spinner:   
+                </p>
+                <pre class="snippet" data-line="2,7"><code class="language-jsx">import React from 'react';
+import { LoadingSpinnerComponent } from './loadingSpinner';
+
+export const ProductListComponent = (props) =&gt (
+  &ltdiv&gt
+    ...
+    &ltLoadingSpinnerComponent /&gt // default-area
+  &lt/div&gt
+);</code></pre>
+                <p>
+                  And we add the <i>shopping-cart-area</i> to show shopping cart spinner:
+                </p>
+                <pre class="snippet" data-line="2,6"><code class="language-jsx">import React from 'react';
+import { LoadingSpinnerComponent} from './loadingSpinner';
+
+export const ShoppingCartModal = (props) =&gt (
+  &ltdiv&gt
+    &ltLoadingSpinnerComponent area="shopping-cart-area" /&gt
+  &lt/div&gt
+);</code></pre>
+                <p>
+                  With this approach, we don't need to define different spinners components, it's only one but it will 
+                  render when we want to track the desired area:
+                </p>
+                <pre class="snippet" data-line="1,3,5"><code class="language-jsx">import { trackPromise} from 'react-promise-tracker';
+...
+trackPromise(
+  fetchSelectedProducts();
+, 'shopping-cart-area');</code></pre>
+              </article>
+            </section>
+          </section>
+          
+          <section id="demos" class="offset">
+            <h2 class="heading">
+              <span>Demos</span>
+              <a href="#demos">
+                <img class="img-link" src="img/link.svg" alt="(link this)">
+              </a>
+            </h2>
+            <article>
+              <p>If you want to see it in action:</p>
+              <ul>
+                <li>
+                  <a href="https://stackblitz.com/edit/react-promise-tracker-default-area-sample">Default area example</a>
+                </li>
+                <li>
+                  <a href="https://stackblitz.com/edit/react-promise-tracker-two-areas-sample">Two areas example</a>
+                </li>
+              </ul>
+            </article>
+          </section>
+
+          <section id="about-lemoncode" class="offset">
+            <h2 class="heading">
+              <span>About Lemoncode</span>
+              <a href="#about-lemoncode">
+                <img class="img-link" src="img/link.svg" alt="(link this)">
+              </a>
+            </h2>
+            <article>
+              <p>
+                We are a team of long-term experienced freelance developers, established as a group in 2010. 
+                We specialize in Front End technologies and .NET. <span><a href="http://lemoncode.net/services/en/#en-home">Click here</a></span> 
+                to get more info about us.
+              </p>
+              <p>
+                For the LATAM/Spanish audience we are running an Online Front End Master degree, 
+                more info: <span><a href="http://lemoncode.net/master-frontend">http://lemoncode.net/master-frontend</a></span>
+              </p>
+            </article>
+          </section>
+         
+        </main>
+        <aside class="col-md-3">
+          <nav id="sidr-right" class="main-menu scrollspy" data-toggle="affix" data-spy="affix" data-offset-top="240">
+            <ul class="nav">
+              <li><a href="#introduction">react-promise-tracker</a></li>
+              <li><a href="#installation">Installation</a></li>
+              <li>
+                <a href="#usage">Usage</a>
+                <ul class="nav">
+                  <li><a href="#track-a-promise">Track a promise</a></li>
+                  <li><a href="#basic-example">Basic example</a></li>
+                  <li><a href="#example-with-areas">Example with areas</a></li>
+                </ul>
+              </li>
+              <li><a href="#demos">Demos</a></li>
+              <li><a href="#about-lemoncode">About Lemoncode</a></li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/prism.js" async></script>
+    <script src="js/jquery.sidr.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
