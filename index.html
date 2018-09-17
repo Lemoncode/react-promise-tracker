@@ -228,6 +228,121 @@ trackPromise(
               </article>
             </section>
           </section>
+
+          <section id="api" class="offset">
+            <h2 class="heading">
+              <span>API</span>
+              <a href="#api">
+                <img class="img-link" src="img/link.svg" alt="(link this)">
+              </a>
+            </h2>
+            <article id="trackPromise" class="offset">
+              <h3 class="heading">
+                <span>trackPromise</span>
+                <a href="#trackPromise">
+                  <img class="img-link" src="img/link.svg" alt="(link this)">
+                </a>
+              </h3>
+              <p>
+                Function to register a promise to be tracked along with the associated area the promise belongs to.
+                It accepts 2 input parameters:                
+              </p>
+              <ul>
+                <li>
+                  <code>promise</code> <em>Promise</em> - The promise we want to be tracked.
+                </li>
+                <li>
+                  <code>area</code> <em>string</em> - A string identifier for the area the promise will belong to. 
+                  If no area is passed, <code>defaul-area</code> will be considered.
+                </li>
+              </ul>
+              <p>For convenience, it returns the same promise we passed as input.</p>
+              <p class="alert alert-info">
+                Note: More than one promise can be tracked for a given area. So you can call several times to <code>trackPromise</code> 
+                with different promises for a given area identifier. Only when all promises have been resolved, the area would be 
+                marked as ready to be rendered.
+              </p>
+              <h4>Example of trackPromise usage</h4>
+              <pre class="snippet"><code class="language-jsx">import { trackPromise} from 'react-promise-tracker';
+...
+// Default area
+trackPromise(fetchContentList());
+
+// Custom area
+trackPromise(
+  fetchMenuConfig(),
+  'menu_area',
+);
+
+trackPromise(
+  fetchMenuItems(),
+  'menu_area',
+);</code></pre>
+            </article>
+            <article id="promiseTrackerHoc" class="offset">
+              <h3 class="heading">
+                <span>promiseTrackerHoc</span>
+                <a href="#promiseTrackerHoc">
+                  <img class="img-link" src="img/link.svg" alt="(link this)">
+                </a>
+              </h3>
+              <p>
+                HOC factory that wraps any React component and makes it aware of promises completion.
+                This function accepts a single input parameter:                
+              </p>
+              <ul>
+                <li>
+                  <code>ComponentToWrap</code> <em>Component</em> - The React component we want to add promise tracking capabilities.
+                </li>
+              </ul>
+              <p>It returns a higher order component ready to be used. This newly created HOC will have an optional property:</p>
+              <ul>
+                <li>
+                  <code>area</code> <em>string</em> - Area string identifier. It determines which area this component belongs to, and thus,
+                  what promises to track. If not specified, default-area will be considered.
+                </li>
+              </ul>
+              <p>
+                Also, the wrapped component by the call to <code>promiseTrackerHoc</code> will have now two new properties intended 
+                to keep track of the promises:
+              </p>
+              <ul>
+                <li>
+                  <code>area</code> <em>string</em> - Area string identifier.
+                </li>
+                <li>
+                  <code>trackedPromiseInProgress</code> <em>boolean</em> - Boolean flag. <code>true</code> if any promise is still pending 
+                  to be resolved. <code>false</code> when all of them have been completed.
+                </li>
+              </ul>
+              <p class="alert alert-info">
+                Note: <code>trackedPromiseInProgress</code> flag will turn to <code>false</code> upon promises resolution,
+                whether they have been <em>resolved</em> or <em>rejected</em>.
+              </p>
+              <h4>Example of promiseTrackerHoc</h4>
+              <p>We could do a very easy area component that displays a spinner when fetching data:</p>
+              <pre class="snippet"><code class="language-jsx">import React from 'react';
+import { promiseTrackerHoc } from 'react-promise-tracker';
+import Loader from 'react-loader-spinner';
+
+const Spinner = () =&gt &ltLoader type="ThreeDots"/&gt
+
+const PromiseAreaInner = (props) =&gt 
+  props.trackedPromiseInProgress ? &ltSpinner /&gt : props.children;
+
+export const PromiseArea = promiseTrackerHoc(PromiseAreaInner);</code></pre>
+              <p>And in order to use it:</p>
+              <pre class="snippet"><code class="language-jsx">render() {
+  return (
+    // ...
+    &ltPromiseArea area="my-area"&gt
+      &ltMyContent&gt
+    &lt/PromiseArea&gt
+    //...
+  );
+}</code></pre>
+            </article>
+          </section>
           
           <section id="demos" class="offset">
             <h2 class="heading">
@@ -281,6 +396,13 @@ trackPromise(
                   <li><a href="#track-a-promise">Track a promise</a></li>
                   <li><a href="#basic-example">Basic example</a></li>
                   <li><a href="#example-with-areas">Example with areas</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#api">API</a>
+                <ul class="nav">
+                  <li><a href="#trackPromise">trackPromise</a></li>
+                  <li><a href="#promiseTrackerHoc">promiseTrackerHoc</a></li>
                 </ul>
               </li>
               <li><a href="#demos">Demos</a></li>
