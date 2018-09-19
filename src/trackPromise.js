@@ -15,10 +15,11 @@ export const trackPromise = (promise, area) => {
   const promiseInProgress = anyPromiseInProgress(area);
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 
-  promise
-    .then(() => decrementPromiseCounter(area),
-      () => decrementPromiseCounter(area)
-    );
+  const onResolveHandler = (arg) => {
+    decrementPromiseCounter(area);
+    return arg;
+  }
+  promise.then(onResolveHandler, onResolveHandler);
 
   return promise;
 };
