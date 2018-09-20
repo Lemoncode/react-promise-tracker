@@ -86,6 +86,23 @@ describe('trackPromise', () => {
         done();
       });
     });
+
+    // Promise chaining working properly.
+    it('Promise returned must handle transparently the result when resolved', (done) => {
+      // Arrange
+      const expectedPromiseResult = "promise result";
+      const promise = Promise.resolve(expectedPromiseResult);
+
+      // Act
+      const trackedPromise = trackPromise(promise);
+
+      // Assert
+      trackedPromise.then((trackedPromiseResult) => {
+        expect(trackedPromiseResult).toEqual(expectedPromiseResult);
+        done();
+      });
+    });
+
   });
 
   describe('using custom area', () => {
