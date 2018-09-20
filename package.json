@@ -1,6 +1,6 @@
 {
   "name": "react-promise-tracker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
   "keywords": [
     "react",
