@@ -1,6 +1,6 @@
 import React from 'react';
-import { promiseTrackerHoc } from './trackerHoc'
-import { emitter, promiseCounterUpdateEventId } from './trackPromise';
+import { promiseTrackerHoc } from './trackerHoc';
+import * as trackPromiseAPI from './trackPromise';
 
 describe('trackerHoc', () => {
   it('should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc', () => {
@@ -50,6 +50,42 @@ describe('trackerHoc', () => {
       />,
     );
 
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should render component with trackedPromiseInProgress equals false when counter is 0', () => {
+    // Arrange
+    const TestSpinnerComponent = (props) => <span>test</span>;
+    trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+
+    // Act
+    const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+
+    // Assert
+    const component = mount(
+      <TrackedComponent
+      />,
+    );
+
+    expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+    expect(component).toMatchSnapshot();
+  });
+
+  it('should render component with trackedPromiseInProgress equals true when counter is 1', () => {
+    // Arrange
+    const TestSpinnerComponent = (props) => <span>test</span>;
+    trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+
+    // Act
+    const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+
+    // Assert
+    const component = mount(
+      <TrackedComponent
+      />,
+    );
+
+    expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
     expect(component).toMatchSnapshot();
   });
 });
