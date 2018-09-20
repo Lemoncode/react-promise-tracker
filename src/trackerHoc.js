@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { emitter, promiseCounterUpdateEventId } from './trackPromise';
+import { emitter, getCounter, promiseCounterUpdateEventId } from './trackPromise';
 import { defaultArea } from './constants';
 
 export const promiseTrackerHoc = (ComponentToWrap) => {
@@ -13,12 +13,23 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
       };
     }
 
-    componentDidMount() {
+    updateProgress(progress, afterUpdateCallback) {
+      this.setState({ trackedPromiseInProgress: progress }, afterUpdateCallback);
+    }
+
+    subscribeToCounterUpdate() {
       emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
         if (this.state.area === area) {
-          this.setState({ trackedPromiseInProgress: anyPromiseInProgress });
+          this.updateProgress(anyPromiseInProgress);
         }
       });
+    }
+
+    componentDidMount() {
+      this.updateProgress(
+        Boolean(getCounter(this.state.area) > 0),
+        this.subscribeToCounterUpdate
+      );
     }
 
     componentWillUnmount() {

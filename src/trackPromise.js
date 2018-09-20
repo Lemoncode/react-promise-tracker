@@ -8,6 +8,8 @@ let counter = {
   [defaultArea]: 0,
 };
 
+export const getCounter = (area) => counter[area];
+
 export const trackPromise = (promise, area) => {
   area = area || defaultArea;
   incrementCounter(area);
