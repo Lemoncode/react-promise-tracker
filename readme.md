@@ -1,6 +1,6 @@
 # react-promise-tracker
 
-Simple promise tracker React Hoc. You can see it in action: [Live Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+Simple promise tracker React Hoc. You can see it in action: [Live Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample, in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls) you will find the basic info to get started.
 
 # Why do I need this?
 
