@@ -1,14 +1,16 @@
 import React from 'react'
-import { emitter, getCounter, promiseCounterUpdateEventId } from './trackPromise';
+import { emitter, promiseCounterUpdateEventId } from './trackPromise';
+import { defaultArea } from './constants';
 
-const usePromiseTracker = () => {
+export const usePromiseTracker = (area = defaultArea) => {
   const [promiseInProgress, setPromiseInProgress]= React.useState(false);
-  // pending area
 
   React.useEffect(()=> {
-    emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
+    emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, areaAffected) => {
       // pending manage area
-      setPromiseInProgress(anyPromiseInProgress);
+      if(area === areaAffected) {
+        setPromiseInProgress(anyPromiseInProgress);
+      }
     });
 
     return () => {emitter.off(promiseCounterUpdateEventId);
