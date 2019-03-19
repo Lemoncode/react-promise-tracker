@@ -7,6 +7,7 @@ const version = JSON.stringify(process.env.npm_package_version).replace(/"/g, ''
 const filename = `react-promise-tracker-${version}${NODE_ENV === 'production' ? '.min' : ''}.js`;
 
 export default {
+  mode: NODE_ENV,
   entry: ['./src/index.js'],
   output: {
     path: path.join(__dirname, 'dist'),
