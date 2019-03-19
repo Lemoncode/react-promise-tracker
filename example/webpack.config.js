@@ -8,7 +8,10 @@ var basePath = __dirname;
 module.exports = {
   context: path.join(basePath, "src"),
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
+    alias: {
+      react: path.resolve('./node_modules/react')
+    },
   },
   entry: {
     app: "./index.jsx",
