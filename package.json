@@ -47,6 +47,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --ignore spec.js,test.js",
     "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
     "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p",
+    "build:perf": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack --config=webpack.perf.config.babel.js",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
@@ -70,7 +71,9 @@
     "regenerator-runtime": "^0.13.1",
     "rimraf": "^2.6.3",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack-bundle-analyzer": "^3.1.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-merge": "^4.2.1"
   },
   "jest": {
     "setupFiles": [
