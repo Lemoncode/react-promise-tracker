@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { emitter, getCounter, promiseCounterUpdateEventId } from './trackPromise';
 import { defaultArea } from './constants';
 
+// Props:
+// config: {
+//  area:  // can be null|undefined|'' (will default to DefaultArea) or area name
+//  delay: // Wait Xms to display the spinner (fast connections scenario avoid blinking)
+//            default value 0ms
+// }
 export const promiseTrackerHoc = (ComponentToWrap) => {
   return class promiseTrackerComponent extends Component {
     constructor(props) {
@@ -9,7 +15,10 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
 
       this.state = {
         trackedPromiseInProgress: false,
-        area: props.area || defaultArea,
+        area: {
+            area: (props.config && props.config.area) || defaultArea,
+            delay:(props.config && props.config.delay) || 0,
+        }
       };
     }
 
