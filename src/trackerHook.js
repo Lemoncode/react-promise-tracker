@@ -16,7 +16,7 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
     // Take into account delay parameter
     setTimeout(() => {
       // Check here ref to internalPromiseInProgress
-      if (latestInternalPromiseInProgress.current === true) {
+      if (latestInternalPromiseInProgress.current) {
         setPromiseInProgress(true);
       }
     }, config.delay);
@@ -35,8 +35,7 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
 
   React.useEffect(() => {
     latestInternalPromiseInProgress.current = internalPromiseInProgress;
-    emitter.on(
-      promiseCounterUpdateEventId,
+    emitter.on(promiseCounterUpdateEventId,
       (anyPromiseInProgress, areaAffected) => {
         updatePromiseTrackerStatus(anyPromiseInProgress, areaAffected);
       }
