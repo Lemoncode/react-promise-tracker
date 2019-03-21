@@ -12,7 +12,7 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
     internalPromiseInProgress
   );
 
-  const notifiyPromiseInProgress = () => {
+  const notifyPromiseInProgress = () => {
     // Take into account delay parameter
     setTimeout(() => {
       // Check here ref to internalPromiseInProgress
@@ -28,7 +28,7 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
       if (!anyPromiseInProgress) {
         setPromiseInProgress(false);
       } else {
-        notifiyPromiseInProgress();
+        notifyPromiseInProgress();
       }
     }
   };
