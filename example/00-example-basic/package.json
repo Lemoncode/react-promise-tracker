@@ -29,6 +29,6 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-loader-spinner": "^2.3.0",
-    "react-promise-tracker": "file:../"
+    "react-promise-tracker": "file:../../"
   }
 }
