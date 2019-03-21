@@ -14,21 +14,21 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
       super(props);
 
       this.state = {
-        trackedPromiseInProgress: false,
-        area: {
-            area: (props.config && props.config.area) || defaultArea,
-            delay:(props.config && props.config.delay) || 0,
+        promiseInProgress: false,
+        config: {
+          area: (props.config && props.config.area) || defaultArea,
+          delay: (props.config && props.config.delay) || 0,
         }
       };
     }
 
     updateProgress(progress, afterUpdateCallback) {
-      this.setState({ trackedPromiseInProgress: progress }, afterUpdateCallback);
+      this.setState({ promiseInProgress: progress }, afterUpdateCallback);
     }
 
     subscribeToCounterUpdate() {
       emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
-        if (this.state.area === area) {
+        if (this.state.config.area === area) {
           this.updateProgress(anyPromiseInProgress);
         }
       });
@@ -36,7 +36,7 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
 
     componentDidMount() {
       this.updateProgress(
-        Boolean(getCounter(this.state.area) > 0),
+        Boolean(getCounter(this.state.config.area) > 0),
         this.subscribeToCounterUpdate
       );
     }
@@ -49,8 +49,8 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
       return (
         <ComponentToWrap
           {...this.props}
-          area={this.state.area}
-          trackedPromiseInProgress={this.state.trackedPromiseInProgress}
+          config={this.state.config}
+          promiseInProgress={this.state.promiseInProgress}
         />
       )
     }
