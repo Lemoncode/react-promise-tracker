@@ -5,7 +5,7 @@ import "./spinner.css";
 
 export const Spinner = (props) => {
   // TODO remove default-area, proper handle defaults in main lib
-  const { promiseInProgress } = usePromiseTracker({area: 'default-area', delay: 200});
+  const { promiseInProgress } = usePromiseTracker({delay: 200});
 
   return (
     promiseInProgress && (
