@@ -27,6 +27,7 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
   const updatePromiseTrackerStatus = (anyPromiseInProgress, areaAffected) => {
     if (config.area === areaAffected) {
       setInternalPromiseInProgress(anyPromiseInProgress);
+      latestInternalPromiseInProgress.current = anyPromiseInProgress;
       if (!anyPromiseInProgress) {
         setPromiseInProgress(false);
       } else {
