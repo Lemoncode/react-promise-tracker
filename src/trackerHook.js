@@ -1,5 +1,5 @@
 import React from "react";
-import { emitter, promiseCounterUpdateEventId } from "./trackPromise";
+import { emitter, promiseCounterUpdateEventId,  getCounter} from "./trackPromise";
 import { defaultArea } from "./constants";
 
 // Defensive config setup
@@ -15,6 +15,17 @@ export const usePromiseTracker = (outerConfig = { area: defaultArea, delay: 0 })
   // We need to apply defensive programming, ensure area and delay default to secure data
   // cover cases like not all params informed, set secure defaults
   const [config] = React.useState(setupConfig(outerConfig));
+
+  // Edge case, when we start the application if we are loading just onComponentDidMount
+  // data, event emitter could have already emitted the event but subscription is not yet
+  // setup
+  React.useEffect(() => {
+    if(config && config.area && getCounter(config.area) > 0) {
+      setInternalPromiseInProgress(true);
+      setInternalPromiseInProgress(true);
+      setPromiseInProgress(true);
+    }
+  }, config)
 
   // Internal will hold the current value
   const [
