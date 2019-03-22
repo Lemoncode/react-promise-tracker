@@ -35,7 +35,8 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
 
   React.useEffect(() => {
     latestInternalPromiseInProgress.current = internalPromiseInProgress;
-    emitter.on(promiseCounterUpdateEventId,
+    emitter.on(
+      promiseCounterUpdateEventId,
       (anyPromiseInProgress, areaAffected) => {
         updatePromiseTrackerStatus(anyPromiseInProgress, areaAffected);
       }

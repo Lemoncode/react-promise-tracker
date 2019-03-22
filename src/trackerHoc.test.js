@@ -325,7 +325,7 @@ describe("trackerHoc", () => {
       .mockImplementation((id, callback) => callback(progress, area));
     const setTimeoutStub = jest
       .spyOn(window, "setTimeout")
-      .mockImplementation((callback) => callback());
+      .mockImplementation(callback => callback());
 
     // Act
     const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
