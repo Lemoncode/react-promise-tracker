@@ -6,7 +6,7 @@ import { Header } from './header';
 import { Row } from './row';
 
 export const UserTable = (props) => (
-  <>
+  <div>
   <Table
     title="Users"
     items={props.users}
@@ -16,6 +16,6 @@ export const UserTable = (props) => (
   <Spinner
     area={areas.user}
   />
-  </>
+  </div>
 
 );

@@ -13,13 +13,15 @@ export const usePromiseTracker = (config = { area: defaultArea, delay: 0 }) => {
   );
 
   const notifiyPromiseInProgress = () => {
-    // Take into account delay parameter
-    setTimeout(() => {
-      // Check here ref to internalPromiseInProgress
-      if (latestInternalPromiseInProgress.current) {
-        setPromiseInProgress(true);
-      }
-    }, config.delay);
+    (!config || !config.delay || config.delay == 0) ?
+      setPromiseInProgress(true)
+    :
+      setTimeout(() => {
+        // Check here ref to internalPromiseInProgress
+        if (latestInternalPromiseInProgress.current) {
+          setPromiseInProgress(true);
+        }
+      }, config.delay);
   };
 
   const updatePromiseTrackerStatus = (anyPromiseInProgress, areaAffected) => {
