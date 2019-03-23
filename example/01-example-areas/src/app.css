@@ -1,0 +1,11 @@
+.tables, .load-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.tables > div, .load-buttons > button {
+  flex-basis: 50%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
