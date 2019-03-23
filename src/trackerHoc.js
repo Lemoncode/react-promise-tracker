@@ -1,6 +1,10 @@
-import React, { Component } from 'react'
-import { emitter, getCounter, promiseCounterUpdateEventId } from './trackPromise';
-import { defaultArea } from './constants';
+import React, { Component } from "react";
+import {
+  emitter,
+  getCounter,
+  promiseCounterUpdateEventId
+} from "./trackPromise";
+import { defaultArea } from "./constants";
 
 // Props:
 // config: {
@@ -8,27 +12,42 @@ import { defaultArea } from './constants';
 //  delay: // Wait Xms to display the spinner (fast connections scenario avoid blinking)
 //            default value 0ms
 // }
-export const promiseTrackerHoc = (ComponentToWrap) => {
+export const promiseTrackerHoc = ComponentToWrap => {
   return class promiseTrackerComponent extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
-        trackedPromiseInProgress: false,
-        area: {
-            area: (props.config && props.config.area) || defaultArea,
-            delay:(props.config && props.config.delay) || 0,
+        promiseInProgress: false,
+        internalPromiseInProgress: false,
+        config: {
+          area: (props.config && props.config.area) || defaultArea,
+          delay: (props.config && props.config.delay) || 0
         }
       };
     }
 
+    updateProgressWithDelay() {
+      setTimeout(() => {
+        this.setState({
+          promiseInProgress: this.state.internalPromiseInProgress
+        });
+      }, this.state.config.delay);
+    }
+
     updateProgress(progress, afterUpdateCallback) {
-      this.setState({ trackedPromiseInProgress: progress }, afterUpdateCallback);
+      this.setState(
+        { internalPromiseInProgress: progress },
+        afterUpdateCallback
+      );
+      this.state.config.delay === 0
+        ? this.setState({ promiseInProgress: progress })
+        : this.updateProgressWithDelay();
     }
 
     subscribeToCounterUpdate() {
       emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
-        if (this.state.area === area) {
+        if (this.state.config.area === area) {
           this.updateProgress(anyPromiseInProgress);
         }
       });
@@ -36,7 +55,7 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
 
     componentDidMount() {
       this.updateProgress(
-        Boolean(getCounter(this.state.area) > 0),
+        Boolean(getCounter(this.state.config.area) > 0),
         this.subscribeToCounterUpdate
       );
     }
@@ -49,10 +68,10 @@ export const promiseTrackerHoc = (ComponentToWrap) => {
       return (
         <ComponentToWrap
           {...this.props}
-          area={this.state.area}
-          trackedPromiseInProgress={this.state.trackedPromiseInProgress}
+          config={this.state.config}
+          promiseInProgress={this.state.promiseInProgress}
         />
-      )
+      );
     }
-  }
-}
+  };
+};
