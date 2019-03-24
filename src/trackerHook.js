@@ -44,7 +44,7 @@ export const usePromiseTracker = (outerConfig = { area: defaultArea, delay: 0 })
   );
 
   const notifiyPromiseInProgress = () => {
-    (!config || !config.delay || config.delay == 0) ?
+    (!config || !config.delay || config.delay === 0) ?
       setPromiseInProgress(true)
     :
       setTimeout(() => {

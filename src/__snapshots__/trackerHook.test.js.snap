@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`trackerHoc renders without crashing 1`] = `
+exports[`trackerHoc Initial Status renders without crashing 1`] = `
 <TestSpinnerComponent>
   <span>
     test
@@ -8,7 +8,7 @@ exports[`trackerHoc renders without crashing 1`] = `
 </TestSpinnerComponent>
 `;
 
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300 1`] = `
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300 1`] = `
 <TestSpinnerComponent>
   <span>
     test
@@ -16,7 +16,7 @@ exports[`trackerHoc should render component with trackedPromiseInProgress equals
 </TestSpinnerComponent>
 `;
 
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
 <TestSpinnerComponent>
   <span>
     test
@@ -24,7 +24,7 @@ exports[`trackerHoc should render component with trackedPromiseInProgress equals
 </TestSpinnerComponent>
 `;
 
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area 1`] = `
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area 1`] = `
 <TestSpinnerComponent>
   <span>
     test
@@ -32,7 +32,7 @@ exports[`trackerHoc should render component with trackedPromiseInProgress equals
 </TestSpinnerComponent>
 `;
 
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area 1`] = `
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area 1`] = `
 <TestSpinnerComponent>
   <span>
     test
