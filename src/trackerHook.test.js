@@ -4,6 +4,11 @@ import * as trackPromiseAPI from "./trackPromise";
 import { defaultArea } from "./constants";
 import { trackPromise, emitter } from "./trackPromise";
 import { act } from "react-dom/test-utils"; // ES6
+//import TestRenderer from "react-test-renderer";
+
+// https://github.com/facebook/react/issues/14774
+//const act = TestRenderer.act;
+
 
 describe("trackerHoc", () => {
   describe("Initial Status", () => {
@@ -166,21 +171,23 @@ describe("trackerHoc", () => {
 
     it.only("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
       // Arrange
+      let TestSpinnerComponent = null;
+      act(() => {
+        TestSpinnerComponent = props => {
+          const { promiseInProgress } = usePromiseTracker({ delay: 200 });
 
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker({ delay: 200 });
+          return (
+            <div>
+              {promiseInProgress ?
+                <h1>SPINNER</h1> :
+                <h2>NO SPINNER</h2>
+              }
+            </div>
+          );
+        };
 
-        return (
-          <div>
-            {promiseInProgress ?
-              <h1>SPINNER</h1> :
-              <h2>NO SPINNER</h2>
-            }
-          </div>
-        );
-      };
-
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+        trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      })
 
       // Act
       let component = null;
@@ -210,18 +217,19 @@ describe("trackerHoc", () => {
 
       // Before the promise get's resolved
       expect(component.text()).toMatch('SPINNER');
+
       // After the promise get's resolved
       act(() => {
         jest.runAllTimers();
-        jest.clearAllTimers();
       });
 
       // Wait for fakePromise (simulated ajax call) to be completed
       // no spinner should be shown
-      myFakePromise.then(() => {
-        expect(component.text()).toMatch('NO SPINNER');
-      })
-
+      act(() => {
+        myFakePromise.then(() => {
+          expect(component.text()).toMatch('NO SPINNER');
+        })
+      });
     });
   });
 });
