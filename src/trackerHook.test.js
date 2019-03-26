@@ -9,7 +9,6 @@ import { act } from "react-dom/test-utils"; // ES6
 // https://github.com/facebook/react/issues/14774
 //const act = TestRenderer.act;
 
-
 describe("trackerHoc", () => {
   describe("Initial Status", () => {
     it("renders without crashing", () => {
@@ -179,16 +178,13 @@ describe("trackerHoc", () => {
 
           return (
             <div>
-              {promiseInProgress ?
-                <h1>SPINNER</h1> :
-                <h2>NO SPINNER</h2>
-              }
+              {promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
             </div>
           );
         };
 
         trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
-      })
+      });
 
       // Act
       let component = null;
@@ -199,7 +195,7 @@ describe("trackerHoc", () => {
 
       // Check very beginning (no promises going on) NO SPINNER is shown
       // TODO: this assert could be skipped (move to another test)
-      expect(component.text()).toMatch('NO SPINNER');
+      expect(component.text()).toMatch("NO SPINNER");
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
 
       // Assert
@@ -209,11 +205,13 @@ describe("trackerHoc", () => {
       // [1] after 200ms spinner will be shown (text SPINNER)
       // [2] after 1000ms spinner will be hidded again (text NOSPINNER)
       let myFakePromise = null;
-      myFakePromise = new Promise(resolve => {
-        setTimeout(() => {
-          resolve(true);
-        }, 1000);
 
+      act(() => {
+        myFakePromise = new Promise(resolve => {
+          setTimeout(() => {
+            resolve(true);
+          }, 1000);
+        });
       });
 
       act(() => {
@@ -228,22 +226,23 @@ describe("trackerHoc", () => {
         // Runs all pending timers. whether it's a second from now or a year.
         // https://jestjs.io/docs/en/timer-mocks.html
         jest.advanceTimersByTime(100);
-      })
+      });
 
       // [0] first 200ms spinner won't be shown (text NOSPINNER)
-      expect(component.text()).toMatch('NO SPINNER');
+      expect(component.text()).toMatch("NO SPINNER");
 
       act(() => {
         // Runs all pending timers. whether it's a second from now or a year.
         // https://jestjs.io/docs/en/timer-mocks.html
         jest.advanceTimersByTime(300);
-      })
+      });
 
       // Before the promise get's resolved
       // [1] after 200ms spinner will be shown (text SPINNER)
-      expect(component.text()).toMatch('SPINNER');
+      expect(component.text()).toMatch("SPINNER");
 
       // After the promise get's resolved
+
       act(() => {
         jest.runAllTimers();
       });
@@ -253,8 +252,8 @@ describe("trackerHoc", () => {
       // no spinner should be shown
       act(() => {
         myFakePromise.then(() => {
-          expect(component.text()).toMatch('NO SPINNER');
-        })
+          expect(component.text()).toMatch("NO SPINNER");
+        });
       });
     });
   });

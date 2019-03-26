@@ -4,7 +4,7 @@ import {
   getCounter,
   promiseCounterUpdateEventId
 } from "./trackPromise";
-import { defaultArea } from "./constants";
+import { setupConfig } from './setupConfig';
 
 // Props:
 // config: {
@@ -20,10 +20,7 @@ export const promiseTrackerHoc = ComponentToWrap => {
       this.state = {
         promiseInProgress: false,
         internalPromiseInProgress: false,
-        config: {
-          area: (props.config && props.config.area) || defaultArea,
-          delay: (props.config && props.config.delay) || 0
-        }
+        config: setupConfig(props.config),
       };
     }
 

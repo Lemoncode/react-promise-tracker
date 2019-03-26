@@ -1,15 +1,10 @@
 import React from "react";
 import { emitter, promiseCounterUpdateEventId,  getCounter} from "./trackPromise";
 import { defaultArea } from "./constants";
-
-// Defensive config setup
-const setupConfig = (outerConfig) => ({
-  area: (!outerConfig || !outerConfig.area) ? defaultArea : outerConfig.area,
-  delay: (!outerConfig || !outerConfig.delay) ? 0 : outerConfig.delay,
-})
+import { defaultConfig, setupConfig } from './setupConfig';
 
 
-export const usePromiseTracker = (outerConfig = { area: defaultArea, delay: 0 }) => {
+export const usePromiseTracker = (outerConfig = defaultConfig) => {
   // Included in state, it will be evaluated just the first time,
   // TODO: discuss if this is a good approach
   // We need to apply defensive programming, ensure area and delay default to secure data
