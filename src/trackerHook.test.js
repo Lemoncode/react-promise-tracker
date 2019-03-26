@@ -4,12 +4,8 @@ import * as trackPromiseAPI from "./trackPromise";
 import { defaultArea } from "./constants";
 import { trackPromise, emitter } from "./trackPromise";
 import { act } from "react-dom/test-utils"; // ES6
-//import TestRenderer from "react-test-renderer";
 
-// https://github.com/facebook/react/issues/14774
-//const act = TestRenderer.act;
-
-describe("trackerHoc", () => {
+describe("trackerHook", () => {
   describe("Initial Status", () => {
     it("renders without crashing", () => {
       // Arrange

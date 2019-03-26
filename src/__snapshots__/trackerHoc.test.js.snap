@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
 exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc without props 1`] = `
 <promiseTrackerComponent>
   <TestSpinnerComponent
