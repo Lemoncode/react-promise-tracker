@@ -462,7 +462,7 @@ describe("trackerHoc", () => {
     });
   });
 
-  describe("Handling delay timeouts", () => {
+  describe.skip("Handling delay timeouts", () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
@@ -471,7 +471,7 @@ describe("trackerHoc", () => {
       jest.useRealTimers();
     });
 
-    it.only("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
+    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
       // Arrange
       let TestSpinnerComponent = null;
       act(() => {
@@ -544,7 +544,8 @@ describe("trackerHoc", () => {
       // After the promise get's resolved
 
       act(() => {
-        jest.runAllTimers();
+        jest.advanceTimersByTime(1500);
+        //jest.runAllTimers();
       });
 
       // [2] after 1000ms spinner will be hidded again (text NOSPINNER)
@@ -552,10 +553,9 @@ describe("trackerHoc", () => {
       // no spinner should be shown
       act(() => {
         myFakePromise.then(() => {
-          expect(component.text()).toMatch("NO SPINNER");
+              expect(component.text()).toMatch("NO SPINNER");
         });
       });
     });
   });
-
 });
