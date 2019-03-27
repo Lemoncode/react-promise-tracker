@@ -35,7 +35,9 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-loader-spinner": "^2.3.0",
+    "react-promise-tracker": "file:../.."
   }
 }

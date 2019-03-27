@@ -34,7 +34,7 @@ export interface ComponentToWrapProps {
 }
 
 export interface TrackerHocProps {
-  config: Config;
+  config?: Config;
 }
 
 export function promiseTrackerHoc<P>(component: React.ComponentType<P & ComponentToWrapProps>): React.ComponentType<P & TrackerHocProps>;

@@ -53,7 +53,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
   "peerDependencies": {
-    "react": "^16.8.4"
+    "react": ">=16.8.0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -68,8 +68,8 @@
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.5.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
     "react-test-renderer": "^16.8.4",
     "regenerator-runtime": "^0.13.1",
     "rimraf": "^2.6.3",

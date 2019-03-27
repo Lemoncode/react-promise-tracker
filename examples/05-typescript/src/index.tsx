@@ -1,9 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { HelloComponent } from './hello';
+import { App } from './app';
+import { Spinner } from './common/spinner';
 
 ReactDOM.render(
-  <HelloComponent/>,
+  <>
+    <App />
+    <Spinner/>
+  </>,
   document.getElementById('root')
 );
