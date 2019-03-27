@@ -317,7 +317,7 @@ describe("trackerHoc", () => {
       expect(component).toMatchSnapshot();
     });
 
-    it.only("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300", () => {
+    it("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
@@ -462,7 +462,7 @@ describe("trackerHoc", () => {
     });
   });
 
-  describe.skip("Handling delay timeouts", () => {
+  describe("Handling delay timeouts", () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });

@@ -1,6 +1,490 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc without props 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "area": "testArea",
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "testArea",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "area": "testArea",
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "testArea",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals false, area equals "default-area" and customProp equals "test" when feeding customProp equals "test" 1`] = `
+<promiseTrackerComponent
+  customProp="test"
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    customProp="test"
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={true}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
 exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={true}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={true}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={true}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true and delay equals 300 1`] = `
+<promiseTrackerComponent
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
+>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area 1`] = `
+<promiseTrackerComponent>
+  <TestSpinnerComponent
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 0,
+      }
+    }
+    promiseInProgress={true}
+  >
+    <span>
+      test
+    </span>
+  </TestSpinnerComponent>
+</promiseTrackerComponent>
+`;
+
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area and delay equals 300 1`] = `
 <promiseTrackerComponent
   config={
     Object {

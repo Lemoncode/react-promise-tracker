@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`trackerHook Initial Status renders without crashing 1`] = `
+<TestSpinnerComponent>
+  <span>
+    test
+  </span>
+</TestSpinnerComponent>
+`;
+
+exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300 1`] = `
+<TestSpinnerComponent>
+  <span>
+    test
+  </span>
+</TestSpinnerComponent>
+`;
+
+exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
+<TestSpinnerComponent>
+  <span>
+    test
+  </span>
+</TestSpinnerComponent>
+`;
+
+exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area 1`] = `
+<TestSpinnerComponent>
+  <span>
+    test
+  </span>
+</TestSpinnerComponent>
+`;
+
+exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area 1`] = `
+<TestSpinnerComponent>
+  <span>
+    test
+  </span>
+</TestSpinnerComponent>
+`;

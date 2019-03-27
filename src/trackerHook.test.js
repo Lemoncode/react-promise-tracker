@@ -164,7 +164,7 @@ describe("trackerHook", () => {
       jest.useRealTimers();
     });
 
-    it.only("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
+    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
       // Arrange
       let TestSpinnerComponent = null;
       act(() => {
