@@ -45,4 +45,4 @@ export function promiseTrackerHoc<P>(component: React.ComponentType<P & Componen
  * @param configuration (optional can be null).
  * @returns promiseInProgressFlag.
  */
-export function usePromiseTracker(outerConfig : Config) : { promiseInProgress : boolean };
+export function usePromiseTracker(outerConfig? : Config) : { promiseInProgress : boolean };
