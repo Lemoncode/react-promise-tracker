@@ -11,21 +11,38 @@ import * as React from "react";
  */
 export function trackPromise(promise: Promise<any>): Promise<any>;
 
+/**
+ * Configuration contract: user can setup areas (display more than one spinner) or delay when
+ * the spinner is shown (this is useful when a user has a fast connection, to avoid unneccessary flickering)
+ */
+
+interface Config {
+   area: string;
+   delay: number;
+}
 
 /**
  * It wraps a given React component into a new component that adds properties to watch
- * pending promises.
+ * pending promises (HOC).
  * @param component Input component to be wrapped.
  * @returns It returns a new component that extends the input one.
  */
 
 export interface ComponentToWrapProps {
-  area: string;
-  trackedPromiseInProgress: boolean;
+  config: Config;
+  promiseInProgress: boolean;
 }
 
 export interface TrackerHocProps {
-  area?: string;
+  config: Config;
 }
 
 export function promiseTrackerHoc<P>(component: React.ComponentType<P & ComponentToWrapProps>): React.ComponentType<P & TrackerHocProps>;
+
+/**
+ * React Promise Tracker custom hook, this hook will expose a promiseInProgress boolean flag.
+ *
+ * @param configuration (optional can be null).
+ * @returns promiseInProgressFlag.
+ */
+export function usePromiseTracker(outerConfig : Config) : { promiseInProgress : boolean };

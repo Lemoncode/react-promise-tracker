@@ -1,0 +1,26 @@
+.load-button {
+  cursor: pointer;
+  margin: 1rem;
+  color: #fff;
+  text-shadow: 1px 1px 0 #888;
+  background-color: #2BAD60;
+  border-color: #14522d;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  outline: none;
+}
+
+
+
+.load-button:hover {
+  background-color: #248f4f;
+  border-color: #1e7b43;
+}

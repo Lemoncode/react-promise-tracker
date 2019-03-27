@@ -1,14 +1,14 @@
-import { Emitter } from './tinyEmmiter';
-import { defaultArea } from './constants';
+import { Emitter } from "./tinyEmmiter";
+import { defaultArea } from "./constants";
 
 export const emitter = new Emitter();
-export const promiseCounterUpdateEventId = 'promise-counter-update';
+export const promiseCounterUpdateEventId = "promise-counter-update";
 
 let counter = {
-  [defaultArea]: 0,
+  [defaultArea]: 0
 };
 
-export const getCounter = (area) => counter[area];
+export const getCounter = area => counter[area];
 
 export const trackPromise = (promise, area) => {
   area = area || defaultArea;
@@ -23,7 +23,7 @@ export const trackPromise = (promise, area) => {
   return promise;
 };
 
-const incrementCounter = (area) => {
+const incrementCounter = area => {
   if (Boolean(counter[area])) {
     counter[area]++;
   } else {
@@ -31,15 +31,15 @@ const incrementCounter = (area) => {
   }
 };
 
-const anyPromiseInProgress = (area) => (counter[area] > 0);
+const anyPromiseInProgress = area => counter[area] > 0;
 
-const decrementPromiseCounter = (area) => {
+const decrementPromiseCounter = area => {
   decrementCounter(area);
-  const promiseInProgress = anyPromiseInProgress();
+  const promiseInProgress = anyPromiseInProgress(area);
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 };
 
-const decrementCounter = (area) => {
+const decrementCounter = area => {
   counter[area]--;
 };
 

@@ -1,67 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc 1`] = `
-<promiseTrackerComponent>
-  <TestSpinnerComponent
-    area="default-area"
-    trackedPromiseInProgress={false}
-  >
-    <span>
-      test
-    </span>
-  </TestSpinnerComponent>
-</promiseTrackerComponent>
-`;
-
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" 1`] = `
+exports[`trackerHoc Initial Status should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300 1`] = `
 <promiseTrackerComponent
-  area="testArea"
+  config={
+    Object {
+      "delay": 300,
+    }
+  }
 >
   <TestSpinnerComponent
-    area="testArea"
-    trackedPromiseInProgress={false}
-  >
-    <span>
-      test
-    </span>
-  </TestSpinnerComponent>
-</promiseTrackerComponent>
-`;
-
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
-<promiseTrackerComponent>
-  <TestSpinnerComponent
-    area="default-area"
-    trackedPromiseInProgress={false}
-  >
-    <span>
-      test
-    </span>
-  </TestSpinnerComponent>
-</promiseTrackerComponent>
-`;
-
-exports[`trackerHoc should render component with trackedPromiseInProgress equals false, area equals "default-area" and customProp equals "test" when feeding customProp equals "test" 1`] = `
-<promiseTrackerComponent
-  customProp="test"
->
-  <TestSpinnerComponent
-    area="default-area"
-    customProp="test"
-    trackedPromiseInProgress={false}
-  >
-    <span>
-      test
-    </span>
-  </TestSpinnerComponent>
-</promiseTrackerComponent>
-`;
-
-exports[`trackerHoc should render component with trackedPromiseInProgress equals true when counter is 1 1`] = `
-<promiseTrackerComponent>
-  <TestSpinnerComponent
-    area="default-area"
-    trackedPromiseInProgress={true}
+    config={
+      Object {
+        "area": "default-area",
+        "delay": 300,
+      }
+    }
+    promiseInProgress={false}
   >
     <span>
       test
