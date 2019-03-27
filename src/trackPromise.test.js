@@ -116,7 +116,7 @@ describe("trackPromise", () => {
         expect(emitter.emit).toHaveBeenNthCalledWith(
           3,
           "promise-counter-update",
-          false,
+          true,
           defaultArea
         );
 

@@ -35,7 +35,7 @@ const anyPromiseInProgress = area => counter[area] > 0;
 
 const decrementPromiseCounter = area => {
   decrementCounter(area);
-  const promiseInProgress = anyPromiseInProgress();
+  const promiseInProgress = anyPromiseInProgress(area);
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 };
 
