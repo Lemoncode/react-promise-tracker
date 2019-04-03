@@ -1,8 +1,6 @@
 import React from "react";
 import { usePromiseTracker } from "./trackerHook";
 import * as trackPromiseAPI from "./trackPromise";
-import { defaultArea } from "./constants";
-import { trackPromise, emitter } from "./trackPromise";
 import { act } from "react-dom/test-utils"; // ES6
 
 describe("trackerHook", () => {
@@ -164,7 +162,7 @@ describe("trackerHook", () => {
       jest.useRealTimers();
     });
 
-    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
+    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", done => {
       // Arrange
       let TestSpinnerComponent = null;
       act(() => {
@@ -191,7 +189,7 @@ describe("trackerHook", () => {
 
       // Check very beginning (no promises going on) NO SPINNER is shown
       // TODO: this assert could be skipped (move to another test)
-      expect(component.text()).toMatch("NO SPINNER");
+      expect(component.text()).toEqual("NO SPINNER");
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
 
       // Assert
@@ -225,7 +223,7 @@ describe("trackerHook", () => {
       });
 
       // [0] first 200ms spinner won't be shown (text NOSPINNER)
-      expect(component.text()).toMatch("NO SPINNER");
+      expect(component.text()).toEqual("NO SPINNER");
 
       act(() => {
         // Runs all pending timers. whether it's a second from now or a year.
@@ -235,7 +233,7 @@ describe("trackerHook", () => {
 
       // Before the promise get's resolved
       // [1] after 200ms spinner will be shown (text SPINNER)
-      expect(component.text()).toMatch("SPINNER");
+      expect(component.text()).toEqual("SPINNER");
 
       // After the promise get's resolved
 
@@ -248,7 +246,8 @@ describe("trackerHook", () => {
       // no spinner should be shown
       act(() => {
         myFakePromise.then(() => {
-          expect(component.text()).toMatch("NO SPINNER");
+          expect(component.text()).toEqual("NO SPINNER");
+          done();
         });
       });
     });

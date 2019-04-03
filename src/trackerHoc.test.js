@@ -2,7 +2,6 @@ import React from "react";
 import { promiseTrackerHoc } from "./trackerHoc";
 import * as trackPromiseAPI from "./trackPromise";
 import { defaultArea } from "./constants";
-import { act } from "react-dom/test-utils"; // ES6
 
 describe("trackerHoc", () => {
   describe("Initial Status", () => {
@@ -471,32 +470,28 @@ describe("trackerHoc", () => {
       jest.useRealTimers();
     });
 
-    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", () => {
+    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", done => {
       // Arrange
-      let TestSpinnerComponent = null;
-      act(() => {
-        TestSpinnerComponent = props => {
-          return (
-            <div>
-              {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
-            </div>
-          );
-        };
+      const TestSpinnerComponent = props => {
+        return (
+          <div>
+            {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
+          </div>
+        );
+      };
 
-        trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
-      });
+      const getCounterStub = jest
+        .spyOn(trackPromiseAPI, "getCounter")
+        .mockReturnValue(0);
 
       // Act
-      let component = null;
-      act(() => {
-        const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
-        component = mount(<TrackedComponent config={{ delay: 300 }} />);
-      });
+      const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
 
       // Check very beginning (no promises going on) NO SPINNER is shown
       // TODO: this assert could be skipped (move to another test)
-      expect(component.text()).toMatch("NO SPINNER");
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(component.text()).toEqual("NO SPINNER");
+      expect(getCounterStub).toHaveBeenCalled();
 
       // Assert
       // This promise will resolved after 1 seconds, by doing this
@@ -504,57 +499,36 @@ describe("trackerHoc", () => {
       // [0] first 200ms spinner won't be shown (text NOSPINNER)
       // [1] after 200ms spinner will be shown (text SPINNER)
       // [2] after 1000ms spinner will be hidded again (text NOSPINNER)
-      let myFakePromise = null;
 
-      act(() => {
-        myFakePromise = new Promise(resolve => {
-          setTimeout(() => {
-            resolve(true);
-          }, 1000);
-        });
+      const myFakePromise = new Promise(resolve => {
+        setTimeout(() => {
+          resolve(true);
+        }, 1000);
       });
 
-      act(() => {
-        trackPromiseAPI.trackPromise(myFakePromise);
+      trackPromiseAPI.trackPromise(myFakePromise);
 
-        // Runs all pending timers. whether it's a second from now or a year.
-        // https://jestjs.io/docs/en/timer-mocks.html
-        //jest.advanceTimersByTime(300);
-      });
-
-      act(() => {
-        // Runs all pending timers. whether it's a second from now or a year.
-        // https://jestjs.io/docs/en/timer-mocks.html
-        jest.advanceTimersByTime(100);
-      });
+      jest.advanceTimersByTime(100);
 
       // [0] first 200ms spinner won't be shown (text NOSPINNER)
-      expect(component.text()).toMatch("NO SPINNER");
+      expect(component.text()).toEqual("NO SPINNER");
 
-      act(() => {
-        // Runs all pending timers. whether it's a second from now or a year.
-        // https://jestjs.io/docs/en/timer-mocks.html
-        jest.advanceTimersByTime(300);
-      });
+      jest.advanceTimersByTime(300);
 
       // Before the promise get's resolved
       // [1] after 200ms spinner will be shown (text SPINNER)
-      expect(component.text()).toMatch("SPINNER");
+      expect(component.text()).toEqual("SPINNER");
 
       // After the promise get's resolved
-
-      act(() => {
-        jest.advanceTimersByTime(1500);
-        //jest.runAllTimers();
-      });
+      jest.runAllTimers();
 
       // [2] after 1000ms spinner will be hidded again (text NOSPINNER)
       // Wait for fakePromise (simulated ajax call) to be completed
       // no spinner should be shown
-      act(() => {
-        myFakePromise.then(() => {
-              expect(component.text()).toMatch("NO SPINNER");
-        });
+
+      myFakePromise.then(() => {
+        expect(component.text()).toEqual("NO SPINNER");
+        done();
       });
     });
   });
