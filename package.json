@@ -52,7 +52,7 @@
     "build:copy": "copyfiles package.json readme.md LICENSE.txt build && copyfiles \"./src/**/*.d.ts\" -u 1 build",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "release:prepare": "npm run clean && npm run lint:fix && npm run test && npm run build && rimraf build/dist/report",
+    "release:prepare": "npm run clean && npm run test && npm run build && rimraf build/dist/report",
     "release": "npm publish ./build"
   },
   "peerDependencies": {
