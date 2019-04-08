@@ -1,12 +1,13 @@
 {
   "name": "react-promise-tracker",
   "version": "2.0.0",
-  "description": "Simple React Promise tracker Hoc, helper to add loading spinner indicators",
+  "description": "Simple React Promise tracker Hook/HOC helper to add loading spinner indicators",
   "keywords": [
     "react",
     "promise",
     "tracker",
     "track",
+    "hook",
     "hoc",
     "higher order component",
     "spinner",
@@ -24,11 +25,13 @@
     "Alejandro Rosa <> (https://github.com/arp82)"
   ],
   "files": [
-    "lib",
-    "es",
-    "src",
     "dist",
-    "index.d.ts"
+    "es",
+    "lib",
+    "index.d.ts",
+    "LICENSE.txt",
+    "package.json",
+    "readme.md"
   ],
   "browser": "lib/index.js",
   "main": "lib/index.js",
@@ -40,17 +43,17 @@
     "url": "git+https://github.com/Lemoncode/react-promise-tracker.git"
   },
   "scripts": {
-    "clean": "rimraf lib dist es",
-    "prepublish": "npm run clean && npm run build",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --ignore spec.js,test.js",
-    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files --ignore spec.js,test.js",
-    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack",
-    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack -p",
-    "build:dev": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack --config=webpack.dev.config.babel.js",
-    "build:perf": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack --config=webpack.perf.config.babel.js",
+    "clean": "rimraf build/*",
+    "build": "npm run clean && npm run build:lib && npm run build:es && npm run build:dist:prod && npm run build:copy",
+    "build:lib": "cross-env BABEL_ENV=es5_cjs babel src --out-dir build/lib --ignore 'src/**/*.spec.js,src/**/*.test.js'",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir build/es --ignore 'src/**/*.spec.js,src/**/*.test.js'",
+    "build:dist:prod": "cross-env BABEL_ENV=umd webpack -p --config ./config/webpack/webpack.prod.js",
+    "build:dist:dev": "cross-env BABEL_ENV=umd webpack --config ./config/webpack/webpack.dev.js",
+    "build:copy": "copyfiles package.json readme.md LICENSE.txt build && copyfiles \"./src/**/*.d.ts\" -u 1 build",
     "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "release:prepare": "npm run clean && npm run lint:fix && npm run test && npm run build && rimraf build/dist/report",
+    "release": "npm publish ./build"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
@@ -63,11 +66,14 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "compression-webpack-plugin": "^2.0.0",
+    "copyfiles": "^2.1.0",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.5.0",
+    "raf": "^3.4.1",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-test-renderer": "^16.8.4",
@@ -80,8 +86,8 @@
   },
   "jest": {
     "setupFiles": [
-      "./test/shim.js",
-      "./test/jestsetup.js"
+      "./config/test/polyfills.js",
+      "./config/test/setupJest.js"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
@@ -89,9 +95,7 @@
     "restoreMocks": true,
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/dist/",
-      "/es/",
-      "/lib/"
+      "/build/"
     ]
   }
 }
