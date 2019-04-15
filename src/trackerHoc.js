@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   emitter,
   getCounter,
   promiseCounterUpdateEventId
-} from "./trackPromise";
-import { setupConfig } from "./setupConfig";
+} from './trackPromise';
+import { setupConfig } from './setupConfig';
 
 // Props:
 // config: {
