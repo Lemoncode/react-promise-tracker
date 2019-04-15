@@ -1,12 +1,30 @@
-node_modules
-.DS_Store
-dist/
-typings/
-*.orig
+# Common aux folders
+.awcache/
+.vscode/
 .idea/
-*/src/**/*.js.map
-yarn.lock
-*.log
+.cache/
+
+# Dependencies & Build
+node_modules/
+build/
 lib/
+dist/
 es/
+
+# Aux files
+*.cer
+*.log
+*/src/**/*.orig
+*/src/**/*.js.map
+
+# Win
+desktop.ini
+
+# MacOs
+.DS_Store
+
+# Yarn
+yarn.lock
+
+# NPM
 package-lock.json

@@ -2,21 +2,22 @@
 
 Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
-# Why do I need this?
+## Why do I need this?
 
 Sometimes we need to track blocking promises (e.g. fetch http calls), to choose between displaying a loading spinner or not.
 
 This library implements:
-  - A simple function that will allow a promise to be tracked.
-  - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
 
-# Installation
+- A simple function that will allow a promise to be tracked.
+- An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
+
+## Installation
 
 ```cmd
 npm install react-promise-tracker --save
 ```
 
-# Usage
+## Usage
 
 Whenever you want a promise to be tracked, just wrap it like in the code below:
 
@@ -33,7 +34,7 @@ Then you only need to create a component that will defined a property called _tr
 
 And wrap it around the _promiseTrackerHoc_
 
-## Basic sample:
+## Basic sample
 
 ```diff
 import React, { Component } from 'react';
@@ -65,7 +66,6 @@ InnerLoadingSpinerComponent.propTypes = {
   - [Demo page](http://www.davidhu.io/react-spinners/)
   - [Github page](https://github.com/davidhu2000/react-spinners)
 
-
 - Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
 
 ```diff
@@ -80,12 +80,12 @@ export const AppComponent = (props) => (
 );
 ```
 
-## Sample with areas:
+## Sample with areas
 
 Using react-promise-tracker as is will just display a single spinner in your page, there are cases where you want to display a given spinner only blocking certain area of the screen (e.g.: a product list app with a shopping cart section.
 We would like to block the ui (show spinner) while is loading the product, but not the rest of the user interface, and the same thing with the shopping cart pop-up section.
 
-![Shopping cart sample](./readme_resources/00-shopping-cart-sample.png)
+![Shopping cart sample](./resources/00-shopping-cart-sample.png)
 
 We could add the `default-area` to show product list spinner:
 
@@ -124,7 +124,7 @@ With this approach, we don't need to define different spinners components, it's 
 + ,'shopping-cart-area');
 ```
 
-# Demos
+## Demos
 
 If you want to see it in action:
 
@@ -132,8 +132,7 @@ If you want to see it in action:
 
 - [Two areas example](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
 
-
-# About Basefactor + Lemoncode
+## About Basefactor + Lemoncode
 
 We are an innovating team of Javascript experts, passionate about turning your ideas into robust products.
 
@@ -141,4 +140,4 @@ We are an innovating team of Javascript experts, passionate about turning your i
 
 [Lemoncode](http://lemoncode.net/services/en/#en-home) provides training services.
 
-For the LATAM/Spanish audience we are running an Online Front End Master degree, more info: http://lemoncode.net/master-frontend
+For the LATAM/Spanish audience we are running an Online Front End Master degree, more info: [http://lemoncode.net/master-frontend](http://lemoncode.net/master-frontend)
