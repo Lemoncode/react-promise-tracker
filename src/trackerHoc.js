@@ -4,7 +4,7 @@ import {
   getCounter,
   promiseCounterUpdateEventId
 } from "./trackPromise";
-import { setupConfig } from './setupConfig';
+import { setupConfig } from "./setupConfig";
 
 // Props:
 // config: {
@@ -20,16 +20,20 @@ export const promiseTrackerHoc = ComponentToWrap => {
       this.state = {
         promiseInProgress: false,
         internalPromiseInProgress: false,
-        config: setupConfig(props.config),
+        config: setupConfig(props.config)
       };
+
+      this.notifyPromiseInProgress = this.notifyPromiseInProgress.bind(this);
+      this.updateProgress = this.updateProgress.bind(this);
+      this.subscribeToCounterUpdate = this.subscribeToCounterUpdate.bind(this);
     }
 
-    updateProgressWithDelay() {
-      setTimeout(() => {
-        this.setState({
-          promiseInProgress: this.state.internalPromiseInProgress
-        });
-      }, this.state.config.delay);
+    notifyPromiseInProgress() {
+      this.state.config.delay === 0
+        ? this.setState({ promiseInProgress: true })
+        : setTimeout(() => {
+            this.setState({ promiseInProgress: true });
+          }, this.state.config.delay);
     }
 
     updateProgress(progress, afterUpdateCallback) {
@@ -37,9 +41,10 @@ export const promiseTrackerHoc = ComponentToWrap => {
         { internalPromiseInProgress: progress },
         afterUpdateCallback
       );
-      this.state.config.delay === 0
-        ? this.setState({ promiseInProgress: progress })
-        : this.updateProgressWithDelay();
+
+      !progress
+        ? this.setState({ promiseInProgress: false })
+        : this.notifyPromiseInProgress();
     }
 
     subscribeToCounterUpdate() {

@@ -470,7 +470,7 @@ describe("trackerHoc", () => {
       jest.useRealTimers();
     });
 
-    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 200 (before timing out)", done => {
+    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 300 (before timing out)", done => {
       // Arrange
       const TestSpinnerComponent = props => {
         return (
