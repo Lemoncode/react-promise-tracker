@@ -1,6 +1,6 @@
 {
   "name": "react-promise-tracker",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0",
   "description": "Simple React Promise tracker Hook/HOC helper to add loading spinner indicators",
   "keywords": [
     "react",
@@ -21,7 +21,8 @@
   "author": "Lemoncode",
   "contributors": [
     "Braulio Diez <braulio.diez@lemoncode.net> (https://github.com/brauliodiez)",
-    "Javier Calzado <fjcalzadosp@gmail.com> (https://github.com/fjcalzado)",
+    "Javier Calzado <javi.calzado@lemoncode.net > (https://github.com/fjcalzado)",
+    "Daniel Sanchez <daniel.sanchez@lemoncode.net> (https://github.com/nasdan)",
     "Alejandro Rosa <> (https://github.com/arp82)"
   ],
   "files": [
