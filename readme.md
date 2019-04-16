@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Lemoncode/react-promise-tracker.svg?branch=master)](https://travis-ci.org/Lemoncode/react-promise-tracker)
+
 # react-promise-tracker
 
 Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/wy04jpmly7), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
