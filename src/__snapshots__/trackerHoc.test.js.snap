@@ -331,7 +331,7 @@ exports[`trackerHoc Initial Status should render component with trackedPromiseIn
         "delay": 300,
       }
     }
-    promiseInProgress={false}
+    promiseInProgress={true}
   >
     <span>
       test

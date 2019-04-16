@@ -1,6 +1,5 @@
 import React from "react";
 import { emitter, promiseCounterUpdateEventId,  getCounter} from "./trackPromise";
-import { defaultArea } from "./constants";
 import { defaultConfig, setupConfig } from './setupConfig';
 
 
