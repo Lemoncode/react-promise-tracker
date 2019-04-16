@@ -1,14 +1,20 @@
 # react-promise-tracker
 
-Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
+Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/wy04jpmly7), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
 # Why do I need this?
 
-Sometimes we need to track blocking promises (e.g. fetch http calls), to choose between displaying a loading spinner or not.
+Sometimes we need to track blocking promises (e.g. fetch or axios http calls), and control whether to
+display a loading spinner indicator not, you have to take care of scenarios like:
+  - You could need to track several ajax calls being performed in parallel.
+  - Some of them you want to be tracked some others to be executed silently in background.
+  - You may want to have several spinners blocking only certain areas of the screen.
+  - For high speed connection you may wat to show the loading spinner after an small delay of time
+  to avoid having a flickering effect in your screen.
 
 This library implements:
   - A simple function that will allow a promise to be tracked.
-  - An HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
+  - A Hook + HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
 
 # Installation
 
@@ -29,22 +35,23 @@ Whenever you want a promise to be tracked, just wrap it like in the code below:
 + );
 ```
 
-Then you only need to create a component that will defined a property called _trackedPromiseInProgress_
-
-And wrap it around the _promiseTrackerHoc_
+Then you only need to create a spinner component and make use of the _usePromiseTracker_, this
+hook will expose a boolean property that will let us decide whether to show or hide the loading
+spinner.
 
 ## Basic sample:
 
 ```diff
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-+ import { promiseTrackerHoc} from 'react-promise-tracker';
++ import { usePromiseTracker } from "react-promise-tracker";
 
-const InnerLoadingSpinerComponent = (props) => {
+export const LoadingSpinerComponent = (props) => {
++ const { promiseInProgress } = usePromiseTracker();
+
   return (
     <div>
     {
-      (props.trackedPromiseInProgress === true) ?
++      (promiseInProgress === true) ?
         <h3>Hey I'm a spinner loader wannabe !!!</h3>
       :
         null
@@ -52,12 +59,6 @@ const InnerLoadingSpinerComponent = (props) => {
   </div>
   )
 };
-
-InnerLoadingSpinerComponent.propTypes = {
-  trackedPromiseInProgress : PropTypes.bool.isRequired,
-};
-
-+ export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
 ```
 
 - To add a cool spinner component you can make use of _react-spinners_:
@@ -85,9 +86,26 @@ export const AppComponent = (props) => (
 Using react-promise-tracker as is will just display a single spinner in your page, there are cases where you want to display a given spinner only blocking certain area of the screen (e.g.: a product list app with a shopping cart section.
 We would like to block the ui (show spinner) while is loading the product, but not the rest of the user interface, and the same thing with the shopping cart pop-up section.
 
-![Shopping cart sample](./readme_resources/00-shopping-cart-sample.png)
+![Shopping cart sample](/img/started//00-shopping-cart-sample.png)
 
-We could add the `default-area` to show product list spinner:
+The _promiseTracker_ hooks exposes a config parameter, here we can define the area that we want to setup
+(by default o area). We could just feed the area in the props of the common spinner we have created
+
+```diff
+export const Spinner = (props) => {
++  const { promiseInProgress } = usePromiseTracker({area: props.area});
+
+  return (
+    promiseInProgress && (
+      <div className="spinner">
+        <Loader type="ThreeDots" color="#2BAD60" height="100" width="100" />
+      </div>
+    )
+  );
+};
+```
+
+We could add the `default-area` to show product list spinner (no params means just default area):
 
 ```diff
 import React from 'react';
@@ -114,7 +132,7 @@ export const ShoppingCartModal = (props) => (
 );
 ```
 
-With this approach, we don't need to define different spinners components, it's only one but it will render when we want to track the desired area:
+The when we track a given promise we can choose the area that would be impacted.
 
 ```diff
 + import { trackPromise} from 'react-promise-tracker';
@@ -124,13 +142,33 @@ With this approach, we don't need to define different spinners components, it's 
 + ,'shopping-cart-area');
 ```
 
+## Sample with delay:
+
+You can add as well a delay to display the spinner, When is this useful? if your users are connected on
+high speed connections it would be worth to show the spinner right after 500 Ms (checking that the
+ajax request hasn't been completed), this will avoid having undesired screen flickering on high speed
+connection scenarios.
+
+```diff
+export const Spinner = (props) => {
++  const { promiseInProgress } = usePromiseTracker({delay: 500});
+```
+
 # Demos
 
-If you want to see it in action:
+Full examples:
 
-- [Default area example](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+- [00 Basic Example](https://codesandbox.io/s/wy04jpmly7): minimum sample to get started.
 
-- [Two areas example](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
+- [01 Example Areas](https://codesandbox.io/s/wy04jpmly7): defining more than one spinner to be displayed in separate screen areas.
+
+- [02 Example Delay](https://codesandbox.io/s/kwrrjjyjm5): displaying the spinner after some miliseconds delay (useful when your users havbe high speed connections).
+
+- [03 Example Hoc](https://codesandbox.io/s/j2jjrk4ply): using legacy high order component approach (useful if your spinner is a class based component)
+
+- [04 Initial load](https://codesandbox.io/s/j2jjrk4ply): launching ajax request just on application startup before the spinner is being mounted.
+
+- [05 Typescript](https://codesandbox.io/s/5ww39l90yp): full sample using typescript (using library embedded typings).
 
 
 # About Basefactor + Lemoncode

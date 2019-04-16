@@ -1,29 +1,43 @@
 {
   "env": {
-    // Compatibility Profile. ES5 output and CommonJS module format.
-    "commonjs": {
+    // Compatibility Profile.
+    // ES5 output and CommonJS module format.
+    "es5_cjs": {
       "presets": [
-        ["env", {
-          "useBuiltIns": false
-        }],
-        "react"
+        "@babel/preset-env",
+        "@babel/preset-react"
       ]
     },
-    // Future Profile. ES6 output and module syntax.
+    // Future Profile.
+    // ES6 output with no module transformation (ES Modules syntax).
     "es": {
       "presets": [
-        ["env", {
-          "useBuiltIns": false,
+        ["@babel/preset-env", {
           "modules": false,
           "targets": {
             "node": "6.5"
           }
         }],
-        "react"
+        "@babel/preset-react"
       ]
     },
+    // Bundled Profile.
+    // ES5 output and UMD module format.
+    "umd": {
+      "presets": [
+        ["@babel/preset-env", {
+          "modules": false,
+        }],
+        "@babel/preset-react"
+      ]
+    },
+    // Jest Profile.
+    // To be used by jest tests.
     "test": {
-      "presets": ["env", "react"]
+      "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+      ]
     }
   }
 }

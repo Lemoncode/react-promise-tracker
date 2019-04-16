@@ -3,22 +3,23 @@
 Componente React Hoc, rastreador de promesas.
  Puedes verlo en acción: [Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
 
-# ¿Por qué necesito esto?
+## ¿Por qué necesito esto?
 
-Algunas veces necesitas rastrear promesas bloqueantes (ejemplo: fetch http calls), 
+Algunas veces necesitas rastrear promesas bloqueantes (ejemplo: fetch http calls),
 para escoger entre mostrar un spinner de cargando... o no.
 
 Esta librería implementa:
-  - Una función simple que te permitirá rastrear una promesa.
-  - Un componente HOC, que  nos permitirá  usar un wrapper como spinner de cargando... (se mostrará cuando el número de peticiones rastreadas sea mayor que cero, y estará oculto cuando no).
 
-# Instalación.
+- Una función simple que te permitirá rastrear una promesa.
+- Un componente HOC, que  nos permitirá  usar un wrapper como spinner de cargando... (se mostrará cuando el número de peticiones rastreadas sea mayor que cero, y estará oculto cuando no).
+
+## Instalación
 
 ```cmd
 npm install react-promise-tracker --save
 ```
 
-# Uso
+## Uso
 
 Siempre que quieras rastrear una promesa, simplemente usa el componente como wrapper tal como se muestra en el siguiente código:
 
@@ -35,7 +36,7 @@ Entonces solo necesitas crear el componente que define una propiedad llamada _tr
 
 Y envolverlo con el _promiseTrackerHoc_
 
-## Ejemplo báscio:
+## Ejemplo básico
 
 ```diff
 import React, { Component } from 'react';
@@ -67,7 +68,6 @@ InnerLoadingSpinerComponent.propTypes = {
   - [Demo page](http://www.davidhu.io/react-spinners/)
   - [Github page](https://github.com/davidhu2000/react-spinners)
 
-
 - Luego en el punto de entrada de tu apliación (main / app / ...) solo añade este componente loading spinner, para que sea renderizado:
 
 ```diff
@@ -82,12 +82,12 @@ export const AppComponent = (props) => (
 );
 ```
 
-## Ejemplo con áreas:
+## Ejemplo con áreas
 
 Es posible usar react-promise-tracker como si se mostrara un solo spinner en la página. Hay casos en los que desea mostrar un spinner solo bloqueando cierta área de la pantalla (por ejemplo, una aplicación de lista de productos con una sección de carrito de la compra).
 Nos gustaría bloquear esa área de la UI (mostrar sólo el spinner) mientras carga el producto, pero no el resto de la interfaz de usuario, y lo mismo con la sección pop-up del carro de compras.
 
-![Shopping cart sample](./readme_resources/00-shopping-cart-sample.png)
+![Shopping cart sample](./resources/00-shopping-cart-sample.png)
 
 Podemos añadir el área `default-area` para mostrar el spinner de la lista de productos:
 
@@ -126,7 +126,7 @@ Con este enfoque, no necesitamos definir diferentes componentes spinners, con un
 + ,'shopping-cart-area');
 ```
 
-# Demos
+## Demos
 
 Si quieres verlo en acción puedes visitar:
 
@@ -134,10 +134,9 @@ Si quieres verlo en acción puedes visitar:
 
 - [Ejemplo de dos áreas](https://stackblitz.com/edit/react-promise-tracker-two-areas-sample)
 
-
-# Sobre Lemoncode
+## Sobre Lemoncode
 
 Somos un equipo de una larga experiencia como desarrolladores freelance, establecidos como grupo en 2010.
 Estamos especializados en tecnologías Front End y .NET. [Click aquí](http://lemoncode.net/services/en/#en-home) para más info sobre nosotros.
 
-Para la audiencia LATAM/Español estamos desarrollando un máster Front End Online, más info: http://lemoncode.net/master-frontend
+Para la audiencia LATAM/Español estamos desarrollando un máster Front End Online, más info: [http://lemoncode.net/master-frontend](http://lemoncode.net/master-frontend)
