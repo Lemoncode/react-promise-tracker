@@ -1,6 +1,0 @@
-.vscode/
-node_modules/
-yarn.lock
-.editorconfig
-lib/
-samples/
