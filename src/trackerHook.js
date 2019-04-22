@@ -16,7 +16,6 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
   React.useEffect(() => {
     if(config && config.area && getCounter(config.area) > 0) {
       setInternalPromiseInProgress(true);
-      setInternalPromiseInProgress(true);
       setPromiseInProgress(true);
     }
   }, config)
