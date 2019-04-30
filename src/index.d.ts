@@ -17,8 +17,8 @@ export function trackPromise(promise: Promise<any>): Promise<any>;
  */
 
 interface Config {
-   area: string;
-   delay: number;
+   area?: string;
+   delay?: number;
 }
 
 /**
