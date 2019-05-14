@@ -9,7 +9,7 @@ import * as React from "react";
  * @param promise Input promise to be tracked.
  * @returns It returns the same promise as input.
  */
-export function trackPromise(promise: Promise<any>): Promise<any>;
+export function trackPromise<T>(promise: Promise<T>, area?: string): Promise<T>;
 
 /**
  * Configuration contract: user can setup areas (display more than one spinner) or delay when
