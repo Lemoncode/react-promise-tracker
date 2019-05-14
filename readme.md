@@ -174,6 +174,9 @@ Full examples:
 
 - [05 Typescript](https://codesandbox.io/s/5ww39l90yp): full sample using typescript (using library embedded typings).
 
+- [06 Suspense Like](https://codesandbox.io/s/6w1oly0x9r): sample implementing a suspense-like component (typescript).
+
+- [07 Suspense Custom](https://codesandbox.io/s/jjkm4vvqr5): sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
 
 # About Basefactor + Lemoncode
 
