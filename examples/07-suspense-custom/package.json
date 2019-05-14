@@ -1,0 +1,49 @@
+{
+  "name": "07-suspense-custom",
+  "version": "1.0.0",
+  "description": "React Promise Tracker sample with suspense-like customizable component",
+  "keywords": [
+    "react",
+    "promise",
+    "tracker",
+    "hook",
+    "hooks",
+    "typescript"
+  ],
+  "author": "Javier Calzado (javi.calzado@lemoncode.net)",
+  "license": "MIT",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "webpack-dev-server  --mode development --inline --hot --open",
+    "typecheck": "tsc --pretty --noEmit",
+    "build": "npm run typecheck && webpack  --mode development"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "@material-ui/core": "3.9.3",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
+    "react-promise-tracker": "2.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/node": "11.13.4",
+    "@types/react": "16.8.8",
+    "@types/react-dom": "16.8.2",
+    "babel-loader": "^8.0.6",
+    "core-js": "^2.6.5",
+    "html-webpack-plugin": "^3.2.0",
+    "tslint": "^5.16.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
