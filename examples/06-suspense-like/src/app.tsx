@@ -9,7 +9,7 @@ import { styles } from "./styles";
 
 
 const Suspense: React.FC<{ tag: string, className?: string }> = ({ tag, className, children }) => {
-  const { promiseInProgress } = usePromiseTracker({ area: tag, delay: 0 });
+  const { promiseInProgress } = usePromiseTracker({ area: tag });
   return promiseInProgress ? <CircularProgress className={className} size={60}/> : <>{children}</>;
 };
 

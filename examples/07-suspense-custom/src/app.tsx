@@ -8,7 +8,7 @@ import { styles } from "./styles";
 import { randomBytes } from "crypto";
 
 const Suspense: React.FC<{tag: string, Progress?: React.ReactNode}> = ({ tag, Progress, children }) => {
-  const { promiseInProgress } = usePromiseTracker({ area: tag, delay: 0 });
+  const { promiseInProgress } = usePromiseTracker({ area: tag });
   return <>{promiseInProgress ? Progress : children}</>;
 };
 
