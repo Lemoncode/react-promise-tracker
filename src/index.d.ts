@@ -7,17 +7,17 @@ import * as React from "react";
 /**
  * It tracks a promise while in pending state.
  * @param promise Input promise to be tracked.
+ * @param group Organize promises into groups.
  * @returns It returns the same promise as input.
  */
-export function trackPromise<T>(promise: Promise<T>, area?: string): Promise<T>;
+export function trackPromise<T>(promise: Promise<T>, group?: string): Promise<T>;
 
 /**
- * Configuration contract: user can setup areas (display more than one spinner) or delay when
+ * Configuration contract: user can setup groups (organize and track promises together) or delay when
  * the spinner is shown (this is useful when a user has a fast connection, to avoid unneccessary flickering)
  */
-
 interface Config {
-   area?: string;
+   group?: string;
    delay?: number;
 }
 
@@ -27,7 +27,6 @@ interface Config {
  * @param component Input component to be wrapped.
  * @returns It returns a new component that extends the input one.
  */
-
 export interface ComponentToWrapProps {
   config: Config;
   promiseInProgress: boolean;

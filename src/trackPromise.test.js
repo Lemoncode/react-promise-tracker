@@ -1,8 +1,8 @@
 import { trackPromise, emitter } from "./trackPromise";
-import { defaultArea } from "./constants";
+import { PROGRESS_UPDATE, DEFAULT_GROUP } from "./constants";
 
 describe("trackPromise", () => {
-  describe("using default area", () => {
+  describe("using default group", () => {
     it("On Initial case, promise fired, promise emitter.emit is called", () => {
       // Arrange
       emitter.emit = jest.fn();
@@ -16,9 +16,9 @@ describe("trackPromise", () => {
       expect(emitter.emit).toHaveBeenCalledTimes(1);
 
       expect(emitter.emit).toHaveBeenCalledWith(
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        defaultArea
+        DEFAULT_GROUP
       );
     });
 
@@ -37,16 +37,16 @@ describe("trackPromise", () => {
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           1,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           true,
-          defaultArea
+          DEFAULT_GROUP
         );
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           2,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           false,
-          defaultArea
+          DEFAULT_GROUP
         );
         done();
       });
@@ -67,16 +67,16 @@ describe("trackPromise", () => {
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           1,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           true,
-          defaultArea
+          DEFAULT_GROUP
         );
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           2,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           false,
-          defaultArea
+          DEFAULT_GROUP
         );
         done();
       });
@@ -101,30 +101,30 @@ describe("trackPromise", () => {
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           1,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           true,
-          defaultArea
+          DEFAULT_GROUP
         );
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           2,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           true,
-          defaultArea
+          DEFAULT_GROUP
         );
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           3,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           true,
-          defaultArea
+          DEFAULT_GROUP
         );
 
         expect(emitter.emit).toHaveBeenNthCalledWith(
           4,
-          "promise-counter-update",
+          PROGRESS_UPDATE,
           false,
-          defaultArea
+          DEFAULT_GROUP
         );
         done();
       });
@@ -147,120 +147,120 @@ describe("trackPromise", () => {
     });
   });
 
-  describe("using custom area", () => {
-    it("should call emitter.emit one time when feeding promise and area equals undefined", () => {
+  describe("using custom group", () => {
+    it("should call emitter.emit one time when feeding promise and group equals undefined", () => {
       // Arrange
       emitter.emit = jest.fn();
 
       const myPromise = Promise.resolve();
-      const area = undefined;
+      const group = undefined;
 
       // Act
-      trackPromise(myPromise, area);
+      trackPromise(myPromise, group);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
       expect(emitter.emit).toHaveBeenCalledWith(
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        defaultArea
+        DEFAULT_GROUP
       );
     });
 
-    it("should call emitter.emit one time when feeding promise and area equals null", () => {
+    it("should call emitter.emit one time when feeding promise and group equals null", () => {
       // Arrange
       emitter.emit = jest.fn();
 
       const myPromise = Promise.resolve();
-      const area = null;
+      const group = null;
 
       // Act
-      trackPromise(myPromise, area);
+      trackPromise(myPromise, group);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
       expect(emitter.emit).toHaveBeenCalledWith(
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        defaultArea
+        DEFAULT_GROUP
       );
     });
 
-    it("should call emitter.emit one time when feeding promise and area equals testArea", () => {
+    it("should call emitter.emit one time when feeding promise and group equals testgroup", () => {
       // Arrange
       emitter.emit = jest.fn();
 
       const myPromise = Promise.resolve();
-      const area = "testArea";
+      const group = "testgroup";
 
       // Act
-      trackPromise(myPromise, area);
+      trackPromise(myPromise, group);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
       expect(emitter.emit).toHaveBeenCalledWith(
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        "testArea"
+        "testgroup"
       );
     });
 
-    it("should call emitter.emit two times when feeding two promises in same area", () => {
+    it("should call emitter.emit two times when feeding two promises in same group", () => {
       // Arrange
       emitter.emit = jest.fn();
 
       const myPromise1 = Promise.resolve();
       const myPromise2 = Promise.resolve();
 
-      const area = "testArea";
+      const group = "testgroup";
 
       // Act
-      trackPromise(myPromise1, area);
-      trackPromise(myPromise2, area);
+      trackPromise(myPromise1, group);
+      trackPromise(myPromise2, group);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(2);
       expect(emitter.emit).toHaveBeenNthCalledWith(
         1,
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        "testArea"
+        "testgroup"
       );
       expect(emitter.emit).toHaveBeenNthCalledWith(
         2,
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        "testArea"
+        "testgroup"
       );
     });
 
-    it("should call emitter.emit two times when feeding two promises in different areas", () => {
+    it("should call emitter.emit two times when feeding two promises in different groups", () => {
       // Arrange
       emitter.emit = jest.fn();
 
       const myPromise1 = Promise.resolve();
       const myPromise2 = Promise.resolve();
 
-      const area1 = "testArea1";
-      const area2 = "testArea2";
+      const group1 = "testgroup1";
+      const group2 = "testgroup2";
 
       // Act
-      trackPromise(myPromise1, area1);
-      trackPromise(myPromise2, area2);
+      trackPromise(myPromise1, group1);
+      trackPromise(myPromise2, group2);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(2);
       expect(emitter.emit).toHaveBeenNthCalledWith(
         1,
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        "testArea1"
+        "testgroup1"
       );
       expect(emitter.emit).toHaveBeenNthCalledWith(
         2,
-        "promise-counter-update",
+        PROGRESS_UPDATE,
         true,
-        "testArea2"
+        "testgroup2"
       );
     });
   });

@@ -1,9 +1,9 @@
-import { defaultArea } from "./constants";
+import { DEFAULT_GROUP } from "./constants";
 
-export const defaultConfig = { area: defaultArea, delay: 0 };
+export const defaultConfig = { group: DEFAULT_GROUP, delay: 0 };
 
 // Defensive config setup, fulfill default values
 export const setupConfig = (outerConfig) => ({
-  area: (!outerConfig || !outerConfig.area) ? defaultArea : outerConfig.area,
+  group: (!outerConfig || !outerConfig.group) ? DEFAULT_GROUP : outerConfig.group,
   delay: (!outerConfig || !outerConfig.delay) ? 0 : outerConfig.delay,
 })

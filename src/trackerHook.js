@@ -1,20 +1,21 @@
 import React from "react";
-import { emitter, promiseCounterUpdateEventId,  getCounter} from "./trackPromise";
+import { PROGRESS_UPDATE } from "./constants";
+import { emitter, getProgressCount} from "./trackPromise";
 import { defaultConfig, setupConfig } from './setupConfig';
 
 
-export const usePromiseTracker = (outerConfig = defaultConfig) => {
+export const usePromiseTracker = (configuration = defaultConfig) => {
   // Included in state, it will be evaluated just the first time,
   // TODO: discuss if this is a good approach
-  // We need to apply defensive programming, ensure area and delay default to secure data
+  // We need to apply defensive programming, ensure group and delay default to secure data
   // cover cases like not all params informed, set secure defaults
-  const [config] = React.useState(setupConfig(outerConfig));
+  const [config] = React.useState(setupConfig(configuration));
 
   // Edge case, when we start the application if we are loading just onComponentDidMount
   // data, event emitter could have already emitted the event but subscription is not yet
   // setup
   React.useEffect(() => {
-    if(config && config.area && getCounter(config.area) > 0) {
+    if(config && config.group && getProgressCount(config.group) > 0) {
       setInternalPromiseInProgress(true);
       setPromiseInProgress(true);
     }
@@ -48,8 +49,8 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
       }, config.delay);
   };
 
-  const updatePromiseTrackerStatus = (anyPromiseInProgress, areaAffected) => {
-    if (config.area === areaAffected) {
+  const updatePromiseTrackerStatus = (anyPromiseInProgress, groupAffected) => {
+    if (config.group === groupAffected) {
       setInternalPromiseInProgress(anyPromiseInProgress);
       // Update the ref object as well, we will check it when we need to
       // cover the _delay_ case (setTimeout)
@@ -64,14 +65,14 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
 
   React.useEffect(() => {
     latestInternalPromiseInProgress.current = internalPromiseInProgress;
-    emitter.on(promiseCounterUpdateEventId,
-      (anyPromiseInProgress, areaAffected) => {
-        updatePromiseTrackerStatus(anyPromiseInProgress, areaAffected);
+    emitter.on(PROGRESS_UPDATE,
+      (anyPromiseInProgress, groupAffected) => {
+        updatePromiseTrackerStatus(anyPromiseInProgress, groupAffected);
       }
     );
 
     return () => {
-      emitter.off(promiseCounterUpdateEventId);
+      emitter.off(PROGRESS_UPDATE);
     };
   }, []);
 

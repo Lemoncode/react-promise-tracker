@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
   emitter,
-  getCounter,
+  getProgressCount,
   promiseCounterUpdateEventId
 } from './trackPromise';
 import { setupConfig } from './setupConfig';
 
 // Props:
 // config: {
-//  area:  // can be null|undefined|'' (will default to DefaultArea) or area name
+//  group:  // can be null|undefined|'' (will default to DefaultGroup) or group name
 //  delay: // Wait Xms to display the spinner (fast connections scenario avoid blinking)
 //            default value 0ms
 // }
@@ -48,8 +48,8 @@ export const promiseTrackerHoc = ComponentToWrap => {
     }
 
     subscribeToCounterUpdate() {
-      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, area) => {
-        if (this.state.config.area === area) {
+      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, group) => {
+        if (this.state.config.group === group) {
           this.updateProgress(anyPromiseInProgress);
         }
       });
@@ -57,7 +57,7 @@ export const promiseTrackerHoc = ComponentToWrap => {
 
     componentDidMount() {
       this.updateProgress(
-        Boolean(getCounter(this.state.config.area) > 0),
+        Boolean(getProgressCount(this.state.config.group) > 0),
         this.subscribeToCounterUpdate
       );
     }

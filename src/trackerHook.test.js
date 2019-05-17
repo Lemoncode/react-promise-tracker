@@ -28,17 +28,17 @@ describe("trackerHook", () => {
         return <span>test</span>;
       };
 
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
 
       // Act
       const component = mount(<TestSpinnerComponent />);
 
       // Assert
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
       expect(component).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area", () => {
+    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different group", () => {
       // Arrange
       const TestSpinnerComponent = props => {
         const { promiseInProgress } = usePromiseTracker();
@@ -46,23 +46,23 @@ describe("trackerHook", () => {
         return <span>test</span>;
       };
 
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
 
       const progress = false;
-      const area = "otherArea";
+      const group = "othergroup";
       const emitterStub = jest
         .spyOn(trackPromiseAPI.emitter, "on")
-        .mockImplementation((id, callback) => callback(progress, area));
+        .mockImplementation((id, callback) => callback(progress, group));
 
       // Act
       const component = mount(<TestSpinnerComponent />);
 
       // Assert
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
       expect(component).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area", () => {
+    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different group", () => {
       // Arrange
       const TestSpinnerComponent = props => {
         const { promiseInProgress } = usePromiseTracker();
@@ -70,20 +70,20 @@ describe("trackerHook", () => {
         return <span>test</span>;
       };
 
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
 
       const progress = true;
-      const area = "otherArea";
+      const group = "othergroup";
       const emitterStub = jest
         .spyOn(trackPromiseAPI.emitter, "on")
-        .mockImplementation((id, callback) => callback(progress, area));
+        .mockImplementation((id, callback) => callback(progress, group));
 
       // Act
       const component = mount(<TestSpinnerComponent />);
 
       // Assert
 
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
       expect(component).toMatchSnapshot();
     });
 
@@ -99,7 +99,7 @@ describe("trackerHook", () => {
         );
       };
 
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
 
       // Act
       const component = mount(<TestSpinnerComponent />);
@@ -107,7 +107,7 @@ describe("trackerHook", () => {
       // Assert
 
       expect(component.find("h2")).toHaveLength(1);
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
     });
 
     it("should render <h1>Spinner</h1> when counter is 1", () => {
@@ -122,7 +122,7 @@ describe("trackerHook", () => {
         );
       };
 
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 1);
 
       // Act
       const component = mount(<TestSpinnerComponent />);
@@ -130,14 +130,14 @@ describe("trackerHook", () => {
       // Assert
 
       expect(component.find("h1")).toHaveLength(1);
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
     });
 
-    it('should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300', () => {
+    it('should render component with trackedPromiseInProgress equals false and group equals "testgroup" when feeding group equals "testgroup" and delay equals 300', () => {
       // Arrange
       const TestSpinnerComponent = props => {
         const { promiseInProgress } = usePromiseTracker({
-          area: "testArea",
+          group: "testgroup",
           delay: 300
         });
 
@@ -177,7 +177,7 @@ describe("trackerHook", () => {
           );
         };
 
-        trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+        trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
       });
 
       // Act
@@ -190,7 +190,7 @@ describe("trackerHook", () => {
       // Check very beginning (no promises going on) NO SPINNER is shown
       // TODO: this assert could be skipped (move to another test)
       expect(component.text()).toEqual("NO SPINNER");
-      expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
+      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
 
       // Assert
       // This promise will resolved after 1 seconds, by doing this
