@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {
-  emitter,
-  getProgressCount,
-  promiseCounterUpdateEventId
-} from './trackPromise';
+import { PROGRESS_UPDATE } from './constants';
+import { emitter, getProgressCount } from './trackPromise';
+
 import { setupConfig } from './setupConfig';
 
 // Props:
@@ -48,7 +46,7 @@ export const promiseTrackerHoc = ComponentToWrap => {
     }
 
     subscribeToCounterUpdate() {
-      emitter.on(promiseCounterUpdateEventId, (anyPromiseInProgress, group) => {
+      emitter.on(PROGRESS_UPDATE, (anyPromiseInProgress, group) => {
         if (this.state.config.group === group) {
           this.updateProgress(anyPromiseInProgress);
         }
@@ -63,7 +61,7 @@ export const promiseTrackerHoc = ComponentToWrap => {
     }
 
     componentWillUnmount() {
-      emitter.off(promiseCounterUpdateEventId);
+      emitter.off(PROGRESS_UPDATE);
     }
 
     render() {
