@@ -6,7 +6,7 @@ export const emitter = new Emitter();
 const countMap = {
   [DEFAULT_GROUP]: 0
 };
-export const getProgressCount = group => countMap[group];
+export const getProgressCount = group => countMap[group || DEFAULT_GROUP] || undefined; // TODO: undefined better than 0 so we can manage not existing groups
 const incrementCount = group => ++countMap[group] || (countMap[group] = 1, 1);
 const decrementCount = group => --countMap[group];
 
