@@ -1,3 +1,5 @@
+// TODO:  This file is candidate to be removed.
+
 import { DEFAULT_GROUP } from "./constants";
 
 export const defaultConfig = { group: DEFAULT_GROUP, delay: 0 };

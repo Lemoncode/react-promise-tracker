@@ -62,7 +62,7 @@ export const usePromiseTracker = (configuration = defaultConfig) => {
     :
       setTimeout(() => {
         // Check here ref to internalPromiseInProgress
-        if (latestInternalPromiseInProgress.current) {
+        if (latestInternalPromiseInProgress.aux) {
           setPromiseInProgress(true);
         }
       }, config.delay);
@@ -75,7 +75,7 @@ export const usePromiseTracker = (configuration = defaultConfig) => {
       setInternalPromiseInProgress(anyPromiseInProgress);
       // Update the ref object as well, we will check it when we need to
       // cover the _delay_ case (setTimeout)
-      latestInternalPromiseInProgress.current = anyPromiseInProgress;
+      latestInternalPromiseInProgress.aux = anyPromiseInProgress;
       if (!anyPromiseInProgress) {
         setPromiseInProgress(false);
       } else {
@@ -85,7 +85,7 @@ export const usePromiseTracker = (configuration = defaultConfig) => {
   };
 
   React.useEffect(() => {
-    latestInternalPromiseInProgress.current = internalPromiseInProgress;
+    latestInternalPromiseInProgress.aux = internalPromiseInProgress;
     emitter.on(PROGRESS_UPDATE,
       (anyPromiseInProgress, groupAffected) => {
         updatePromiseTrackerStatus(anyPromiseInProgress, groupAffected);
