@@ -1,4 +1,11 @@
+/**
+ * Emitter event types.
+ * (Just one right now).
+ */
 export const PROGRESS_UPDATE = 'progress-update-event';
-export const DEFAULT_GROUP = 'default-group';
 
-export const defaultConfig = { group: DEFAULT_GROUP, delay: 0 };
+/**
+ * Default values.
+ */
+export const DEFAULT_GROUP = 'default-group';
+export const DEFAULT_DELAY = 0;

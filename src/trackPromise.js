@@ -1,18 +1,29 @@
-import { Emitter } from "./tinyEmmiter";
+import { Emitter } from "./tinyEmitter";
 import { PROGRESS_UPDATE, DEFAULT_GROUP } from "./constants";
+import { event } from "./utils";
 
+/**
+ * Emitter singleton.
+ */
 export const emitter = new Emitter();
 
+/**
+ * Promise registry based on counters and its utility methods.
+ */
 const countMap = {
   [DEFAULT_GROUP]: 0
 };
-export const getProgressCount = group => countMap[group || DEFAULT_GROUP] || undefined; // TODO: undefined better than 0 so we can manage not existing groups
 const incrementCount = group => ++countMap[group] || (countMap[group] = 1, 1);
 const decrementCount = group => --countMap[group];
+export const inProgress = group => countMap[group || DEFAULT_GROUP] > 0;
 
+/**
+ * Track a promise by increasing its group counter by one & programm its
+ * untracking once the promise has settled.
+ */
 export const trackPromise = (promise, group) => {
   group = group || DEFAULT_GROUP;
-  emitter.emit(PROGRESS_UPDATE, incrementCount(group) > 0, group);
+  emitter.emit(event(PROGRESS_UPDATE, group), incrementCount(group) > 0);
 
   const onResolveHandler = () => untrack(group);
   promise.then(onResolveHandler, onResolveHandler);
@@ -20,9 +31,11 @@ export const trackPromise = (promise, group) => {
   return promise;
 };
 
+/**
+ * Untrack a promise by decrementing one to its group counter.
+ */
 const untrack = group => {
-  emitter.emit(PROGRESS_UPDATE, decrementCount(group) > 0, group);
+  emitter.emit(event(PROGRESS_UPDATE, group), decrementCount(group) > 0);
 };
 
-// TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error
-// then the consumer of this event can be listening and decide what to to in case of error
+// TODO: Error management. Catch unhandled errors and throw events?

@@ -16,7 +16,7 @@ export function trackPromise<T>(promise: Promise<T>, group?: string): Promise<T>
  * Configuration contract: user can setup groups (organize and track promises together) or delay when
  * the spinner is shown (this is useful when a user has a fast connection, to avoid unneccessary flickering)
  */
-interface Config {
+interface PromiseTrackerConfiguration {
    group?: string;
    delay?: number;
 }
@@ -28,20 +28,21 @@ interface Config {
  * @returns It returns a new component that extends the input one.
  */
 export interface ComponentToWrapProps {
-  config: Config;
+  config: PromiseTrackerConfiguration;
   promiseInProgress: boolean;
 }
 
 export interface TrackerHocProps {
-  config?: Config;
+  config?: PromiseTrackerConfiguration;
 }
 
 export function promiseTrackerHoc<P>(component: React.ComponentType<P & ComponentToWrapProps>): React.ComponentType<P & TrackerHocProps>;
 
 /**
- * React Promise Tracker custom hook, this hook will expose a promiseInProgress boolean flag.
+ * React Promise Tracker custom hook.
+ * Keep track of your promises in any component with this hook.
  *
- * @param configuration (optional can be null).
- * @returns promiseInProgressFlag.
+ * @param configuration Optional. Object with a group property (string) and a delay property (number)
+ * @returns An object with a progress boolean flag.
  */
-export function usePromiseTracker(outerConfig? : Config) : { promiseInProgress : boolean };
+export function usePromiseTracker(configuration?: PromiseTrackerConfiguration): { progress : boolean };
