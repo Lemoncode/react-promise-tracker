@@ -1,13 +1,13 @@
-import React from "react";
-import { PROGRESS_UPDATE } from "./constants";
+import React from 'react';
+import { PROGRESS_UPDATE } from './constants';
 import { makeSafeConfig } from './utils';
-import { emitter, inProgress} from "./trackPromise";
+import { emitter, inProgress } from './trackPromise';
 
-const auxInitialState = {timeoutId: null, firstTime: null}
+const auxInitialState = { timeoutId: null, firstTime: null };
 
-export const usePromiseTracker = (configuration) => {
+export const usePromiseTracker = trackingConfig => {
   // Memoize a safe configuration & progress update event name.
-  const config = React.useMemo(() => makeSafeConfig(configuration), [configuration]);
+  const config = React.useMemo(() => makeSafeConfig(trackingConfig), [trackingConfig]);
   const updateEvent = React.useMemo(() => event(PROGRESS_UPDATE, config.group), [config.group]);
 
   // Create state for progress (boolean).
@@ -19,7 +19,7 @@ export const usePromiseTracker = (configuration) => {
   // Throttled setProgress implementation.
   const throttledSetProgress = React.useCallback(progressStatus => {
     const now = Date.now();
-    if(!aux.current.firstTime) aux.current.firstTime = now;
+    if (!aux.current.firstTime) aux.current.firstTime = now;
     const remaining = config.delay - (now - aux.current.firstTime);
     clearTimeout(aux.current.timeoutId);
     aux.current.timeoutId = setTimeout(() => {
@@ -30,7 +30,7 @@ export const usePromiseTracker = (configuration) => {
 
   // Update progress callback.
   const updateProgress = React.useCallback(progressStatus => {
-    if(progressStatus) throttledSetProgress(progressStatus);
+    if (progressStatus) throttledSetProgress(progressStatus);
     else setProgress(progressStatus);
   }, [throttledSetProgress]);
 
@@ -41,7 +41,7 @@ export const usePromiseTracker = (configuration) => {
     return () => {
       emitter.off(updateEvent); // Unsubscribe.
       clearTimeout(aux.current.timeoutId); // Clean pending/throttled updates.
-    }
+    };
   }, [updateEvent, updateProgress, config.group]);
 
   return { progress };

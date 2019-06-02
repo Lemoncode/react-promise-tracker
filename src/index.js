@@ -1,3 +1,3 @@
 export { trackPromise } from './trackPromise';
-export { promiseTrackerHoc } from './trackerHoc';
+export { withPromiseTracker } from './trackerHoc';
 export { usePromiseTracker } from './trackerHook';

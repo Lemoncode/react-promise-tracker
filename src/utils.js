@@ -1,3 +1,5 @@
+import { DEFAULT_GROUP, DEFAULT_DELAY } from "./constants";
+
 /**
  * Given an unsafe config, return a safe config object initialized
  * with default values whenever it applies.
@@ -11,4 +13,5 @@ export const makeSafeConfig = (config) => ({
  * Creates an emitter event name based on the event type and the
  * target group.
  */
-export const event = (eventType, group) => `${eventType}|${group}`;
+export const event = (eventType, group) => eventType ?
+  group ? `${eventType}|${group}` : eventType : undefined;

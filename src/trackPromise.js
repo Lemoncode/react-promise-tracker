@@ -1,6 +1,6 @@
-import { Emitter } from "./tinyEmitter";
-import { PROGRESS_UPDATE, DEFAULT_GROUP } from "./constants";
-import { event } from "./utils";
+import { Emitter } from './tinyEmitter';
+import { PROGRESS_UPDATE, DEFAULT_GROUP } from './constants';
+import { event } from './utils';
 
 /**
  * Emitter singleton.
@@ -10,12 +10,13 @@ export const emitter = new Emitter();
 /**
  * Promise registry based on counters and its utility methods.
  */
-const countMap = {
-  [DEFAULT_GROUP]: 0
-};
-const incrementCount = group => ++countMap[group] || (countMap[group] = 1, 1);
+const countMap = {};
+const incrementCount = group => ++countMap[group] || ((countMap[group] = 1), 1);
 const decrementCount = group => --countMap[group];
-export const inProgress = group => countMap[group || DEFAULT_GROUP] > 0;
+export const inProgress = group => {
+  const counter = countMap[group || DEFAULT_GROUP];
+  return Number.isInteger(counter) ? counter > 0 : undefined;
+}
 
 /**
  * Track a promise by increasing its group counter by one & programm its

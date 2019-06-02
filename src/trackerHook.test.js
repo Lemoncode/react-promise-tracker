@@ -4,7 +4,7 @@ import { usePromiseTracker } from "./trackerHook";
 import { act } from "react-dom/test-utils"; // ES6
 
 /**
- * Config section
+ * Config section.
  */
 beforeEach(() => {
   jest.clearAllTimers();
@@ -16,7 +16,7 @@ afterAll(() => {
 })
 
 /**
- * Common stubs
+ * Common stubs.
  */
 const PROGRESS = "PROGRESS";
 const IDLE = "IDLE";

@@ -1,267 +1,248 @@
-import { trackPromise, emitter } from "./trackPromise";
-import { PROGRESS_UPDATE, DEFAULT_GROUP } from "./constants";
+import { PROGRESS_UPDATE, DEFAULT_GROUP } from './constants';
+import { event } from './utils';
+import { trackPromise, inProgress, emitter } from './trackPromise';
 
-describe("trackPromise", () => {
-  describe("using default group", () => {
-    it("On Initial case, promise fired, promise emitter.emit is called", () => {
+/**
+ * Config section.
+ */
+beforeEach(() => {
+  jest.clearAllTimers();
+  jest.useFakeTimers(); // Place it before each test.
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+})
+
+/**
+ * Common stubs.
+ */
+const testGroup = 'testGroup';
+const defaultUpdateEvent = event(PROGRESS_UPDATE, DEFAULT_GROUP);
+const testUpdateEvent = event(PROGRESS_UPDATE, testGroup);
+
+/**
+ * Test suites.
+ */
+describe('trackPromise', () => {
+  describe('returned promise', () => {
+    it('must handle transparently the result when resolved', done => {
       // Arrange
-      emitter.emit = jest.fn();
-
-      const myPromise = Promise.resolve();
+      const expectedResult = 'promise result';
+      const promise = Promise.resolve(expectedResult);
 
       // Act
-      trackPromise(myPromise);
+      const returnPromise = trackPromise(promise);
+
+      // Assert
+      returnPromise.then(result => {
+        expect(result).toEqual(expectedResult);
+        done();
+      });
+    });
+
+    it('must handle transparently the error when rejected', done => {
+      // Arrange
+      const expectedResult = 'promise reject error';
+      const promise = Promise.reject(expectedResult);
+
+      // Act
+      const returnPromise = trackPromise(promise);
+
+      // Assert
+      returnPromise.catch(result => {
+        expect(result).toEqual(expectedResult);
+        done();
+      });
+    });
+  })
+
+  describe ('default and custom group input', () => {
+    it('emit event for default group if no group is informed', () => {
+      // Arrange
+      emitter.emit = jest.fn();
+      const promise = Promise.resolve();
+
+      // Act
+      trackPromise(promise);
 
       // Assert
       expect(emitter.emit).toHaveBeenCalledTimes(1);
-
-      expect(emitter.emit).toHaveBeenCalledWith(
-        PROGRESS_UPDATE,
-        true,
-        DEFAULT_GROUP
-      );
+      expect(emitter.emit).toHaveBeenCalledWith(defaultUpdateEvent, true);
     });
 
-    it("Promise tracked, we got resolve, check that emit is called 2 times", done => {
+    it('emit event for default group if input group is null', () => {
       // Arrange
       emitter.emit = jest.fn();
+      const promise = Promise.resolve();
 
+      // Act
+      trackPromise(promise, null);
+
+      // Assert
+      expect(emitter.emit).toHaveBeenCalledTimes(1);
+      expect(emitter.emit).toHaveBeenCalledWith(defaultUpdateEvent, true);
+    });
+
+    it('emit event for default group if input group is empty', () => {
+      // Arrange
+      emitter.emit = jest.fn();
+      const promise = Promise.resolve();
+
+      // Act
+      trackPromise(promise, '');
+
+      // Assert
+      expect(emitter.emit).toHaveBeenCalledTimes(1);
+      expect(emitter.emit).toHaveBeenCalledWith(defaultUpdateEvent, true);
+    });
+
+    it('emit event for custom group if input group is informed', () => {
+      // Arrange
+      emitter.emit = jest.fn();
+      const promise = Promise.resolve();
+
+      // Act
+      trackPromise(promise, testGroup);
+
+      // Assert
+      expect(emitter.emit).toHaveBeenCalledTimes(1);
+      expect(emitter.emit).toHaveBeenCalledWith(testUpdateEvent, true);
+    });
+  });
+
+  describe('emitter working as expected', () => {
+    it('once promise is tracked, an update event is emitted', () => {
+      // Arrange
+      emitter.emit = jest.fn();
+      const promise = Promise.resolve();
+
+      // Act
+      trackPromise(promise, testGroup);
+
+      // Assert
+      expect(emitter.emit).toHaveBeenCalledTimes(1);
+      expect(emitter.emit).toHaveBeenCalledWith(testUpdateEvent, true);
+    });
+
+    it('once promise is resolved, 2 update events are emitted in total', done => {
+      // Arrange
+      emitter.emit = jest.fn();
       const myPromise = Promise.resolve();
 
       // Act
-      trackPromise(myPromise);
+      trackPromise(myPromise, testGroup);
 
       // Assert
       myPromise.then(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(2);
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          1,
-          PROGRESS_UPDATE,
-          true,
-          DEFAULT_GROUP
-        );
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          2,
-          PROGRESS_UPDATE,
-          false,
-          DEFAULT_GROUP
-        );
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, testUpdateEvent, true);
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, testUpdateEvent, false);
         done();
       });
     });
 
-    it("Promise tracked, we got fail, check that emit is called 2 times", done => {
+    it('once promise is rejected, 2 update events are emitted in total', done => {
       // Arrange
       emitter.emit = jest.fn();
-
       const myPromise = Promise.reject();
 
       // Act
-      trackPromise(myPromise);
+      trackPromise(myPromise, testGroup);
 
       // Assert
       myPromise.catch(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(2);
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          1,
-          PROGRESS_UPDATE,
-          true,
-          DEFAULT_GROUP
-        );
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          2,
-          PROGRESS_UPDATE,
-          false,
-          DEFAULT_GROUP
-        );
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, testUpdateEvent, true);
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, testUpdateEvent, false);
         done();
       });
     });
 
-    // Pending promise failed
-    it("Two Promises tracked, we got resolve on both, check that emit is called 4 times", done => {
+    it('when 2 promises are tracked and resolved, 4 update events are emitted in total', done => {
       // Arrange
       emitter.emit = jest.fn();
-
-      const myPromiseA = Promise.resolve();
-      const myPromiseB = Promise.resolve();
-      const promises = [myPromiseA, myPromiseB];
+      const promiseA = Promise.resolve();
+      const promiseB = Promise.resolve();
 
       // Act
-      trackPromise(myPromiseA);
-      trackPromise(myPromiseB);
+      trackPromise(promiseA, testGroup);
+      trackPromise(promiseB, testGroup);
 
       // Assert
-      Promise.all(promises).then(() => {
+      Promise.all([promiseA, promiseB]).then(() => {
         expect(emitter.emit).toHaveBeenCalledTimes(4);
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          1,
-          PROGRESS_UPDATE,
-          true,
-          DEFAULT_GROUP
-        );
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          2,
-          PROGRESS_UPDATE,
-          true,
-          DEFAULT_GROUP
-        );
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          3,
-          PROGRESS_UPDATE,
-          true,
-          DEFAULT_GROUP
-        );
-
-        expect(emitter.emit).toHaveBeenNthCalledWith(
-          4,
-          PROGRESS_UPDATE,
-          false,
-          DEFAULT_GROUP
-        );
+        expect(emitter.emit).toHaveBeenNthCalledWith(1, testUpdateEvent, true);
+        expect(emitter.emit).toHaveBeenNthCalledWith(2, testUpdateEvent, true);
+        expect(emitter.emit).toHaveBeenNthCalledWith(3, testUpdateEvent, true);
+        expect(emitter.emit).toHaveBeenNthCalledWith(4, testUpdateEvent, false);
         done();
       });
     });
 
-    // Promise chaining working properly.
-    it("Promise returned must handle transparently the result when resolved", done => {
-      // Arrange
-      const expectedPromiseResult = "promise result";
-      const promise = Promise.resolve(expectedPromiseResult);
 
-      // Act
-      const trackedPromise = trackPromise(promise);
-
-      // Assert
-      trackedPromise.then(trackedPromiseResult => {
-        expect(trackedPromiseResult).toEqual(expectedPromiseResult);
-        done();
-      });
-    });
   });
 
-  describe("using custom group", () => {
-    it("should call emitter.emit one time when feeding promise and group equals undefined", () => {
-      // Arrange
-      emitter.emit = jest.fn();
+  it('when tracking promises in different groups, 2 separated update events are emitted', () => {
+    // Arrange
+    emitter.emit = jest.fn();
+    const promiseA = Promise.resolve();
+    const promiseB = Promise.resolve();
 
-      const myPromise = Promise.resolve();
-      const group = undefined;
+    // Act
+    trackPromise(promiseA);
+    trackPromise(promiseB, testGroup);
 
-      // Act
-      trackPromise(myPromise, group);
-
-      // Assert
-      expect(emitter.emit).toHaveBeenCalledTimes(1);
-      expect(emitter.emit).toHaveBeenCalledWith(
-        PROGRESS_UPDATE,
-        true,
-        DEFAULT_GROUP
-      );
+    // Assert
+    Promise.all([promiseA, promiseB]).then(() => {
+      expect(emitter.emit).toHaveBeenCalledTimes(4);
+      expect(emitter.emit).toHaveBeenNthCalledWith(1, defaultUpdateEvent, true);
+      expect(emitter.emit).toHaveBeenNthCalledWith(2, testUpdateEvent, true);
+      expect(emitter.emit).toHaveBeenNthCalledWith(3, defaultUpdateEvent, false);
+      expect(emitter.emit).toHaveBeenNthCalledWith(4, testUpdateEvent, false);
+      done();
     });
+  });
+});
 
-    it("should call emitter.emit one time when feeding promise and group equals null", () => {
-      // Arrange
-      emitter.emit = jest.fn();
+describe('inProgress', () => {
+  it('should return undefined if no promise has ever tracked yet for the input group', () => {
+    // Arrange
+    emitter.emit = jest.fn();
 
-      const myPromise = Promise.resolve();
-      const group = null;
+    // Act
+    const result = inProgress('neverUsedBeforeGroup');
 
-      // Act
-      trackPromise(myPromise, group);
+    // Assert
+    expect(result).toEqual(undefined);
+  });
 
-      // Assert
-      expect(emitter.emit).toHaveBeenCalledTimes(1);
-      expect(emitter.emit).toHaveBeenCalledWith(
-        PROGRESS_UPDATE,
-        true,
-        DEFAULT_GROUP
-      );
-    });
+  it('should return true if a tracked promise is pending', () => {
+    // Arrange
+    emitter.emit = jest.fn();
+    const promise = Promise.resolve();
 
-    it("should call emitter.emit one time when feeding promise and group equals testgroup", () => {
-      // Arrange
-      emitter.emit = jest.fn();
+    // Act
+    trackPromise(promise, testGroup);
+    const result = inProgress(testGroup);
 
-      const myPromise = Promise.resolve();
-      const group = "testgroup";
+    // Assert
+    expect(result).toEqual(true);
+  });
 
-      // Act
-      trackPromise(myPromise, group);
+  it('should return false if a tracked promise has settled', done => {
+    // Arrange
+    emitter.emit = jest.fn();
+    const promise = Promise.resolve();
 
-      // Assert
-      expect(emitter.emit).toHaveBeenCalledTimes(1);
-      expect(emitter.emit).toHaveBeenCalledWith(
-        PROGRESS_UPDATE,
-        true,
-        "testgroup"
-      );
-    });
+    // Act
+    trackPromise(promise, testGroup);
 
-    it("should call emitter.emit two times when feeding two promises in same group", () => {
-      // Arrange
-      emitter.emit = jest.fn();
-
-      const myPromise1 = Promise.resolve();
-      const myPromise2 = Promise.resolve();
-
-      const group = "testgroup";
-
-      // Act
-      trackPromise(myPromise1, group);
-      trackPromise(myPromise2, group);
-
-      // Assert
-      expect(emitter.emit).toHaveBeenCalledTimes(2);
-      expect(emitter.emit).toHaveBeenNthCalledWith(
-        1,
-        PROGRESS_UPDATE,
-        true,
-        "testgroup"
-      );
-      expect(emitter.emit).toHaveBeenNthCalledWith(
-        2,
-        PROGRESS_UPDATE,
-        true,
-        "testgroup"
-      );
-    });
-
-    it("should call emitter.emit two times when feeding two promises in different groups", () => {
-      // Arrange
-      emitter.emit = jest.fn();
-
-      const myPromise1 = Promise.resolve();
-      const myPromise2 = Promise.resolve();
-
-      const group1 = "testgroup1";
-      const group2 = "testgroup2";
-
-      // Act
-      trackPromise(myPromise1, group1);
-      trackPromise(myPromise2, group2);
-
-      // Assert
-      expect(emitter.emit).toHaveBeenCalledTimes(2);
-      expect(emitter.emit).toHaveBeenNthCalledWith(
-        1,
-        PROGRESS_UPDATE,
-        true,
-        "testgroup1"
-      );
-      expect(emitter.emit).toHaveBeenNthCalledWith(
-        2,
-        PROGRESS_UPDATE,
-        true,
-        "testgroup2"
-      );
-    });
+    // Act & Assert
+    promise.then(() => {
+      const result = inProgress(testGroup);
+      expect(result).toEqual(false);
+      done();
+    })
   });
 });
