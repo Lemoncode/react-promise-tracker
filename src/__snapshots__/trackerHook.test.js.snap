@@ -1,41 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`trackerHook Initial Status renders without crashing 1`] = `
-<TestSpinnerComponent>
-  <span>
-    test
-  </span>
-</TestSpinnerComponent>
-`;
-
-exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false and group equals "testgroup" when feeding group equals "testgroup" and delay equals 300 1`] = `
-<TestSpinnerComponent>
-  <span>
-    test
-  </span>
-</TestSpinnerComponent>
-`;
-
-exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 1`] = `
-<TestSpinnerComponent>
-  <span>
-    test
-  </span>
-</TestSpinnerComponent>
-`;
-
-exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different group 1`] = `
-<TestSpinnerComponent>
-  <span>
-    test
-  </span>
-</TestSpinnerComponent>
-`;
-
-exports[`trackerHook Initial Status should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different group 1`] = `
-<TestSpinnerComponent>
-  <span>
-    test
-  </span>
-</TestSpinnerComponent>
+exports[`usePromiseTracker basic testing renders without crashing 1`] = `
+<TrackingComponent>
+  <p>
+    noTracking
+  </p>
+</TrackingComponent>
 `;

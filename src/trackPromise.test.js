@@ -10,6 +10,10 @@ beforeEach(() => {
   jest.useFakeTimers(); // Place it before each test.
 });
 
+afterEach(() => {
+  jest.runAllTimers();
+});
+
 afterAll(() => {
   jest.useRealTimers();
 })

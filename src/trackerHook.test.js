@@ -1,7 +1,7 @@
-import React from "react";
-import * as trackPromiseAPI from "./trackPromise";
-import { usePromiseTracker } from "./trackerHook";
-import { act } from "react-dom/test-utils"; // ES6
+import React from 'react';
+import * as trackPromiseAPI from './trackPromise';
+import { usePromiseTracker } from './trackerHook';
+import { randomBytes } from 'crypto';
 
 /**
  * Config section.
@@ -11,229 +11,221 @@ beforeEach(() => {
   jest.useFakeTimers(); // Place it before each test.
 });
 
+afterEach(() => {
+  jest.runAllTimers();
+});
+
 afterAll(() => {
   jest.useRealTimers();
-})
+});
 
 /**
  * Common stubs.
  */
-const PROGRESS = "PROGRESS";
-const IDLE = "IDLE";
-const UNKNOWN = "unknown";
-const TrackingComponent = ({group, delay}) => {
-  const { promiseInProgress } = usePromiseTracker({ group, delay });
-  return promiseInProgress === true ? <p>{PROGRESS}</p> :
-    promiseInProgress === false ? <p>{IDLE}</p> : <p>{UNKNOWN}</p>;
+const testGroup = 'testGroup';
+const randomGroup = () => randomBytes(10).toString('hex');
+const PROGRESS = 'PROGRESS';
+const IDLE = 'IDLE';
+const NO_TRACKING = 'noTracking';
+const TrackingComponent = ({ group, delay }) => {
+  const { progress } = usePromiseTracker({ group, delay });
+  return progress === true ? <p>{PROGRESS}</p> :
+    progress === false ? <p>{IDLE}</p> : <p>{NO_TRACKING}</p>;
 };
-const createFakePromise = (duration = 1000) => new Promise(
-  resolve => setTimeout(() => resolve()),
-  duration
-);
+const createFakePromise = (duration = 1000) =>
+  new Promise(resolve => setTimeout(() => resolve()), duration);
 
 /**
  * Test suites
  */
-describe("trackerHook", () => {
-  describe.skip("Initial Status", () => {
-    it("renders without crashing", () => {
-      // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return <span>test</span>;
-      };
-
-      // Act
-      const component = mount(<TestSpinnerComponent />);
+describe('usePromiseTracker', () => {
+  describe('basic testing', () => {
+    it('renders without crashing', () => {
+      // Arrange & Act
+      const component = mount(<TrackingComponent />);
 
       // Assert
       expect(component).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0", () => {
-      // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return <span>test</span>;
-      };
-
-      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
-
-      // Act
-      const component = mount(<TestSpinnerComponent />);
+    it('renders NO TRACKING when no promise is tracked yet for the target group', () => {
+      // Arrange & Act
+      const component = mount(<TrackingComponent group={randomGroup()} />);
 
       // Assert
-      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(component.text()).toEqual(NO_TRACKING);
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different group", () => {
+    it('renders PROGRESS when the tracked promise is pending', () => {
       // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return <span>test</span>;
-      };
-
-      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
-
-      const progress = false;
-      const group = "othergroup";
-      const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
-        .mockImplementation((id, callback) => callback(progress, group));
+      const promise = createFakePromise(10);
+      trackPromiseAPI.trackPromise(promise, testGroup);
 
       // Act
-      const component = mount(<TestSpinnerComponent />);
+      const component = mount(<TrackingComponent group={testGroup} />);
 
       // Assert
-      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(component.text()).toEqual(PROGRESS);
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different group", () => {
+    it('renders IDLE once the tracked promise has settled', done => {
       // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return <span>test</span>;
-      };
-
-      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
-
-      const progress = true;
-      const group = "othergroup";
-      const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
-        .mockImplementation((id, callback) => callback(progress, group));
+      const promise = createFakePromise(10);
+      trackPromiseAPI.trackPromise(promise, testGroup);
 
       // Act
-      const component = mount(<TestSpinnerComponent />);
+      const component = mount(<TrackingComponent group={testGroup} />);
+      jest.runAllTimers();
 
       // Assert
-
-      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
-    });
-
-    it("should render <h2>No Spinner</h2> when counter is 0", () => {
-      // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return (
-          <div>
-            {promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
-          </div>
-        );
-      };
-
-      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 0);
-
-      // Act
-      const component = mount(<TestSpinnerComponent />);
-
-      // Assert
-
-      expect(component.find("h2")).toHaveLength(1);
-      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
-    });
-
-    it("should render <h1>Spinner</h1> when counter is 1", () => {
-      // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker();
-
-        return (
-          <div>
-            {promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
-          </div>
-        );
-      };
-
-      trackPromiseAPI.getProgressCount = jest.fn().mockImplementation(() => 1);
-
-      // Act
-      const component = mount(<TestSpinnerComponent />);
-
-      // Assert
-
-      expect(component.find("h1")).toHaveLength(1);
-      expect(trackPromiseAPI.getProgressCount).toHaveBeenCalled();
-    });
-
-    it('should render component with trackedPromiseInProgress equals false and group equals "testgroup" when feeding group equals "testgroup" and delay equals 300', () => {
-      // Arrange
-      const TestSpinnerComponent = props => {
-        const { promiseInProgress } = usePromiseTracker({
-          group: "testgroup",
-          delay: 300
-        });
-
-        return <span>test</span>;
-      };
-
-      // Act
-      const component = mount(<TestSpinnerComponent />);
-
-      // Assert
-
-      expect(component).toMatchSnapshot();
+      promise.then(() => {
+        expect(component.text()).toEqual(IDLE);
+        done();
+      })
     });
   });
 
-  describe("Testing delay timing", () => {
-
-    it("[1] should change from IDLE to PROGRESS once the delay has ended, and from PROGRESS to IDLE once promise is fulfilled", done => {
+  describe('several promises tracked', () => {
+    it('renders PROGRESS -> IDLE with multiple overlapping promises, tracked before mount', done => {
       // Arrange
-      const fakePromise = createFakePromise(600);
+      const group = randomGroup();
+      const promiseA = createFakePromise(10);
+      const promiseB = createFakePromise(20);
+
+      // Act & Assert
+      trackPromiseAPI.trackPromise(promiseA, group);
+      trackPromiseAPI.trackPromise(promiseB, group);
+
+      // 1. Mount. Expect PROGRESS.
+      const component = mount(<TrackingComponent group={group} />);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 2. First promise settled, second one still pending. Expect PROGRESS.
+      jest.advanceTimersByTime(15);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 3. Both promises settled. Expect IDLE.
+      jest.runAllTimers();
+      Promise.all([promiseA, promiseB]).then(() => {
+        expect(component.text()).toEqual(IDLE);
+        done();
+      })
+    });
+
+    it('renders NO_TRACKING -> PROGRESS -> IDLE with multiple overlapping promises, tracked after mount', done => {
+      // Arrange
+      const group = randomGroup();
+      const promiseA = createFakePromise(10);
+      const promiseB = createFakePromise(20);
+
+      // Act & Assert
+      const component = mount(<TrackingComponent group={group} />);
+
+      // 1. On mount, no promises tracked. Expect NO_TRACKING.
+      expect(component.text()).toEqual(NO_TRACKING);
+
+      // 2. Now track promises. Expect PROGRESS.
+      trackPromiseAPI.trackPromise(promiseA, group);
+      trackPromiseAPI.trackPromise(promiseB, group);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 3. First promise settled, second one still pending. Expect PROGRESS.
+      jest.advanceTimersByTime(15);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 4. Both promises settled. Expect IDLE.
+      jest.runAllTimers();
+      Promise.all([promiseA, promiseB]).then(() => {
+        expect(component.text()).toEqual(IDLE);
+        done();
+      })
+    });
+
+    it('renders NO_TRACKING -> PROGRESS -> IDLE -> PROGRESS -> IDLE with multiple non-overlapping promises', done => {
+      // Arrange
+      const group = randomGroup();
+      const promiseA = createFakePromise(10);
+
+      // Act & Assert
+      const component = mount(<TrackingComponent group={group} />);
+
+      // 1. On mount, no promises tracked. Expect NO_TRACKING.
+      expect(component.text()).toEqual(NO_TRACKING);
+
+      // 2. Track promise A. Expect PROGRESS.
+      trackPromiseAPI.trackPromise(promiseA, group);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 3. Let promise A resolve. Expect IDLE.
+      jest.runOnlyPendingTimers();
+      promiseA.then(() => {
+        expect(component.text()).toEqual(IDLE);
+
+        // 4. Track promise B. Expect PROGRESS.
+        const promiseB = createFakePromise(10);
+        trackPromiseAPI.trackPromise(promiseB, group);
+        expect(component.text()).toEqual(PROGRESS);
+
+        // 5. Let promise B resolve. Expect IDLE.
+        jest.runAllTimers();
+        promiseB.then(() => {
+          expect(component.text()).toEqual(IDLE);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('delay timing', () => {
+    it('renders NO_TRACKING -> PROGRESS -> IDLE with active delay, promise tracked before mount', done => {
+      // Arrange
+      const group = randomGroup();
+      const promise = createFakePromise(50);
 
       // Act & Assert
 
-      // 1. Mount component. Expect IDLE status.
-      const component = mount(<TrackingComponent delay={150}/>);
-      expect(component.text()).toEqual(IDLE);
+      // 1. Track promise and Mount. Expect NO_TRACKING.
+      trackPromiseAPI.trackPromise(promise, group);
+      const component = mount(<TrackingComponent group={group} delay={20} />);
+      expect(component.text()).toEqual(NO_TRACKING);
 
-      // 2. Track promise. Expect IDLE status, still under delay window.
-      jest.advanceTimersByTime(50);
-      expect(trackPromiseAPI.getProgressCount()).toEqual(0);
-      trackPromiseAPI.trackPromise(fakePromise);
-      expect(trackPromiseAPI.getProgressCount()).toEqual(1);
-      jest.advanceTimersByTime(50);
-      expect(component.text()).toEqual(IDLE);
-
-      // 3. Complete delay window. Expect PROGRESS status.
-      jest.advanceTimersByTime(300);
+      // 2. Delay window completed. Expect PROGRESS.
+      jest.advanceTimersByTime(25);
       expect(component.text()).toEqual(PROGRESS);
 
-      // 4. Settled promise. Expect IDLE status.
-      fakePromise.then(() => {
+      // 3. Settled promise. Expect IDLE.
+      jest.runAllTimers();
+      promise.then(() => {
         expect(component.text()).toEqual(IDLE);
         done();
       });
     });
 
-    it("[2] should stay IDLE when a promise is already in progress before component mounts and a delay is set", done => {
+    it('renders NO_TRACKING -> PROGRESS -> IDLE with active delay, promise tracked after mount', done => {
       // Arrange
-      const fakePromise = createFakePromise(300);
+      const group = randomGroup();
+      const promise = createFakePromise(50);
 
       // Act & Assert
 
-      // First: track promise. Check count increases by one.
-      expect(trackPromiseAPI.getProgressCount()).toEqual(0);
-      trackPromiseAPI.trackPromise(fakePromise);
-      expect(trackPromiseAPI.getProgressCount()).toEqual(1);
+      // 1. Mount. Expect NO_TRACKING.
+      const component = mount(<TrackingComponent group={group} delay={20} />);
+      expect(component.text()).toEqual(NO_TRACKING);
 
-      // Then, mount component with the promise already in progress.
-      // Check delay is working and not showing PROGRESS yet.
-      jest.advanceTimersByTime(50);
-      const component = mount(<TrackingComponent delay={150}/>);
-      jest.advanceTimersByTime(50);
-      expect(component.text()).toEqual(IDLE);
+      // 2. Track promise. Expect NO_TRACKING.
+      trackPromiseAPI.trackPromise(promise, group);
+      expect(component.text()).toEqual(NO_TRACKING);
 
-      done();
+      // 3. Delay window completed. Expect PROGRESS.
+      jest.advanceTimersByTime(25);
+      expect(component.text()).toEqual(PROGRESS);
+
+      // 4. Settled promise. Expect IDLE.
+      jest.runAllTimers();
+      promise.then(() => {
+        expect(component.text()).toEqual(IDLE);
+        done();
+      });
     });
   });
 });

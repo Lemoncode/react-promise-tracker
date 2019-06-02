@@ -1,6 +1,6 @@
 import React from 'react';
 import { PROGRESS_UPDATE } from './constants';
-import { makeSafeConfig } from './utils';
+import { makeSafeConfig, event } from './utils';
 import { emitter, inProgress } from './trackPromise';
 
 const auxInitialState = { timeoutId: null, firstTime: null };
@@ -30,9 +30,9 @@ export const usePromiseTracker = trackingConfig => {
 
   // Update progress callback.
   const updateProgress = React.useCallback(progressStatus => {
-    if (progressStatus) throttledSetProgress(progressStatus);
+    if (progressStatus && config.delay) throttledSetProgress(progressStatus);
     else setProgress(progressStatus);
-  }, [throttledSetProgress]);
+  }, [throttledSetProgress, config.delay]);
 
   // Subscribe on first render / clear subscription on last render.
   React.useEffect(() => {
