@@ -49,7 +49,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
@@ -64,7 +64,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = defaultArea;
@@ -85,7 +85,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = "otherArea";
@@ -106,7 +106,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
       const area = defaultArea;
@@ -127,7 +127,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
       const area = "otherArea";
@@ -148,7 +148,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
@@ -163,7 +163,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = defaultArea;
@@ -184,7 +184,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = "otherArea";
@@ -205,7 +205,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = defaultArea;
@@ -226,7 +226,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = "otherArea";
@@ -262,7 +262,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
@@ -277,7 +277,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = defaultArea;
@@ -298,7 +298,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = "otherArea";
@@ -319,7 +319,8 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValueOnce(0)
+      .mockReturnValueOnce(1);
 
       const progress = true;
       const area = defaultArea;
@@ -343,7 +344,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 0);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
       const area = "otherArea";
@@ -364,7 +365,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
@@ -379,7 +380,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = defaultArea;
@@ -400,7 +401,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = "otherArea";
@@ -421,7 +422,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = defaultArea;
@@ -442,7 +443,7 @@ describe("trackerHoc", () => {
     it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area and delay equals 300", () => {
       // Arrange
       const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockImplementation(() => 1);
+      trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = "otherArea";
@@ -482,7 +483,6 @@ describe("trackerHoc", () => {
 
       const getCounterStub = jest
         .spyOn(trackPromiseAPI, "getCounter")
-        .mockReturnValue(0);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
@@ -528,6 +528,109 @@ describe("trackerHoc", () => {
 
       myFakePromise.then(() => {
         expect(component.text()).toEqual("NO SPINNER");
+        done();
+      });
+    });
+
+    it("should render <h1>SPINNER</h2> when counter is 1, delay is set to 1000 and promise has 2000 timeout", done => {
+      // Arrange
+      const TestSpinnerComponent = props => {
+        return (
+          <div>
+            {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
+          </div>
+        );
+      };
+
+      const getCounterStub = jest
+        .spyOn(trackPromiseAPI, "getCounter");
+
+      // Act
+      const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+      const component = mount(<TrackedComponent config={{ delay: 1000 }} />);
+
+      expect(component.text()).toEqual("NO SPINNER");
+      expect(getCounterStub).toHaveBeenCalled();
+
+      // Assert
+      const myFakePromise = new Promise(resolve => {
+        setTimeout(() => {
+          resolve(true);
+        }, 2000);
+      });
+
+      trackPromiseAPI.trackPromise(myFakePromise);
+
+      jest.advanceTimersByTime(500);
+      expect(component.text()).toEqual("NO SPINNER");
+
+      // Total advance 1000
+      jest.advanceTimersByTime(500);
+      expect(component.text()).toEqual("SPINNER");
+
+      // Total advance 1999
+      jest.advanceTimersByTime(999);
+      expect(component.text()).toEqual("SPINNER");
+
+      // After the promise get's resolved
+      jest.runAllTimers();
+
+      myFakePromise.then(() => {
+        expect(component.text()).toEqual("NO SPINNER");
+
+        // Total advance 2010
+        jest.advanceTimersByTime(11);
+        expect(component.text()).toEqual("NO SPINNER");
+
+        done();
+      });
+    });
+
+    it("should render <h1>NO SPINNER</h2> when counter is 1, delay is set to 2000 and promise has 1000 timeout", done => {
+      // Arrange
+      const TestSpinnerComponent = props => {
+        return (
+          <div>
+            {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
+          </div>
+        );
+      };
+
+      const getCounterStub = jest
+        .spyOn(trackPromiseAPI, "getCounter");
+
+      // Act
+      const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
+      const component = mount(<TrackedComponent config={{ delay: 2000 }} />);
+
+      expect(component.text()).toEqual("NO SPINNER");
+      expect(getCounterStub).toHaveBeenCalled();
+
+      // Assert
+      const myFakePromise = new Promise(resolve => {
+        setTimeout(() => {
+          resolve(true);
+        }, 1000);
+      });
+
+      trackPromiseAPI.trackPromise(myFakePromise);
+
+      jest.advanceTimersByTime(500);
+      expect(component.text()).toEqual("NO SPINNER");
+
+      // Total advance 1000
+      jest.advanceTimersByTime(500);
+      expect(component.text()).toEqual("NO SPINNER");
+
+      myFakePromise.then(() => {
+        expect(component.text()).toEqual("NO SPINNER");
+
+        // Total advance 1999
+        jest.advanceTimersByTime(999);
+        expect(component.text()).toEqual("NO SPINNER");
+
+        // After the promise get's resolved
+        jest.runAllTimers();
         done();
       });
     });
