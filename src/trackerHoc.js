@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   emitter,
   getCounter,
-  promiseCounterUpdateEventId
+  promiseCounterUpdateEventId,
 } from './trackPromise';
 import { setupConfig } from './setupConfig';
 
@@ -20,7 +20,7 @@ export const promiseTrackerHoc = ComponentToWrap => {
       this.state = {
         promiseInProgress: false,
         internalPromiseInProgress: false,
-        config: setupConfig(props.config)
+        config: setupConfig(props.config),
       };
 
       this.notifyPromiseInProgress = this.notifyPromiseInProgress.bind(this);
@@ -32,7 +32,8 @@ export const promiseTrackerHoc = ComponentToWrap => {
       this.state.config.delay === 0
         ? this.setState({ promiseInProgress: true })
         : setTimeout(() => {
-            this.setState({ promiseInProgress: true });
+            const progress = Boolean(getCounter(this.state.config.area) > 0);
+            this.setState({ promiseInProgress: progress });
           }, this.state.config.delay);
     }
 
