@@ -18,7 +18,7 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
       setInternalPromiseInProgress(true);
       setPromiseInProgress(true);
     }
-  }, config)
+  }, [config])
 
   // Internal will hold the current value
   const [
