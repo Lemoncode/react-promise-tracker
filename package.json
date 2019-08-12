@@ -1,6 +1,6 @@
 {
   "name": "react-promise-tracker",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Simple React Promise tracker Hook/HOC helper to add loading spinner indicators",
   "keywords": [
     "react",
@@ -54,7 +54,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "release:prepare": "npm run clean && npm run test && npm run build && rimraf build/dist/report",
-    "release": "npm publish ./build",
+    "release": "npm run release:prepare && npm publish ./build",
     "release-beta": "npm run release:prepare && npm publish ./build --tag beta"
   },
   "peerDependencies": {
