@@ -49,5 +49,18 @@ export const manuallyResetPromiseCounter = area => {
   emitter.emit(promiseCounterUpdateEventId, false, area);
 };
 
+export const manuallyDecrementPromiseCounter = area => {
+  area = area || defaultArea;
+  decrementPromiseCounter(area);
+};
+
+export const manuallyIncrementPromiseCounter = area => {
+  area = area || defaultArea;
+  incrementCounter(area);
+
+  const promiseInProgress = anyPromiseInProgress(area);
+  emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
+};
+
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error
 // then the consumer of this event can be listening and decide what to to in case of error
