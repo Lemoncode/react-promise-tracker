@@ -34,13 +34,19 @@ const incrementCounter = area => {
 const anyPromiseInProgress = area => counter[area] > 0;
 
 const decrementPromiseCounter = area => {
-  decrementCounter(area);
+  counter[area] > 0 && decrementCounter(area);
   const promiseInProgress = anyPromiseInProgress(area);
   emitter.emit(promiseCounterUpdateEventId, promiseInProgress, area);
 };
 
 const decrementCounter = area => {
   counter[area]--;
+};
+
+export const manuallyResetPromiseCounter = area => {
+  area = area || defaultArea;
+  counter[area] = 0;
+  emitter.emit(promiseCounterUpdateEventId, false, area);
 };
 
 // TODO: Enhancement we could catch here errors and throw an Event in case there's an HTTP Error
