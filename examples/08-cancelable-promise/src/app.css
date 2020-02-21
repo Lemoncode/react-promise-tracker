@@ -1,0 +1,16 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.tables {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.tables > div {
+  flex-basis: 50%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
