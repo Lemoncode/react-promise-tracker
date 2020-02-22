@@ -1,9 +1,19 @@
 import React from "react";
-import { emitter, promiseCounterUpdateEventId,  getCounter} from "./trackPromise";
-import { defaultConfig, setupConfig } from './setupConfig';
-
+import {
+  emitter,
+  promiseCounterUpdateEventId,
+  getCounter
+} from "./trackPromise";
+import { defaultConfig, setupConfig } from "./setupConfig";
 
 export const usePromiseTracker = (outerConfig = defaultConfig) => {
+  let isMounted = React.useRef(false);
+
+  React.useEffect(() => {
+    isMounted.current = true;
+    return () => (isMounted.current = false);
+  }, []);
+
   // Included in state, it will be evaluated just the first time,
   // TODO: discuss if this is a good approach
   // We need to apply defensive programming, ensure area and delay default to secure data
@@ -14,11 +24,16 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
   // data, event emitter could have already emitted the event but subscription is not yet
   // setup
   React.useEffect(() => {
-    if(config && config.area && getCounter(config.area) > 0) {
+    if (
+      isMounted.current &&
+      config &&
+      config.area &&
+      getCounter(config.area) > 0
+    ) {
       setInternalPromiseInProgress(true);
       setPromiseInProgress(true);
     }
-  }, [config])
+  }, [config]);
 
   // Internal will hold the current value
   const [
@@ -36,20 +51,19 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
     internalPromiseInProgress
   );
 
-  const notifiyPromiseInProgress = () => {
-    (!config || !config.delay || config.delay === 0) ?
-      setPromiseInProgress(true)
-    :
-      setTimeout(() => {
-        // Check here ref to internalPromiseInProgress
-        if (latestInternalPromiseInProgress.current) {
-          setPromiseInProgress(true);
-        }
-      }, config.delay);
+  const notifyPromiseInProgress = () => {
+    !config || !config.delay || config.delay === 0
+      ? setPromiseInProgress(true)
+      : setTimeout(() => {
+          // Check here ref to internalPromiseInProgress
+          if (latestInternalPromiseInProgress.current) {
+            setPromiseInProgress(true);
+          }
+        }, config.delay);
   };
 
   const updatePromiseTrackerStatus = (anyPromiseInProgress, areaAffected) => {
-    if (config.area === areaAffected) {
+    if (isMounted.current && config.area === areaAffected) {
       setInternalPromiseInProgress(anyPromiseInProgress);
       // Update the ref object as well, we will check it when we need to
       // cover the _delay_ case (setTimeout)
@@ -57,22 +71,17 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
       if (!anyPromiseInProgress) {
         setPromiseInProgress(false);
       } else {
-        notifiyPromiseInProgress();
+        notifyPromiseInProgress();
       }
     }
   };
 
   React.useEffect(() => {
     latestInternalPromiseInProgress.current = internalPromiseInProgress;
-    emitter.on(promiseCounterUpdateEventId,
-      (anyPromiseInProgress, areaAffected) => {
-        updatePromiseTrackerStatus(anyPromiseInProgress, areaAffected);
-      }
-    );
+    emitter.on(promiseCounterUpdateEventId, updatePromiseTrackerStatus);
 
-    return () => {
-      emitter.off(promiseCounterUpdateEventId);
-    };
+    return () =>
+      emitter.off(promiseCounterUpdateEventId, updatePromiseTrackerStatus);
   }, []);
 
   return { promiseInProgress };
