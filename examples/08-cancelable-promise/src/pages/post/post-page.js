@@ -30,6 +30,7 @@ export const PostPage = () => {
   return (
     <div>
       <h2>Posts Page</h2>
+      <h3>When you leave this page, manuallyResetPromiseCounter is called</h3>
       <Link to="/">Navigate to User Page</Link>
       <br />
       <Link to="/another">Navigate to Another Page</Link>

@@ -8,10 +8,9 @@ export const UserPage = () => {
   const [users, setUsers] = React.useState([]);
 
   React.useEffect(() => {
-    // Call api end-point when this component is mounted
     const fetchUserAsync = async () => {
       const users = await trackPromise(userAPI.fetchUsers());
-      setUsers(users);
+      setUsers(users); // This line may cause a warning if the component is unmount
     };
 
     fetchUserAsync();
