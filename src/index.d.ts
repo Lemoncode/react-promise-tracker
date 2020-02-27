@@ -13,19 +13,16 @@ export function trackPromise<T>(promise: Promise<T>, area?: string): Promise<T>;
 
 /**
  * Perform a reset for the area counter (default-area by default).
- * @param area Area to be reset.
  */
 export function manuallyResetPromiseCounter(area?: string): void;
 
 /**
  * Decrement the area counter (default-area by default).
- * @param area Area to be decremented.
  */
 export function manuallyDecrementPromiseCounter(area?: string): void;
 
 /**
  * Increment the area counter (default-area by default).
- * @param area Area to be incremented.
  */
 export function manuallyIncrementPromiseCounter(area?: string): void;
 
