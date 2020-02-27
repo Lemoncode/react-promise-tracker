@@ -76,14 +76,12 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
     }
   };
 
-  const fn = (anyPromiseInProgress, areaAffected) =>
-    updatePromiseTrackerStatus(anyPromiseInProgress, areaAffected);
-
   React.useEffect(() => {
     latestInternalPromiseInProgress.current = internalPromiseInProgress;
-    emitter.on(promiseCounterUpdateEventId, fn);
+    emitter.on(promiseCounterUpdateEventId, updatePromiseTrackerStatus);
 
-    return () => emitter.off(promiseCounterUpdateEventId, fn);
+    return () =>
+      emitter.off(promiseCounterUpdateEventId, updatePromiseTrackerStatus);
   }, []);
 
   return { promiseInProgress };
