@@ -39,6 +39,6 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-loader-spinner": "^2.3.0",
-    "react-promise-tracker": "file:../../build"
+    "react-promise-tracker": "^2.0.6"
   }
 }

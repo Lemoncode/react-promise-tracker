@@ -2,7 +2,7 @@
 
 # react-promise-tracker
 
-Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/wy04jpmly7), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
+Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
 For detailed information check out the [project site](https://lemoncode.github.io/react-promise-tracker/)
 
@@ -10,15 +10,17 @@ For detailed information check out the [project site](https://lemoncode.github.i
 
 Sometimes we need to track blocking promises (e.g. fetch or axios http calls), and control whether to
 display a loading spinner indicator not, you have to take care of scenarios like:
-  - You could need to track several ajax calls being performed in parallel.
-  - Some of them you want to be tracked some others to be executed silently in background.
-  - You may want to have several spinners blocking only certain areas of the screen.
-  - For high speed connection you may wat to show the loading spinner after an small delay of time
+
+- You could need to track several ajax calls being performed in parallel.
+- Some of them you want to be tracked some others to be executed silently in background.
+- You may want to have several spinners blocking only certain areas of the screen.
+- For high speed connection you may wat to show the loading spinner after an small delay of time
   to avoid having a flickering effect in your screen.
 
 This library implements:
-  - A simple function that will allow a promise to be tracked.
-  - A Hook + HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
+
+- A simple function that will allow a promise to be tracked.
+- A Hook + HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
 
 # Installation
 
@@ -70,8 +72,7 @@ export const LoadingSpinerComponent = (props) => {
   - [Demo page](http://www.davidhu.io/react-spinners/)
   - [Github page](https://github.com/davidhu2000/react-spinners)
 
-
-- Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
+* Then in your application entry point (main / app / ...) just add this loading spinner to be displayed:
 
 ```diff
 import React from 'react';
@@ -162,21 +163,21 @@ export const Spinner = (props) => {
 
 Full examples:
 
-- [00 Basic Example](https://codesandbox.io/s/wy04jpmly7): minimum sample to get started.
+- [00 Basic Example](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic): minimum sample to get started.
 
-- [01 Example Areas](https://codesandbox.io/s/wy04jpmly7): defining more than one spinner to be displayed in separate screen areas.
+- [01 Example Areas](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/01-example-areas): defining more than one spinner to be displayed in separate screen areas.
 
-- [02 Example Delay](https://codesandbox.io/s/kwrrjjyjm5): displaying the spinner after some miliseconds delay (useful when your users havbe high speed connections).
+- [02 Example Delay](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay): displaying the spinner after some miliseconds delay (useful when your users havbe high speed connections).
 
-- [03 Example Hoc](https://codesandbox.io/s/j2jjrk4ply): using legacy high order component approach (useful if your spinner is a class based component)
+- [03 Example Hoc](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc): using legacy high order component approach (useful if your spinner is a class based component)
 
-- [04 Initial load](https://codesandbox.io/s/j2jjrk4ply): launching ajax request just on application startup before the spinner is being mounted.
+- [04 Initial load](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/04-initial-load): launching ajax request just on application startup before the spinner is being mounted.
 
-- [05 Typescript](https://codesandbox.io/s/5ww39l90yp): full sample using typescript (using library embedded typings).
+- [05 Typescript](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/05-typescript): full sample using typescript (using library embedded typings).
 
-- [06 Suspense Like](https://codesandbox.io/s/6w1oly0x9r): sample implementing a suspense-like component (typescript).
+- [06 Suspense Like](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/06-suspense-like): sample implementing a suspense-like component (typescript).
 
-- [07 Suspense Custom](https://codesandbox.io/s/jjkm4vvqr5): sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
+- [07 Suspense Custom](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom): sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
 
 # About Basefactor + Lemoncode
 
