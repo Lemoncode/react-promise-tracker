@@ -2,7 +2,7 @@
   "name": "example5",
   "version": "1.0.0",
   "description": "React Typescript examples",
-  "main": "index.js",
+  "main": "src/index.tsx",
   "scripts": {
     "start": "webpack-dev-server  --mode development --inline --hot --open",
     "build": "webpack  --mode development"

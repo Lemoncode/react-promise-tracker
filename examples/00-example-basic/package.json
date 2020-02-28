@@ -2,7 +2,7 @@
   "name": "example0",
   "version": "1.0.0",
   "description": "In this sample we are going to setup a web project that can be easily managed\r by webpack.",
-  "main": "index.js",
+  "main": "src/index.jsx",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "rimraf dist && webpack --mode development",
