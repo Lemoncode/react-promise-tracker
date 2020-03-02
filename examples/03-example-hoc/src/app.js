@@ -3,6 +3,7 @@ import { trackPromise } from 'react-promise-tracker';
 import { userAPI } from './api/userAPI';
 import { postAPI } from './api/postAPI';
 import { UserTable, PostTable, LoadButton } from './components';
+import { areas } from './common/constants/areas';
 import './app.css';
 
 export class App extends Component {
@@ -14,13 +15,13 @@ export class App extends Component {
       posts: [],
     };
 
-    this.onLoadTables = this.onLoadTables.bind(this);
+    this.onLoadUsers = this.onLoadUsers.bind(this);
+    this.onLoadPosts = this.onLoadPosts.bind(this);
   }
 
-  onLoadTables() {
+  onLoadUsers() {
     this.setState({
       users: [],
-      posts: [],
     });
 
     trackPromise(
@@ -29,8 +30,15 @@ export class App extends Component {
           this.setState({
             users,
           })
-        })
+        }),
+      areas.user,
     );
+  }
+
+  onLoadPosts() {
+    this.setState({
+      posts: [],
+    });
 
     trackPromise(
       postAPI.fetchPosts()
@@ -38,17 +46,24 @@ export class App extends Component {
           this.setState({
             posts,
           })
-        })
+        }),
+      areas.post,
     );
   }
 
   render() {
     return (
       <div>
-        <LoadButton
-          onLoad={this.onLoadTables}
-          title="Load tables with delay"
-        />
+        <div className="load-buttons">
+          <LoadButton
+            onLoad={this.onLoadUsers}
+            title="Load users with delay"
+          />
+          <LoadButton
+            onLoad={this.onLoadPosts}
+            title="Load posts with delay"
+          />
+        </div>
         <div className="tables">
           <UserTable users={this.state.users} />
           <PostTable posts={this.state.posts} />
