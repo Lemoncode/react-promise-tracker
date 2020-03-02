@@ -4,7 +4,7 @@
 
 Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
-For detailed information check out the [project site](https://lemoncode.github.io/react-promise-tracker/)
+For detailed information check out the [documentation](https://lemoncode.github.io/react-promise-tracker/)
 
 # Why do I need this?
 
