@@ -56,7 +56,7 @@ export const usePromiseTracker = (outerConfig = defaultConfig) => {
       ? setPromiseInProgress(true)
       : setTimeout(() => {
           // Check here ref to internalPromiseInProgress
-          if (latestInternalPromiseInProgress.current) {
+          if (isMounted.current && latestInternalPromiseInProgress.current) {
             setPromiseInProgress(true);
           }
         }, config.delay);
