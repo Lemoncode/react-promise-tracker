@@ -1,12 +1,20 @@
-export const fetchWithDelay = (url) => {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(fetch(url, {
-        method: 'GET',
-      })
-        .then((response) => response.json()));
-    }, 3000)
-  });
+export const fetchWithDelay = async (url) => {
 
-  return promise;
+ try {
+        const response = await new Promise((resolve, reject) => {
+          setTimeout(
+            () =>
+              resolve(
+                fetch(url).then((data) => {
+                  return data;
+                })
+              ),
+            3000
+          );
+        });
+        const responseJSON = await response.json();
+        return responseJSON;
+      } catch (err) {
+        throw new Error(err);
+      }
 }
