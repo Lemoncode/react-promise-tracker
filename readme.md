@@ -14,7 +14,7 @@ display a loading spinner indicator not, you have to take care of scenarios like
 - You could need to track several ajax calls being performed in parallel.
 - Some of them you want to be tracked some others to be executed silently in background.
 - You may want to have several spinners blocking only certain areas of the screen.
-- For high speed connection you may wat to show the loading spinner after an small delay of time
+- For high speed connection you may want to show the loading spinner after an small delay of time
   to avoid having a flickering effect in your screen.
 
 This library implements:
