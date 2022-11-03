@@ -1,0 +1,40 @@
+name: Create Release Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+        required: true
+        default: patch
+        description: "The package version to publish"
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{secrets.PAT}}
+      - name: Config git
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+          sudo chmod 600 ~/.ssh/id_rsa
+          git config --global user.email "cd-user@lemoncode.net"
+          git config --global user.name "cd-user"
+      - name: Create version tag
+        run: |
+          npm version ${{github.event.inputs.version}}
+          git push
+          git push --tags
+          echo "TAG_NAME=$(git describe --tags)" >> $GITHUB_ENV
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+        run: gh release create ${{env.TAG_NAME}} --generate-notes

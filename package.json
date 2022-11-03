@@ -52,10 +52,7 @@
     "build:dist:dev": "cross-env BABEL_ENV=umd webpack --config ./config/webpack/webpack.dev.js",
     "build:copy": "copyfiles package.json readme.md LICENSE.txt build && copyfiles \"./src/**/*.d.ts\" -u 1 build",
     "test": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "release:prepare": "npm run clean && npm run test && npm run build && rimraf build/dist/report",
-    "release": "npm run release:prepare && npm publish ./build",
-    "release-beta": "npm run release:prepare && npm publish ./build --tag beta"
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

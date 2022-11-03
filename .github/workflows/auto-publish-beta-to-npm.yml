@@ -1,0 +1,25 @@
+name: Auto publish Beta Version to NPM
+
+on:
+  push:
+    tags:
+      - "v*-beta*"
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Add NPM registry
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Publish Beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+        run: npm publish ./build --tag beta --access public

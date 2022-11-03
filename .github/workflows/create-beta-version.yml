@@ -1,0 +1,42 @@
+name: Create Beta Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        options:
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+        required: true
+        default: prerelease
+        description: "The beta version to publish"
+
+jobs:
+  create-pre-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{secrets.PAT}}
+      - name: Config git
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/id_rsa
+          sudo chmod 600 ~/.ssh/id_rsa
+          git config --global user.email "cd-user@lemoncode.net"
+          git config --global user.name "cd-user"
+      - name: Create beta version tag
+        run: |
+          npm version ${{github.event.inputs.version}} --preid=beta
+          git push
+          git push --tags
+          echo "TAG_NAME=$(git describe --tags)" >> $GITHUB_ENV
+      - name: Create beta pre-release
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+        run: gh release create ${{env.TAG_NAME}} --generate-notes --prerelease
