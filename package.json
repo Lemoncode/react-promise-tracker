@@ -48,7 +48,7 @@
     "build": "npm run clean && npm run build:lib && npm run build:es && npm run build:dist:prod && npm run build:copy",
     "build:lib": "cross-env BABEL_ENV=es5_cjs babel src --out-dir build/lib --ignore 'src/**/*.spec.js,src/**/*.test.js'",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir build/es --ignore 'src/**/*.spec.js,src/**/*.test.js'",
-    "build:dist:prod": "cross-env BABEL_ENV=umd webpack -p --config ./config/webpack/webpack.prod.js",
+    "build:dist:prod": "cross-env BABEL_ENV=umd webpack --config ./config/webpack/webpack.prod.js",
     "build:dist:dev": "cross-env BABEL_ENV=umd webpack --config ./config/webpack/webpack.dev.js",
     "build:copy": "copyfiles package.json readme.md LICENSE.txt build && copyfiles \"./src/**/*.d.ts\" -u 1 build",
     "test": "cross-env NODE_ENV=test jest -c ./config/test/jest.js",
