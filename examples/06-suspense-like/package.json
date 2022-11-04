@@ -23,7 +23,7 @@
     "@material-ui/core": "3.9.3",
     "react": "16.8.4",
     "react-dom": "16.8.4",
-    "react-promise-tracker": "^2.1.0"
+    "react-promise-tracker": "^2.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
