@@ -163,7 +163,7 @@ export const Spinner = (props) => {
 
 Full examples:
 
-> NOTE: If you are going to modify the following examples in Codesanbox, you must first do a fork
+> NOTE: If you are going to modify the following examples in Codesandbox, you must first do a fork
 
 - 00 Basic Example: minimum sample to get started.
   - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic)
