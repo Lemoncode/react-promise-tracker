@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/Lemoncode/react-promise-tracker.svg?branch=master)](https://travis-ci.org/Lemoncode/react-promise-tracker)
+[![Build Status](https://github.com/Lemoncode/react-promise-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/Lemoncode/react-promise-tracker/actions/workflows/ci.yml)
 
 # react-promise-tracker
 
-Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
+Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
 For detailed information check out the [documentation](https://lemoncode.github.io/react-promise-tracker/)
 
@@ -163,7 +163,11 @@ export const Spinner = (props) => {
 
 Full examples:
 
-- [00 Basic Example](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic): minimum sample to get started.
+> NOTE: If you are going to modify the following examples in Codesanbox, you must first do a fork
+
+- 00 Basic Example: minimum sample to get started.
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic)
 
 - [01 Example Areas](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/01-example-areas): defining more than one spinner to be displayed in separate screen areas.
 
