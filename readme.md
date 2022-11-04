@@ -169,19 +169,33 @@ Full examples:
   - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic)
   - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic)
 
-- [01 Example Areas](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/01-example-areas): defining more than one spinner to be displayed in separate screen areas.
+- 01 Example Areas: defining more than one spinner to be displayed in separate screen areas.
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/01-example-areas)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/01-example-areas)
 
-- [02 Example Delay](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay): displaying the spinner after some miliseconds delay (useful when your users havbe high speed connections).
+- 02 Example Delay: displaying the spinner after some miliseconds delay (useful when your users havbe high speed connections).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay)
 
-- [03 Example Hoc](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc): using legacy high order component approach (useful if your spinner is a class based component)
+- 03 Example Hoc: using legacy high order component approach (useful if your spinner is a class based component).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
 
-- [04 Initial load](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/04-initial-load): launching ajax request just on application startup before the spinner is being mounted.
+- 04 Initial load: launching ajax request just on application startup before the spinner is being mounted.
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/04-initial-load)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/04-initial-load)
 
-- [05 Typescript](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/05-typescript): full sample using typescript (using library embedded typings).
+- 05 Typescript: full sample using typescript (using library embedded typings).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/05-typescript)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/05-typescript)
 
-- [06 Suspense Like](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/06-suspense-like): sample implementing a suspense-like component (typescript).
+- 06 Suspense Like: sample implementing a suspense-like component (typescript).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/06-suspense-like)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/06-suspense-like)
 
-- [07 Suspense Custom](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom): sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
+- 07 Suspense Custom: sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom)
 
 # About Basefactor + Lemoncode
 
