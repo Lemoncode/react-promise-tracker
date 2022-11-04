@@ -22,9 +22,3 @@ desktop.ini
 
 # MacOs
 .DS_Store
-
-# Yarn
-yarn.lock
-
-# NPM
-package-lock.json

@@ -1,468 +1,471 @@
-import React from "react";
-import { promiseTrackerHoc } from "./trackerHoc";
-import * as trackPromiseAPI from "./trackPromise";
-import { defaultArea } from "./constants";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { promiseTrackerHoc } from './trackerHoc';
+import * as trackPromiseAPI from './trackPromise';
+import { defaultArea } from './constants';
 
-describe("trackerHoc", () => {
-  describe("Initial Status", () => {
+const TestSpinnerComponent = (props) => (
+  <pre>props: {JSON.stringify(props, null, 4)}</pre>
+);
+
+describe('trackerHoc', () => {
+  describe('Initial Status', () => {
     it('should render component with trackedPromiseInProgress equals false and area equals "default-area" when render promiseTrackerHoc without props', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render component with trackedPromiseInProgress equals false, area equals "default-area" and customProp equals "test" when feeding customProp equals "test"', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent customProp="test" />);
+      const { asFragment } = render(<TrackedComponent customProp="test" />);
 
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea"', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(
-        <TrackedComponent config={{ area: "testArea" }} />
+      const { asFragment } = render(
+        <TrackedComponent config={{ area: 'testArea' }} />
       );
 
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 1', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent />);
+      const { asFragment } = render(<TrackedComponent />);
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render component with trackedPromiseInProgress equals false and area equals "testArea" when feeding area equals "testArea" and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(
-        <TrackedComponent config={{ area: "testArea", delay: 300 }} />
+      const { asFragment } = render(
+        <TrackedComponent config={{ area: 'testArea', delay: 300 }} />
       );
 
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals false to different area and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = false;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals true when counter is 0 and emit event with progress equals true and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
-      trackPromiseAPI.getCounter = jest.fn().mockReturnValueOnce(0)
-      .mockReturnValueOnce(1);
+      trackPromiseAPI.getCounter = jest
+        .fn()
+        .mockReturnValueOnce(0)
+        .mockReturnValueOnce(1);
 
       const progress = true;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
       const setTimeoutStub = jest
-        .spyOn(window, "setTimeout")
-        .mockImplementation(callback => callback());
+        .spyOn(window, 'setTimeout')
+        .mockImplementation((callback) => callback());
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 0 and emit event with progress equals true to different area and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(0);
 
       const progress = true;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals true and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals true to different area and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals true to different area and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = true;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
       const area = defaultArea;
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should render component with trackedPromiseInProgress equals true when counter is 1 and emit event with progress equals false to different area and delay equals 300", () => {
+    it('should render component with trackedPromiseInProgress equals false when counter is 1 and emit event with progress equals false to different area and delay equals 300', () => {
       // Arrange
-      const TestSpinnerComponent = props => <span>test</span>;
       trackPromiseAPI.getCounter = jest.fn().mockReturnValue(1);
 
       const progress = false;
-      const area = "otherArea";
+      const area = 'otherArea';
       const emitterStub = jest
-        .spyOn(trackPromiseAPI.emitter, "on")
+        .spyOn(trackPromiseAPI.emitter, 'on')
         .mockImplementation((id, callback) => callback(progress, area));
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
 
       // Assert
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      const { asFragment } = render(
+        <TrackedComponent config={{ delay: 300 }} />
+      );
 
       expect(trackPromiseAPI.getCounter).toHaveBeenCalled();
-      expect(component).toMatchSnapshot();
+      expect(asFragment()).toMatchSnapshot();
     });
   });
 
-  describe("Handling delay timeouts", () => {
+  describe('Handling delay timeouts', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
@@ -471,9 +474,9 @@ describe("trackerHoc", () => {
       jest.useRealTimers();
     });
 
-    it("should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 300 (before timing out)", done => {
+    it('should render <h1>NO SPINNER</h2> when counter is 1 but delay is set to 300 (before timing out)', async () => {
       // Arrange
-      const TestSpinnerComponent = props => {
+      const TestSpinnerComponent = (props) => {
         return (
           <div>
             {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
@@ -481,16 +484,15 @@ describe("trackerHoc", () => {
         );
       };
 
-      const getCounterStub = jest
-        .spyOn(trackPromiseAPI, "getCounter")
+      const getCounterStub = jest.spyOn(trackPromiseAPI, 'getCounter');
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
-      const component = mount(<TrackedComponent config={{ delay: 300 }} />);
+      render(<TrackedComponent config={{ delay: 300 }} />);
 
       // Check very beginning (no promises going on) NO SPINNER is shown
       // TODO: this assert could be skipped (move to another test)
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(screen.getByText('NO SPINNER')).toBeInTheDocument();
       expect(getCounterStub).toHaveBeenCalled();
 
       // Assert
@@ -500,7 +502,7 @@ describe("trackerHoc", () => {
       // [1] after 200ms spinner will be shown (text SPINNER)
       // [2] after 1000ms spinner will be hidded again (text NOSPINNER)
 
-      const myFakePromise = new Promise(resolve => {
+      const myFakePromise = new Promise((resolve) => {
         setTimeout(() => {
           resolve(true);
         }, 1000);
@@ -511,13 +513,13 @@ describe("trackerHoc", () => {
       jest.advanceTimersByTime(100);
 
       // [0] first 200ms spinner won't be shown (text NOSPINNER)
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
       jest.advanceTimersByTime(300);
 
       // Before the promise get's resolved
       // [1] after 200ms spinner will be shown (text SPINNER)
-      expect(component.text()).toEqual("SPINNER");
+      expect(await screen.findByText('SPINNER')).toBeInTheDocument();
 
       // After the promise get's resolved
       jest.runAllTimers();
@@ -526,15 +528,14 @@ describe("trackerHoc", () => {
       // Wait for fakePromise (simulated ajax call) to be completed
       // no spinner should be shown
 
-      myFakePromise.then(() => {
-        expect(component.text()).toEqual("NO SPINNER");
-        done();
-      });
+      await myFakePromise;
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
+      expect(screen.queryByText('SPINNER')).not.toBeInTheDocument();
     });
 
-    it("should render <h1>SPINNER</h2> when counter is 1, delay is set to 1000 and promise has 2000 timeout", done => {
+    it('should render <h1>SPINNER</h2> when counter is 1, delay is set to 1000 and promise has 2000 timeout', async () => {
       // Arrange
-      const TestSpinnerComponent = props => {
+      const TestSpinnerComponent = (props) => {
         return (
           <div>
             {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
@@ -542,18 +543,17 @@ describe("trackerHoc", () => {
         );
       };
 
-      const getCounterStub = jest
-        .spyOn(trackPromiseAPI, "getCounter");
+      const getCounterStub = jest.spyOn(trackPromiseAPI, 'getCounter');
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
-      const component = mount(<TrackedComponent config={{ delay: 1000 }} />);
+      render(<TrackedComponent config={{ delay: 1000 }} />);
 
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
       expect(getCounterStub).toHaveBeenCalled();
 
       // Assert
-      const myFakePromise = new Promise(resolve => {
+      const myFakePromise = new Promise((resolve) => {
         setTimeout(() => {
           resolve(true);
         }, 2000);
@@ -562,33 +562,30 @@ describe("trackerHoc", () => {
       trackPromiseAPI.trackPromise(myFakePromise);
 
       jest.advanceTimersByTime(500);
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
       // Total advance 1000
       jest.advanceTimersByTime(500);
-      expect(component.text()).toEqual("SPINNER");
+      expect(await screen.findByText('SPINNER')).toBeInTheDocument();
 
       // Total advance 1999
       jest.advanceTimersByTime(999);
-      expect(component.text()).toEqual("SPINNER");
+      expect(await screen.findByText('SPINNER')).toBeInTheDocument();
 
       // After the promise get's resolved
       jest.runAllTimers();
 
-      myFakePromise.then(() => {
-        expect(component.text()).toEqual("NO SPINNER");
+      await myFakePromise;
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
-        // Total advance 2010
-        jest.advanceTimersByTime(11);
-        expect(component.text()).toEqual("NO SPINNER");
-
-        done();
-      });
+      // Total advance 2010
+      jest.advanceTimersByTime(11);
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
     });
 
-    it("should render <h1>NO SPINNER</h2> when counter is 1, delay is set to 2000 and promise has 1000 timeout", done => {
+    it('should render <h1>NO SPINNER</h2> when counter is 1, delay is set to 2000 and promise has 1000 timeout', async () => {
       // Arrange
-      const TestSpinnerComponent = props => {
+      const TestSpinnerComponent = (props) => {
         return (
           <div>
             {props.promiseInProgress ? <h1>SPINNER</h1> : <h2>NO SPINNER</h2>}
@@ -596,18 +593,17 @@ describe("trackerHoc", () => {
         );
       };
 
-      const getCounterStub = jest
-        .spyOn(trackPromiseAPI, "getCounter");
+      const getCounterStub = jest.spyOn(trackPromiseAPI, 'getCounter');
 
       // Act
       const TrackedComponent = promiseTrackerHoc(TestSpinnerComponent);
-      const component = mount(<TrackedComponent config={{ delay: 2000 }} />);
+      render(<TrackedComponent config={{ delay: 2000 }} />);
 
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
       expect(getCounterStub).toHaveBeenCalled();
 
       // Assert
-      const myFakePromise = new Promise(resolve => {
+      const myFakePromise = new Promise((resolve) => {
         setTimeout(() => {
           resolve(true);
         }, 1000);
@@ -616,23 +612,21 @@ describe("trackerHoc", () => {
       trackPromiseAPI.trackPromise(myFakePromise);
 
       jest.advanceTimersByTime(500);
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
       // Total advance 1000
       jest.advanceTimersByTime(500);
-      expect(component.text()).toEqual("NO SPINNER");
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
-      myFakePromise.then(() => {
-        expect(component.text()).toEqual("NO SPINNER");
+      await myFakePromise;
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
-        // Total advance 1999
-        jest.advanceTimersByTime(999);
-        expect(component.text()).toEqual("NO SPINNER");
+      // Total advance 1999
+      jest.advanceTimersByTime(999);
+      expect(await screen.findByText('NO SPINNER')).toBeInTheDocument();
 
-        // After the promise get's resolved
-        jest.runAllTimers();
-        done();
-      });
+      // After the promise get's resolved
+      jest.runAllTimers();
     });
   });
 });
