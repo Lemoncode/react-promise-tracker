@@ -38,7 +38,7 @@
   "dependencies": {
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
-    "react-loader-spinner": "^2.3.0",
+    "react-loader-spinner": "^5.3.4",
     "react-promise-tracker": "^2.1.0"
   }
 }
