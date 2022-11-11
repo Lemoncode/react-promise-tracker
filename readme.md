@@ -2,7 +2,7 @@
 
 # react-promise-tracker
 
-Simple promise tracker React Hoc. You can see it in action in this [Live Demo](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
+Simple promise tracker React Hook. You can see it in action in this [Live Demo](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/00-example-basic), and find the basic info to get started in this [post](https://www.basefactor.com/react-how-to-display-a-loading-indicator-on-fetch-calls).
 
 For detailed information check out the [documentation](https://lemoncode.github.io/react-promise-tracker/)
 
@@ -20,7 +20,9 @@ display a loading spinner indicator not, you have to take care of scenarios like
 This library implements:
 
 - A simple function that will allow a promise to be tracked.
-- A Hook + HOC component that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
+- A Hook that will allow us wrap a loading spinner (it will be displayed when the number of tracked request are greater than zero, and hidden when not).
+
+> Note HOC version of the library has been removed in version 3.0, if you want to use it, please use a version prior to 3.0.
 
 # Installation
 
@@ -177,9 +179,6 @@ Full examples:
   - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay)
   - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/02-example-delay)
 
-- **03 Example Hoc**: using legacy high order component approach (useful if your spinner is a class based component).
-  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
-  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
 
 - **04 Initial load**: launching ajax request just on application startup before the spinner is being mounted.
   - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/04-initial-load)
@@ -196,6 +195,15 @@ Full examples:
 - **07 Suspense Custom**: sample implementing a suspense-like component that can be customized by passing a spinner component of your choice (typescript).
   - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom)
   - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/07-suspense-custom)
+
+# Legacy
+
+If need to use an HOC solution because your codebase is legacy, you can refer to the following examples (version prior to 3.0).
+
+- **03 Example Hoc**: using legacy high order component approach (useful if your spinner is a class based component).
+  - [Stackblitz](https://stackblitz.com/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
+  - [Codesandbox](https://codesandbox.io/s/github/lemoncode/react-promise-tracker/tree/master/examples/03-example-hoc)
+
 
 # About Basefactor + Lemoncode
 
