@@ -1,17 +1,24 @@
 # react-promise-tracker
 
 Componente React Hoc, rastreador de promesas.
- Puedes verlo en acción: [Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
+
+
+Para ver como funciona: [Demo](https://stackblitz.com/edit/react-promise-tracker-default-area-sample)
 
 ## ¿Por qué necesito esto?
 
-Algunas veces necesitas rastrear promesas bloqueantes (ejemplo: fetch http calls),
-para escoger entre mostrar un spinner de cargando... o no.
+Cuando realizamos llamadas AJAX (usando Fetch, Axios o cualquier tipo de librería...), resulta que ciertas llamadas son bloqueantes (es decir tenemos que evitar que el usuario pueda interactuar con la aplicación mientras se está realizando la llamada), y otras las hacemos en background (el usuario
+puede seguir interactuando con la aplicación mientras se está realizando la llamada).
+
+Gestionar esto no es fácil, ya que dichas llamadas se pueden realizar a
+diferentes niveles de la aplicación ¿Cómo podemos hacer para saber si
+tenemos que mostrar un spinner de carga y bloquear el UI? React Promise
+Tracker se encarga de gestionar ese estado por ti.
 
 Esta librería implementa:
 
-- Una función simple que te permitirá rastrear una promesa.
-- Un componente HOC, que  nos permitirá  usar un wrapper como spinner de cargando... (se mostrará cuando el número de peticiones rastreadas sea mayor que cero, y estará oculto cuando no).
+- Una función que te permitirá que la librería haga tracking de una promesa.
+- Un componente HOC, que  nos permitirá  usar un wrapper para mostrar/ocultar un spinner que indique que se están cargando datos... (se mostrará cuando el número de peticiones rastreadas sea mayor que cero, y estará oculto cuando no).
 
 ## Instalación
 
@@ -21,7 +28,7 @@ npm install react-promise-tracker --save
 
 ## Uso
 
-Siempre que quieras rastrear una promesa, simplemente usa el componente como wrapper tal como se muestra en el siguiente código:
+Siempre que quieras trackear una promesa, simplemente usa el componente como wrapper tal como se muestra en el siguiente código:
 
 ```diff
 + import { trackPromise} from 'react-promise-tracker';
@@ -32,22 +39,20 @@ Siempre que quieras rastrear una promesa, simplemente usa el componente como wra
 + );
 ```
 
-Entonces solo necesitas crear el componente que define una propiedad llamada _trackedPromiseInProgress_
-
-Y envolverlo con el _promiseTrackerHoc_
-
-## Ejemplo básico
+Después sólo te hace falta crear el componente de spinner, usar el hook __ y
+usar el flag de __ para saber si hay promesas bloqueantes en marcha o no:
 
 ```diff
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-+ import { promiseTrackerHoc} from 'react-promise-tracker';
++ import { usePromiseTracker } from "react-promise-tracker";
 
-const InnerLoadingSpinerComponent = (props) => {
+export const LoadingSpinerComponent = (props) => {
++ const { promiseInProgress } = usePromiseTracker();
+
   return (
     <div>
     {
-      (props.trackedPromiseInProgress === true) ?
++      (promiseInProgress === true) ?
         <h3>Hey I'm a spinner loader wannabe !!!</h3>
       :
         null
@@ -55,20 +60,15 @@ const InnerLoadingSpinerComponent = (props) => {
   </div>
   )
 };
-
-InnerLoadingSpinerComponent.propTypes = {
-  trackedPromiseInProgress : PropTypes.bool.isRequired,
-};
-
-+ export const LoadingSpinnerComponent = promiseTrackerHoc(InnerLoadingSpinerComponent);
 ```
 
-- Para añadir un component spinner atractivo,  puedes hacer uso de _react-spinners_:
+- Para añadir un component spinner que un aspecto más profesional,  puedes hacer uso de _react-spinners_:
 
   - [Demo page](http://www.davidhu.io/react-spinners/)
   - [Github page](https://github.com/davidhu2000/react-spinners)
 
-- Luego en el punto de entrada de tu apliación (main / app / ...) solo añade este componente loading spinner, para que sea renderizado:
+- Luego en el punto de entrada de tu aplicación (main / app / ...) solo tienes
+que añadir el componente de spinner para que se renderice cuando toque:
 
 ```diff
 import React from 'react';
@@ -84,8 +84,12 @@ export const AppComponent = (props) => (
 
 ## Ejemplo con áreas
 
-Es posible usar react-promise-tracker como si se mostrara un solo spinner en la página. Hay casos en los que desea mostrar un spinner solo bloqueando cierta área de la pantalla (por ejemplo, una aplicación de lista de productos con una sección de carrito de la compra).
-Nos gustaría bloquear esa área de la UI (mostrar sólo el spinner) mientras carga el producto, pero no el resto de la interfaz de usuario, y lo mismo con la sección pop-up del carro de compras.
+Hay veces en las que tener un sólo spinner para toda la aplicación no te vale, en ciertos escenarios puede querer hacer tracking por separado de varias zonas
+de tu interfaz de usuario, para ello puedes hacer uso de las areas de esta
+librería (por ejemplo, en una aplicación de lista de productos con una sección de carrito de la compra, igual quieres bloquear la lista de la compra pero no el
+carrito).
+
+Vamos a definir dos areas, una para el carrito de la compra y otra para la lista de productos:
 
 ![Shopping cart sample](./resources/00-shopping-cart-sample.png)
 

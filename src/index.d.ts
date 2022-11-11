@@ -37,26 +37,6 @@ interface Config {
 }
 
 /**
- * It wraps a given React component into a new component that adds properties to watch
- * pending promises (HOC).
- * @param component Input component to be wrapped.
- * @returns It returns a new component that extends the input one.
- */
-
-export interface ComponentToWrapProps {
-  config: Config;
-  promiseInProgress: boolean;
-}
-
-export interface TrackerHocProps {
-  config?: Config;
-}
-
-export function promiseTrackerHoc<P>(
-  component: React.ComponentType<P & ComponentToWrapProps>
-): React.ComponentType<P & TrackerHocProps>;
-
-/**
  * React Promise Tracker custom hook, this hook will expose a promiseInProgress boolean flag.
  *
  * @param configuration (optional can be null).
